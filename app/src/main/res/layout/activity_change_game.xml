@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_comm_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="原游戏"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/old_game"
+                        style="@style/back_edit_style"
+                        android:focusable="false"
+                        android:hint="游戏名称"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/back_game_id"
+                        style="@style/back_edit_style"
+                        android:hint="游戏帐号"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/old_person"
+                        style="@style/back_edit_style"
+                        android:hint="角色名"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/old_area"
+                        style="@style/back_edit_style"
+                        android:hint="游戏区服"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/old_money"
+                        style="@style/back_edit_style"
+                        android:hint="充值金额"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/aile_line_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="转游"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/new_game"
+                        style="@style/back_edit_style"
+                        android:focusable="false"
+                        android:hint="游戏名称"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        style="@style/back_edit_style"
+                        android:hint="游戏帐号"
+                        android:inputType="number"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/new_person"
+                        style="@style/back_edit_style"
+                        android:hint="角色名"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/new_area"
+                        style="@style/back_edit_style"
+                        android:hint="游戏区服"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:text="*"
+                    android:textColor="@color/red"
+                    android:visibility="invisible" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp">
+
+                    <EditText
+                        android:id="@+id/new_explain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/back_edit_bg"
+                        android:hint="备注"
+                        android:minHeight="35dp"
+                        android:padding="10dp"
+                        android:textSize="12sp" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/back_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="5dp"
+        android:background="@drawable/select_date_bg"
+        android:text="提   交" />
+
+
+</LinearLayout>
