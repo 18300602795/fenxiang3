@@ -49,9 +49,9 @@ public class MainGameFragment extends AutoLazyFragment {
     ImageView ivGotoMsg;
     private VpAdapter vpAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private String[] titleList = {"分类", "BT", "折扣", "GM", "精品"};
-    private int[] mIconUnselectIds = {R.mipmap.fenlei_u, R.mipmap.kaice_u,R.mipmap.xinyoubang_u, R.mipmap.gm_icon, R.mipmap.remenbang_u};
-    private int[] mIconSelectIds = {R.mipmap.fenlei_s, R.mipmap.kaice_s, R.mipmap.xinyoubang_s,R.mipmap.gm_icon_s, R.mipmap.remenbang_s};
+    private String[] titleList = {"分类", "精品", "BT", "折扣", "GM"};
+    private int[] mIconUnselectIds = {R.mipmap.fenlei_u, R.mipmap.remenbang_u, R.mipmap.kaice_u, R.mipmap.xinyoubang_u, R.mipmap.gm_icon};
+    private int[] mIconSelectIds = {R.mipmap.fenlei_s, R.mipmap.remenbang_s, R.mipmap.kaice_s, R.mipmap.xinyoubang_s, R.mipmap.gm_icon_s};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
     private int position = 0;
     private int secondPosition = 0;
@@ -77,15 +77,11 @@ public class MainGameFragment extends AutoLazyFragment {
         for (int i = 0; i < titleList.length; i++) {
             mTabEntities.add(new TabEntity(titleList[i], mIconSelectIds[i], mIconUnselectIds[i]));
         }
-        if(BuildConfig.projectCode == 137) {
-            fragmentList.add(new GameFirstClassifyFragment());
-        }else{
-            fragmentList.add(new GameFirstClassifyFragmentV1());
-        }
-        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0,3, null));
-        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0,4, null));
-        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0,1, null));
-        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0,5,null));
+        fragmentList.add(new GameFirstClassifyFragmentV1());
+        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 5, null));
+        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 3, null));
+        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 4, null));
+        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 1, null));
 //        gameTestNewFragment = new GameTestNewFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putInt("position", secondPosition);
@@ -109,7 +105,7 @@ public class MainGameFragment extends AutoLazyFragment {
         onMessageEvent(messageEvent);
     }
 
-    private void bindTab(final CommonTabLayout tabMainGame, final SViewPager vpMainGame){
+    private void bindTab(final CommonTabLayout tabMainGame, final SViewPager vpMainGame) {
         tabMainGame.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {

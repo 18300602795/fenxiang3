@@ -1,6 +1,7 @@
 package com.etsdk.app.huov7.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Base64;
@@ -29,6 +30,7 @@ import com.etsdk.app.huov7.sharesdk.ShareDataEvent;
 import com.etsdk.app.huov7.sharesdk.ShareUtil;
 import com.etsdk.app.huov7.ui.LoginActivityV1;
 import com.etsdk.app.huov7.ui.WebViewActivity;
+import com.etsdk.app.huov7.ui.WebViewH5Activity;
 import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
 import com.game.sdk.SdkConstant;
 import com.game.sdk.domain.BaseRequestBean;
@@ -67,6 +69,7 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     private GameBean gameBean;
     private ShareResultBean.DateBean shareResult;
     private UserInfoResultBean resultBean;
+    private boolean isH5;
 
     public GameDetailDownView(Context context) {
         super(context);
@@ -96,10 +99,15 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         ButterKnife.bind(this);
     }
 
-    public void setGameBean(GameBean gameBean) {
+    public void setGameBean(GameBean gameBean, boolean isH5) {
         this.gameBean = gameBean;
-        tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
-        if ("下载".equals(tvDownStatus.getText().toString().trim()) && !TextUtils.isEmpty(gameBean.getSize())) {
+        this.isH5 = isH5;
+        if (isH5){
+            tvDownStatus.setText("开启");
+        }else {
+            tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
+        }
+         if ("下载".equals(tvDownStatus.getText().toString().trim()) && !TextUtils.isEmpty(gameBean.getSize())) {
             tvDownStatus.setText("下载（" + gameBean.getSize() + "）");
         }
         pbDown.setProgress(100);
@@ -125,6 +133,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     @Override
     public void pending(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" pending");
+        if (isH5){
+            return;
+        }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
     }
@@ -132,6 +143,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     @Override
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" progress");
+        if (isH5){
+            return;
+        }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
         tvDownStatus.setText(TasksManager.getImpl().getProgress(tasksManagerModel.getId()) + "%");
     }
@@ -139,6 +153,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     @Override
     public void completed(TasksManagerModel tasksManagerModel) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" completed");
+        if (isH5){
+            return;
+        }
         pbDown.setProgress(100);
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
     }
@@ -146,6 +163,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     @Override
     public void paused(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" paused");
+        if (isH5){
+            return;
+        }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
 
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -154,6 +174,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     @Override
     public void error(TasksManagerModel tasksManagerModel, Throwable e) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" error");
+        if (isH5){
+            return;
+        }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
     }
@@ -252,7 +275,14 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pb_down:
-                DownloadHelper.onClick(gameBean.getGameid(), this);
+                if (isH5) {
+                    Intent intent = new Intent(getContext(), WebViewH5Activity.class);
+                    intent.putExtra("url", "http://play.11h5.com/game/?gameid=123&code=c-c28b0dc48d19dafcde90101dfc5432b9&statid=1602&backGC=1");
+                    intent.putExtra("titleName", gameBean.getGamename());
+                    getContext().startActivity(intent);
+                } else {
+                    DownloadHelper.onClick(gameBean.getGameid(), this);
+                }
                 break;
             case R.id.tv_share:
                 L.i("333", "开始分享");

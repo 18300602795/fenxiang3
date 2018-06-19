@@ -89,7 +89,7 @@ public class GameListActivity extends ImmerseActivity implements AdvRefreshListe
         // 设置适配器
         multiTypeAdapter = new MultiTypeAdapter(items);
         multiTypeAdapter.register(SplitLine.class, new SplitLineViewProvider());
-        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(showRank));
+        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(showRank, category));
         baseRefreshLayout.setAdapter(multiTypeAdapter);
         baseRefreshLayout.setAdvRefreshListener(this);
         baseRefreshLayout.refresh();

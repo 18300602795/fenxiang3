@@ -82,4 +82,8 @@ public class ImgUtil {
         }
         return false;
     }
+
+    public static void setImg(Context context, String url, int errImg, ImageView imageView) {
+        Glide.with(context).load(url).dontAnimate().placeholder(errImg).into(imageView);
+    }
 }

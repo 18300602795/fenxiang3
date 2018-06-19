@@ -87,7 +87,7 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
     public void onLoginEvent(Boolean isLogin) {
         if (isLogin) {
             EventBus.getDefault().post(new ShowMsg(true));
-            getUserInfoData();
+//            getUserInfoData();
         }
     }
 

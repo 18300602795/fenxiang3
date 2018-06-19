@@ -11,7 +11,7 @@ import java.util.List;
  * Created by liu hong liang on 2016/12/9.
  */
 
-public class VpAdapter extends FragmentStatePagerAdapter {
+public class VpAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragmentList;
     private String[] titleList;
     public VpAdapter(FragmentManager fm,List<Fragment> fragmentList,String [] titleList) {

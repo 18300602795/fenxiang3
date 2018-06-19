@@ -11,6 +11,9 @@ import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
 import com.etsdk.app.huov7.model.SwitchFragmentEvent;
+import com.etsdk.app.huov7.ui.DownloadManagerActivity;
+import com.etsdk.app.huov7.ui.MessageActivity;
+import com.etsdk.app.huov7.ui.SearchActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.liang530.views.viewpager.SViewPager;
@@ -22,6 +25,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * 主页游戏 开服开测，内嵌两个fragment
@@ -92,6 +96,21 @@ public class GameTestNewFragmentNew extends AutoLazyFragment {
 
             }
         });
+    }
+
+    @OnClick({R.id.main_gameSearch, R.id.iv_tj_downManager, R.id.rl_goto_msg})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.main_gameSearch:
+                SearchActivity.start(mContext);
+                break;
+            case R.id.iv_tj_downManager:
+                DownloadManagerActivity.start(mContext);
+                break;
+            case R.id.rl_goto_msg:
+                MessageActivity.start(mContext);
+                break;
+        }
     }
 
     /**

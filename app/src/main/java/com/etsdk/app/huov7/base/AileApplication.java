@@ -7,11 +7,11 @@ import android.telephony.TelephonyManager;
 
 import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.model.InstallApkRecord;
-import com.fm.openinstall.OpenInstall;
 import com.game.sdk.log.L;
 import com.liang530.application.BaseApplication;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.mob.MobSDK;
+import com.sh.sdk.shareinstall.ShareInstall;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +21,11 @@ import java.util.Map;
  */
 
 public class AileApplication extends BaseApplication {
-    private Map<String,InstallApkRecord> installingApkList=new HashMap<>();
+    private Map<String, InstallApkRecord> installingApkList = new HashMap<>();
     public static String agent;
     boolean f = false;
     public static String imei;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -38,10 +39,15 @@ public class AileApplication extends BaseApplication {
         imei = getIMEI(this);
         L.i("333", "imei：" + imei);
         if (isMainProcess()) {
-            OpenInstall.init(this);
+            ShareInstall.getInstance().init(getApplicationContext());
         }
     }
 
+    /**
+     * 判断当前进程是否是应用的主进程
+     *
+     * @return
+     */
     public boolean isMainProcess() {
         int pid = android.os.Process.myPid();
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -57,12 +63,14 @@ public class AileApplication extends BaseApplication {
     public Class getLoginClass() {
         return null;
     }
+
     public Map<String, InstallApkRecord> getInstallingApkList() {
         return installingApkList;
     }
+
     /**
      * 获取手机IMEI号
-     *
+     * <p>
      * 需要动态权限: android.permission.READ_PHONE_STATE
      */
     public static String getIMEI(Context context) {
@@ -74,6 +82,7 @@ public class AileApplication extends BaseApplication {
 
     @Override
     protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base); MultiDex.install(this);
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

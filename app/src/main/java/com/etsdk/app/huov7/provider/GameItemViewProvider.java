@@ -16,12 +16,19 @@ import me.drakeet.multitype.ItemViewProvider;
 public class GameItemViewProvider
         extends ItemViewProvider<GameBean, GameItemViewProvider.ViewHolder> {
     boolean showRank;
-
+    int category;
     public GameItemViewProvider(boolean showRank) {
         this.showRank = showRank;
+        category = 0;
     }
 
-    public GameItemViewProvider() {
+    public GameItemViewProvider(boolean showRank, int category) {
+        this.showRank = showRank;
+        this.category = category;
+    }
+
+    public GameItemViewProvider(int category) {
+        this.category = category;
     }
 
     @NonNull
@@ -34,7 +41,7 @@ public class GameItemViewProvider
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull GameBean gameBean) {
         holder.listGameItem.showLine(true);
-        holder.listGameItem.setGameBean(gameBean);
+        holder.listGameItem.setGameBean(gameBean, category);
         if(showRank){
             holder.listGameItem.setIsHotRank(showRank,holder.getAdapterPosition());
         }

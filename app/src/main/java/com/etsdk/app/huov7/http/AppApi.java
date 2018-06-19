@@ -78,6 +78,7 @@ public class AppApi {
     public static final String searchIndexApi="search/index";
     public static final String ranklistApi="integral/ranklist";
     public static final String hompageApi="homepage";
+    public static final String hompageApi2="homepage/andindex";
     public static final String goodsListApi="goods/list";
     public static final String wealNoteApi="weal/note";
     public static final String addressListApi="address/list";

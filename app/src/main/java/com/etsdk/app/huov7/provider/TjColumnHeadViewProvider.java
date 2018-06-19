@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.etsdk.app.huov7.BuildConfig;
@@ -18,6 +19,7 @@ import com.etsdk.app.huov7.ui.GiftCardListActivity;
 import com.etsdk.app.huov7.ui.GiftListActivity;
 import com.etsdk.app.huov7.ui.MainActivity;
 import com.etsdk.hlrefresh.BaseRefreshLayout;
+import com.game.sdk.log.L;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,9 +32,15 @@ public class TjColumnHeadViewProvider
         extends ItemViewProvider<TjColumnHead, TjColumnHeadViewProvider.ViewHolder> {
     boolean requestBackGroundColor;
     BaseRefreshLayout baseRefreshLayout;
-
+    private int category;
     public TjColumnHeadViewProvider(BaseRefreshLayout baseRefreshLayout) {
         this.baseRefreshLayout = baseRefreshLayout;
+        category = 0;
+    }
+
+    public TjColumnHeadViewProvider(BaseRefreshLayout baseRefreshLayout, int category) {
+        this.baseRefreshLayout = baseRefreshLayout;
+        this.category = category;
     }
 
     public TjColumnHeadViewProvider() {
@@ -61,59 +69,47 @@ public class TjColumnHeadViewProvider
             holder.ivHint.setBackgroundResource(R.mipmap.smnews);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 2, 0, 0, 0, 0, 0, null);
+                    L.i("333", "新游首发");
+                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 2, 0, 0, 0, 0, category, null);
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_WELFARE) {
-            if (BuildConfig.projectCode == 177) {//177七二网络改叫bt游戏
-                holder.tvTypeName.setText("BT游戏");
-            } else {
-                holder.tvTypeName.setText("公益游戏");
-            }
+            holder.tvTypeName.setText("公益游戏");
             holder.ivHint.setBackgroundResource(R.mipmap.gongyi);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 0, 0, 0, 0, 2, 0, null);
+                    L.i("333", "公益游戏");
+                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 0, 0, 0, 0, 2, category, null);
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_FXB) {
-            if (BuildConfig.projectCode == 137) {
-                holder.tvTypeName.setText("BT游戏");
-            } else {
-                holder.tvTypeName.setText("热门游戏");
-            }
+            holder.tvTypeName.setText("热门游戏");
             holder.ivHint.setBackgroundResource(R.mipmap.remen);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);//跳转至游戏热门分类
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (holder.itemView.getContext() instanceof MainActivity) {
-//                        MainActivity mainActivity = (MainActivity) holder.itemView.getContext();
-//                        mainActivity.switchGameFragment(1);
-                        GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 2, 0, 0, 0, 0, 0, 0, null);
-                    }
+                    L.i("333", "热门游戏");
+                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 2, 0, 0, 0, 0, 0, category, null);
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_TJ) {
-            holder.tvTypeName.setText("新游推荐");
+            holder.tvTypeName.setText("精品推荐");
             holder.ivHint.setBackgroundResource(R.mipmap.zuixin);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);//跳转至游戏新游
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (holder.itemView.getContext() instanceof MainActivity) {
-//                        MainActivity mainActivity = (MainActivity) holder.itemView.getContext();
-//                        mainActivity.switchGameFragment(2);
-                        GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 2, 0, 0, 0, 0, 0, null);
-                    }
+                    L.i("333", "精品推荐");
+                    GameListActivity.start(v.getContext(), holder.tvTypeName.getText().toString(), true, true, 0, 0, 2, 0, 0, 0, category, null);
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_LIKE) {
@@ -121,7 +117,7 @@ public class TjColumnHeadViewProvider
             holder.ivHint.setBackgroundResource(R.mipmap.xihuan);
             holder.tvMore.setText("换一批");
             holder.ivMore.setVisibility(View.GONE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (baseRefreshLayout != null) {
@@ -133,7 +129,7 @@ public class TjColumnHeadViewProvider
             holder.tvTypeName.setText("豪华礼包");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftListActivity.start(v.getContext(), "豪华礼包", null, 0, 0, 0, 2);
@@ -143,7 +139,7 @@ public class TjColumnHeadViewProvider
             holder.tvTypeName.setText("限时代金券");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CouponListActivity.start(v.getContext(), "限时代金券", null, 0);
@@ -155,7 +151,7 @@ public class TjColumnHeadViewProvider
             holder.ivHint.setBackgroundResource(R.mipmap.rec_blue);
             holder.ivHint.setVisibility(View.VISIBLE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftListActivity.start(v.getContext(), "热门推荐礼包", null, 0, 0, 2, 0);
@@ -167,7 +163,7 @@ public class TjColumnHeadViewProvider
             holder.ivHint.setBackgroundResource(R.mipmap.rec_blue);
             holder.ivHint.setVisibility(View.VISIBLE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftListActivity.start(v.getContext(), "热门礼包", null, 2, 0, 0, 0);
@@ -179,7 +175,7 @@ public class TjColumnHeadViewProvider
             holder.ivHint.setBackgroundResource(R.mipmap.rec_blue);
             holder.ivHint.setVisibility(View.VISIBLE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftListActivity.start(v.getContext(), "最新礼包", null, 0, 2, 0, 0);
@@ -189,7 +185,7 @@ public class TjColumnHeadViewProvider
             holder.tvTypeName.setText("代金券兑换专区");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     CouponListActivity.start(v.getContext(), "代金券兑换专区", null, 0);
@@ -199,7 +195,7 @@ public class TjColumnHeadViewProvider
             holder.tvTypeName.setText("礼品卡兑换专区");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftCardListActivity.start(v.getContext(), "礼品卡兑换专区", 1);
@@ -209,7 +205,7 @@ public class TjColumnHeadViewProvider
             holder.tvTypeName.setText("实物兑换专区");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
-            holder.tvMore.setOnClickListener(new View.OnClickListener() {
+            holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     GiftCardListActivity.start(v.getContext(), "实物兑换专区", 2);
@@ -232,6 +228,8 @@ public class TjColumnHeadViewProvider
         TextView tvMore;
         @BindView(R.id.iv_more)
         ImageView ivMore;
+        @BindView(R.id.ll_more)
+        LinearLayout llMore;
 
         ViewHolder(View itemView) {
             super(itemView);

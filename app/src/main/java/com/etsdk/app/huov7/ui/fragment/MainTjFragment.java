@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
@@ -18,19 +15,16 @@ import com.etsdk.app.huov7.model.HomePage1Data;
 import com.etsdk.app.huov7.model.MessageEvent;
 import com.etsdk.app.huov7.model.SplitLine;
 import com.etsdk.app.huov7.model.TjAdText;
-import com.etsdk.app.huov7.model.TjAdTop;
 import com.etsdk.app.huov7.model.TjColumnHead;
 import com.etsdk.app.huov7.model.TjTestNewVp;
 import com.etsdk.app.huov7.provider.AdImageViewProvider;
 import com.etsdk.app.huov7.provider.GameItemViewProvider;
 import com.etsdk.app.huov7.provider.GamelikeListProvider;
+import com.etsdk.app.huov7.provider.NewGameProvider;
 import com.etsdk.app.huov7.provider.TjAdTextViewProvider;
 import com.etsdk.app.huov7.provider.TjAdTopViewProvider;
 import com.etsdk.app.huov7.provider.TjColumnHeadViewProvider;
 import com.etsdk.app.huov7.provider.TjTestNewVpViewProvider;
-import com.etsdk.app.huov7.ui.DownloadManagerActivity;
-import com.etsdk.app.huov7.ui.MainActivity;
-import com.etsdk.app.huov7.ui.SearchActivity;
 import com.etsdk.app.huov7.util.RecyclerViewNoAnimator;
 import com.etsdk.hlrefresh.AdvRefreshListener;
 import com.etsdk.hlrefresh.BaseRefreshLayout;
@@ -44,11 +38,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
@@ -62,14 +54,14 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
     RecyclerView recyMainTj;
     @BindView(R.id.srf_main_tj)
     SwipeRefreshLayout srfMainTj;
-    @BindView(R.id.iv_gotoMine)
-    ImageView ivGotoMine;
-    @BindView(R.id.main_gameSearch)
-    TextView mainGameSearch;
     private MultiTypeAdapter multiTypeAdapter;
     private BaseRefreshLayout baseRefreshLayout;
     Items items = new Items();
+    private int category;
 
+    public MainTjFragment(int category) {
+        this.category = category;
+    }
 
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
@@ -84,14 +76,15 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
         multiTypeAdapter = new MultiTypeAdapter(items);
         multiTypeAdapter.applyGlobalMultiTypePool();
         TjAdTopViewProvider tjAdTopViewProvider = new TjAdTopViewProvider();
-        setBannerImageWH(tjAdTopViewProvider);
-        multiTypeAdapter.register(TjAdTop.class, tjAdTopViewProvider);
-        multiTypeAdapter.register(TjAdText.class, new TjAdTextViewProvider());
+//        setBannerImageWH(tjAdTopViewProvider);
+//        multiTypeAdapter.register(TjAdTop.class, tjAdTopViewProvider);
+//        multiTypeAdapter.register(TjAdText.class, new TjAdTextViewProvider());
 //        multiTypeAdapter.register(TjOptionColumn.class, new TjOptionColumnViewProvider());
-        multiTypeAdapter.register(TjColumnHead.class, new TjColumnHeadViewProvider(baseRefreshLayout));
+        multiTypeAdapter.register(TjColumnHead.class, new TjColumnHeadViewProvider(baseRefreshLayout, category));
         multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
-        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider());
-        multiTypeAdapter.register(  TjTestNewVp.class, new TjTestNewVpViewProvider());
+        multiTypeAdapter.register(HomePage1Data.DataBean.class, new NewGameProvider(category));
+        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(category));
+        multiTypeAdapter.register(TjTestNewVp.class, new TjTestNewVpViewProvider());
         multiTypeAdapter.register(GamelikeBean.class, new GamelikeListProvider());
         recyMainTj.setLayoutManager(new LinearLayoutManager(mContext));
         recyMainTj.setItemAnimator(new RecyclerViewNoAnimator());
@@ -113,27 +106,28 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
         int deviceWidth = BaseAppUtil.getDeviceWidth(getContext());
         tjAdTopViewProvider.setBannerHeight((int) (deviceWidth * AppApi.AD_IMAGE_HW_RATA));
     }
-
-    @OnClick({R.id.rl_goto_mine, R.id.main_gameSearch, R.id.iv_tj_downManager})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rl_goto_mine:
-                ((MainActivity) getActivity()).switchFragment(4);
-                break;
-            case R.id.main_gameSearch:
-                SearchActivity.start(mContext);
-                break;
-            case R.id.iv_tj_downManager:
-                DownloadManagerActivity.start(mContext);
-                break;
-        }
-    }
+//
+//    @OnClick({R.id.rl_goto_mine, R.id.main_gameSearch, R.id.iv_tj_downManager})
+//    public void onClick(View view) {
+//        switch (view.getId()) {
+//            case R.id.rl_goto_mine:
+//                ((MainActivity) getActivity()).switchFragment(4);
+//                break;
+//            case R.id.main_gameSearch:
+//                SearchActivity.start(mContext);
+//                break;
+//            case R.id.iv_tj_downManager:
+//                DownloadManagerActivity.start(mContext);
+//                break;
+//        }
+//    }
 
     @Override
     public void getPageData(int requestPageNo) {
-        HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.hompageApi);
+        HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.hompageApi2);
+        httpParams.put("category",category);
         //成功，失败，null数据
-        NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.hompageApi), new HttpJsonCallBackDialog<HomePage1Data>() {
+        NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.hompageApi2), new HttpJsonCallBackDialog<HomePage1Data>() {
             @Override
             public void onDataSuccess(HomePage1Data data) {
                 if (data != null && data.getData() != null) {
@@ -158,17 +152,17 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
     private void updateHomeData(HomePage1Data.DataBean homePage1Data) {
         Items allItems = new Items();
         //顶部banner
-        if (homePage1Data.getHometopper() != null && homePage1Data.getHometopper().getList() != null
-                && homePage1Data.getHometopper().getList().size() > 0) {
-            allItems.add(new TjAdTop(homePage1Data.getHometopper().getList()));
-        } else {
-            allItems.add(new TjAdTop(new ArrayList<AdImage>()));
-        }
+//        if (homePage1Data.getHometopper() != null && homePage1Data.getHometopper().getList() != null
+//                && homePage1Data.getHometopper().getList().size() > 0) {
+//            allItems.add(new TjAdTop(homePage1Data.getHometopper().getList()));
+//        } else {
+//            allItems.add(new TjAdTop(new ArrayList<AdImage>()));
+//        }
         //滚动文字信息
-        if (homePage1Data.getTexthome() != null && homePage1Data.getTexthome().getList() != null
-                && homePage1Data.getTexthome().getList().size() > 0) {
-            allItems.add(new TjAdText(homePage1Data.getTexthome().getList()));
-        }
+//        if (homePage1Data.getTexthome() != null && homePage1Data.getTexthome().getList() != null
+//                && homePage1Data.getTexthome().getList().size() > 0) {
+//            allItems.add(new TjAdText(homePage1Data.getTexthome().getList()));
+//        }
         //秒杀代金券、活动资讯等
 //        allItems.add(new TjOptionColumn());
         boolean isReuqestLine = false;
@@ -243,17 +237,44 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
 
         //新游推荐头
         isReuqestLine = false;
-        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_TJ);
+        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_NEW_GAME_SF);
         allItems.add(tjColumnHead);
-        //新游推荐
+        //新游首发
         if (homePage1Data.getNewgame() != null && homePage1Data.getNewgame() != null
                 && homePage1Data.getNewgame().getList() != null
                 && homePage1Data.getNewgame().getList().size() > 0) {
-            List<GameBean> gameBeanList = homePage1Data.getNewgame().getList();
+//            List<GameBean> gameBeanList = homePage1Data.getNewgame().getList();
+//            int i = 0;
+//            for (GameBean gameBean : gameBeanList) {
+//                i++;
+//                if(i>5){
+//                    break;
+//                }
+//                allItems.add(gameBean);
+//            }
+            allItems.add(homePage1Data);
+            isReuqestLine = true;
+        }
+        //横幅广告
+        if (homePage1Data.getHomenewgame() != null && homePage1Data.getHomenewgame().getList() != null
+                && homePage1Data.getHomenewgame().getList().size() > 0) {
+//            allItems.add(homePage1Data.getHomenewgame().getList().get(0));
+            isReuqestLine = true;
+            allItems.add(new SplitLine());
+        }
+        //手游风向标头(热门游戏)
+        isReuqestLine = false;
+        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_TJ);
+        allItems.add(tjColumnHead);
+        //手游风向标(精品推荐)
+        if (homePage1Data.getNewrmd() != null && homePage1Data.getNewrmd() != null
+                && homePage1Data.getNewrmd().getList() != null
+                && homePage1Data.getNewrmd().getList().size() > 0) {
+            List<GameBean> gameBeanList = homePage1Data.getNewrmd().getList();
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
                 i++;
-                if(i>4){
+                if(i>5){
                     break;
                 }
                 allItems.add(gameBean);
@@ -267,11 +288,11 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
             isReuqestLine = true;
             allItems.add(new SplitLine());
         }
-        //手游风向标头(热门游戏)
+        //公益游戏头
         isReuqestLine = false;
         tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_FXB);
         allItems.add(tjColumnHead);
-        //手游风向标(热门游戏)
+        //热门游戏
         if (homePage1Data.getHotgame() != null && homePage1Data.getHotgame() != null
                 && homePage1Data.getHotgame().getList() != null
                 && homePage1Data.getHotgame().getList().size() > 0) {
@@ -279,7 +300,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
                 i++;
-                if(i>4){
+                if(i>20){
                     break;
                 }
                 allItems.add(gameBean);
@@ -290,32 +311,6 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
         if (homePage1Data.getHomehotgame() != null && homePage1Data.getHomehotgame().getList() != null
                 && homePage1Data.getHomehotgame().getList().size() > 0) {
             allItems.add(homePage1Data.getHomehotgame().getList().get(0));
-            isReuqestLine = true;
-            allItems.add(new SplitLine());
-        }
-        //公益游戏头
-        isReuqestLine = false;
-        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_WELFARE);
-        allItems.add(tjColumnHead);
-        //公益游戏
-        if (homePage1Data.getWelfaregame() != null && homePage1Data.getWelfaregame() != null
-                && homePage1Data.getWelfaregame().getList() != null
-                && homePage1Data.getWelfaregame().getList().size() > 0) {
-            List<GameBean> gameBeanList = homePage1Data.getWelfaregame().getList();
-            int i = 0;
-            for (GameBean gameBean : gameBeanList) {
-                i++;
-                if(i>4){
-                    break;
-                }
-                allItems.add(gameBean);
-            }
-            isReuqestLine = true;
-        }
-        //横幅广告
-        if (homePage1Data.getWelfareslide() != null && homePage1Data.getWelfareslide().getList() != null
-                && homePage1Data.getWelfareslide().getList().size() > 0) {
-            allItems.add(homePage1Data.getWelfareslide().getList().get(0));
             isReuqestLine = true;
             allItems.add(new SplitLine());
         }

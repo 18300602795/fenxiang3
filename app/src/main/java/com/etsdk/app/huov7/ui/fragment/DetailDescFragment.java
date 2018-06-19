@@ -94,7 +94,7 @@ public class DetailDescFragment extends AutoLazyFragment {
         recyclerLike.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerLike.setNestedScrollingEnabled(false);
         MultiTypeAdapter likeRcyAdapter = new MultiTypeAdapter(likeGameList);
-        likeRcyAdapter.register(GameBean.class, new GameItemViewProvider());
+        likeRcyAdapter.register(GameBean.class, new GameItemViewProvider(0));
         recyclerLike.setAdapter(likeRcyAdapter);
         getLikeGameData();
         setupGameData(gameBean);

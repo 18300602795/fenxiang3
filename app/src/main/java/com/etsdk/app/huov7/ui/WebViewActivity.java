@@ -268,7 +268,7 @@ public class WebViewActivity extends ImmerseActivity {
                 if (data != null && data.getData() != null) {
                     flGame.setVisibility(View.VISIBLE);
                     NewListGameItem gameView = new NewListGameItem(mContext);
-                    gameView.setGameBean(data.getData());
+                    gameView.setGameBean(data.getData(), 0);
                     flGame.addView(gameView);
                 }
             }

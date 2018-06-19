@@ -99,6 +99,7 @@ public class GameDetailV2Activity extends ImmerseActivity {
     private String gameId = "0";
     private GameBean gameBean;
     private DetailDescFragment detailDescFragment;
+    private boolean isH5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +120,9 @@ public class GameDetailV2Activity extends ImmerseActivity {
         fragmentList.clear();
         if (intent != null) {//onNewintent
             gameId = intent.getStringExtra("gameId");
+            isH5 = intent.getBooleanExtra("isH5", false);
         } else {//onCreate
+            isH5 = getIntent().getBooleanExtra("isH5", false);
             gameId = getIntent().getStringExtra("gameId");
         }
         if (BuildConfig.projectCode == 74) {//显示右边的充值按钮
@@ -175,7 +178,15 @@ public class GameDetailV2Activity extends ImmerseActivity {
                 finish();
                 break;
             case R.id.iv_downManager:
-                DownloadManagerActivity.start(mContext);
+                if (isH5) {
+                    Intent intent = new Intent(mContext, WebViewH5Activity.class);
+                    intent.putExtra("url", "http://play.11h5.com/game/?gameid=123&code=c-c28b0dc48d19dafcde90101dfc5432b9&statid=1602&backGC=1");
+                    intent.putExtra("titleName", gameBean.getGamename());
+                    startActivity(intent);
+                } else {
+                    DownloadManagerActivity.start(mContext);
+                }
+
                 break;
             case R.id.iv_gotoMsg:
                 MessageActivity.start(mContext);
@@ -227,7 +238,7 @@ public class GameDetailV2Activity extends ImmerseActivity {
         gameTagView.setGameType(gameBean.getType());
         loadview.showSuccess();
         detailDescFragment.setupGameData(gameBean);
-        gameDetailDownView.setGameBean(gameBean);
+        gameDetailDownView.setGameBean(gameBean, isH5);
         if (gameBean.getCategory().equals("4")) {
             iv_discount.setVisibility(View.VISIBLE);
         }
@@ -271,6 +282,15 @@ public class GameDetailV2Activity extends ImmerseActivity {
         //TODO 此处可以切换为Detail-V3 的样式
 //        Intent starter = new Intent(context, NewGameDetailActivity.class);
         starter.putExtra("gameId", gameId);
+        context.startActivity(starter);
+    }
+
+    public static void start(Context context, String gameId, boolean isH5) {
+        Intent starter = new Intent(context, GameDetailV2Activity.class);
+        //TODO 此处可以切换为Detail-V3 的样式
+//        Intent starter = new Intent(context, NewGameDetailActivity.class);
+        starter.putExtra("gameId", gameId);
+        starter.putExtra("isH5", isH5);
         context.startActivity(starter);
     }
 

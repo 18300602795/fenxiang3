@@ -167,7 +167,7 @@ public class GameDetailV3Activity extends BaseActivity {
         gameTagView.setGameType(gameBean.getType());
         loadview.showSuccess();
         detailDescFragment.setupGameData(gameBean);
-        gameDetailDownView.setGameBean(gameBean);
+        gameDetailDownView.setGameBean(gameBean, false);
     }
 
     public GameBean getGameBean() {

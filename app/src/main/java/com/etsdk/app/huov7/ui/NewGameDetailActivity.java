@@ -163,7 +163,7 @@ public class NewGameDetailActivity extends ImmerseActivity implements PullHeader
         gameTagView.setGameType(gameBean.getType());
         loadview.showSuccess();
         detailDescFragment.setupGameData(gameBean);
-        gameDetailDownView.setGameBean(gameBean);
+        gameDetailDownView.setGameBean(gameBean, false);
     }
 
     public GameBean getGameBean() {

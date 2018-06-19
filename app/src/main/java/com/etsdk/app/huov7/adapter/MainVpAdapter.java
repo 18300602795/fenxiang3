@@ -4,10 +4,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.etsdk.app.huov7.shop.ui.MainShopFragment;
 import com.etsdk.app.huov7.ui.fragment.FindFragment;
+import com.etsdk.app.huov7.ui.fragment.GameTestNewFragment;
+import com.etsdk.app.huov7.ui.fragment.GameTestNewFragmentNew;
+import com.etsdk.app.huov7.ui.fragment.HomeFragment;
 import com.etsdk.app.huov7.ui.fragment.MainGameFragment;
 import com.etsdk.app.huov7.ui.fragment.MainMineFragmentNew2;
-import com.etsdk.app.huov7.ui.fragment.MainTjFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +23,10 @@ public class MainVpAdapter extends FragmentPagerAdapter {
     List<Fragment> fragmentList=new ArrayList<>();
     public MainVpAdapter(FragmentManager fm) {
         super(fm);
-        fragmentList.add(new MainTjFragment());
+        fragmentList.add(new HomeFragment());
         fragmentList.add(new MainGameFragment());
         fragmentList.add(new FindFragment());
-//        fragmentList.add(new MainShopFragment());
+        fragmentList.add(new GameTestNewFragmentNew());
 //        fragmentList.add(new MainNewsFragment());
         fragmentList.add(new MainMineFragmentNew2());
     }

@@ -30,9 +30,15 @@ android {
         }
     }
     buildToolsVersion '26.0.2'
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
+    compile(name: 'ShareInstall_1.0.4', ext: 'aar')
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile fileTree(include: ['*.jar'], dir: 'share_libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -75,7 +81,6 @@ dependencies {
     compile project(':jcvideoplayer-lib')
     compile files('share_libs/MobCommons-2017.1201.1507.jar')
     dependencies { compile 'com.android.support:multidex:1.0.1' }
-    compile files('libs/OpenInstall_v2.2.0.jar')
 }
 //apply plugin: 'AndResGuard'
 apply plugin: 'com.antfortune.freeline'
