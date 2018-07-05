@@ -76,7 +76,11 @@ public class GiftListItemViewProvider
                 }
             }
         });
-        holder.tvGiftName.setText(giftListItem.getGiftname());
+        if (giftListItem.getGiftname().contains(giftListItem.getGamename())){
+            holder.tvGiftName.setText(giftListItem.getGiftname());
+        }else {
+            holder.tvGiftName.setText(giftListItem.getGamename() + "：" + giftListItem.getGiftname());
+        }
         holder.tvGiftContent.setText("礼包内容:" + giftListItem.getContent());
         int total = giftListItem.getTotal();
         int remain = giftListItem.getRemain();

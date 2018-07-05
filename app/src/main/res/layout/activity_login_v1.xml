@@ -152,7 +152,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <View
             android:layout_width="match_parent"
@@ -202,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/huo_qq"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/iv_weixin"
@@ -210,15 +210,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@mipmap/huo_weixin"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ImageView
                 android:id="@+id/iv_weibo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@mipmap/huo_weibo"
-                android:visibility="gone"/>
+                android:src="@mipmap/huo_zhifu"
+                android:visibility="visible"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

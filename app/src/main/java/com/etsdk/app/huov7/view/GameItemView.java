@@ -1,16 +1,22 @@
 package com.etsdk.app.huov7.view;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
+import com.etsdk.app.huov7.base.AileApplication;
 import com.etsdk.app.huov7.down.BaseDownView;
 import com.etsdk.app.huov7.down.DownloadHelper;
 import com.etsdk.app.huov7.down.TasksManager;
@@ -23,10 +29,10 @@ import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.GameDetailV2Activity;
 import com.etsdk.app.huov7.ui.SettingActivity;
 import com.etsdk.app.huov7.ui.WebViewActivity;
-import com.etsdk.app.huov7.ui.WebViewH5Activity;
 import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
 import com.etsdk.app.huov7.ui.dialog.Open4gDownHintDialog;
 import com.etsdk.app.huov7.util.ImgUtil;
+import com.etsdk.app.huov7.util.StringUtils;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
 import com.game.sdk.log.L;
@@ -39,15 +45,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.category;
+
 /**
  * Created by Administrator on 2018\3\29 0029.
  */
 
 public class GameItemView extends BaseDownView {
-    @BindView(R.id.item_game)
-    LinearLayout item_game;
     @BindView(R.id.iv_game_img)
     RoundedImageView iv_game_img;
+    @BindView(R.id.discount_tv)
+    TextView discount_tv;
     @BindView(R.id.tv_game_title)
     TextView tv_game_title;
     private Context mContext;
@@ -69,15 +77,36 @@ public class GameItemView extends BaseDownView {
         ButterKnife.bind(this);
     }
 
-    public void setData(GameBean gameBean, int category) {
+    public void setData(GameBean gameBean) {
         this.gameBean = gameBean;
         ImgUtil.setImg(getContext(), gameBean.getIcon(), R.mipmap.icon_load, iv_game_img);
         tv_game_title.setText(gameBean.getGamename());
-        if (category == 2){
+        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
             isH5 = true;
             tvDownStatus.setText("开启");
-        }else {
+        } else {
             tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
+        }
+        if (gameBean.getCategory().equals("4")) {
+            discount_tv.setVisibility(VISIBLE);
+            String name;
+            if (StringUtils.isEmpty(gameBean.getMem_rate()) || gameBean.getMem_rate().equals("0")) {
+                name = "10";
+            } else {
+                double dis = Double.valueOf(gameBean.getMem_rate()) * 10;
+                if (dis >= 10) {
+                    name = "10";
+                } else {
+                    name = dis + "";
+                }
+            }
+            String uname = "折";
+            String str = name + uname;
+            final SpannableStringBuilder sp = new SpannableStringBuilder(str);
+            sp.setSpan(new AbsoluteSizeSpan(10, true), name.length(), str.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE); //字体大小
+            discount_tv.setText(sp);
+        } else {
+            discount_tv.setVisibility(GONE);
         }
         pbDown.setProgress(100);
         TasksManager.getImpl().addDownloadListenerById(gameBean.getGameid(), this);
@@ -90,13 +119,13 @@ public class GameItemView extends BaseDownView {
                 if (gameBean == null) {
                     return;
                 }
-                GameDetailV2Activity.start(getContext(), gameBean.getGameid(), isH5);
+                GameDetailV2Activity.start(getContext(), gameBean.getGameid());
                 break;
             case R.id.tv_down_status:
                 if (gameBean == null) {
                     return;
                 }
-                GameDetailV2Activity.start(getContext(), gameBean.getGameid(), isH5);
+                GameDetailV2Activity.start(getContext(), gameBean.getGameid());
                 break;
         }
     }
@@ -104,7 +133,7 @@ public class GameItemView extends BaseDownView {
     @Override
     public void pending(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" pending");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -115,7 +144,7 @@ public class GameItemView extends BaseDownView {
     @Override
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" progress");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -125,7 +154,7 @@ public class GameItemView extends BaseDownView {
     @Override
     public void completed(TasksManagerModel tasksManagerModel) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" completed");
-        if (isH5){
+        if (isH5) {
             return;
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
@@ -136,7 +165,7 @@ public class GameItemView extends BaseDownView {
     @Override
     public void paused(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" paused");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -146,7 +175,7 @@ public class GameItemView extends BaseDownView {
     @Override
     public void error(TasksManagerModel tasksManagerModel, Throwable e) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" error");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -197,12 +226,12 @@ public class GameItemView extends BaseDownView {
                         if (data.getList().size() == 1) {//只有一个直接下载
                             GameDownResult.GameDown gameDown = data.getList().get(0);
                             if ("1".equals(gameDown.getType())) {//可以直接下载
-                                if(!TextUtils.isEmpty(gameDown.getUrl())) {
+                                if (!TextUtils.isEmpty(gameDown.getUrl())) {
                                     tasksManagerModel.setUrl(gameDown.getUrl());
-                                    L.i("333" , "" + gameDown.getUrl());
+                                    L.i("333", "" + gameDown.getUrl());
                                     tasksManagerModel.setDowncnt(data.getDowncnt() + "");
                                     DownloadHelper.start(tasksManagerModel);
-                                }else{
+                                } else {
                                     T.s(getContext(), "暂无下载地址");
                                 }
                             } else {//跳转到网页下载

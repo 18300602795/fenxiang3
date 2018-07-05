@@ -16,7 +16,7 @@ import com.liang530.security.MD5;
 public class AppApi {
     //广告图高宽比例
     public static float AD_IMAGE_HW_RATA=300/720f;
-    public static float HUODONG=180/285f;
+    public static float HUODONG=480/800f;
     public static final String bannerUrl1="http://img.zcool.cn/community/018f38557b825f00000059ff0f774c.jpg";
     public static final String testUrl="http://h5i.99play.cc/app_api/index";
     public static final String bannerUrl2="http://pic.qiantucdn.com/58pic/17/56/27/12S58PIC89m_1024.jpg";
@@ -68,6 +68,7 @@ public class AppApi {
     //广告图
     public static final String slideListApi="slide/list";
     public static final String gameListApi ="game/list";
+
     public static final String gameDetail="game/detail";
     public static final String aboutus="system/aboutus";
 
@@ -85,7 +86,17 @@ public class AppApi {
     public static final String userHeadImgApi="user/portrait/update";
     public static final String newsList="news/list";//新闻列表
     public static final String newsDetail="news/webdetail/";//新闻详情，后面要加上id
-
+    //评论
+    public static final String addArticleApi="bbs/add";
+    public static final String postListApi="bbs/list";
+    public static final String addPraiseApi="bbs/add_praise";
+    public static final String addCommentsApi="bbs/add_comments";
+    public static final String addReplyApi="bbs/add_reply";
+    public static final String detailsListApi="bbs/details_list";
+    public static final String delArticleApi="bbs/del_article";
+    public static final String delCommentsApi="bbs/del_comments";
+    public static final String delReplyApi="bbs/del_reply";
+    public static final String myListApi="bbs/mylist";
     //需要加密接口
     public static final String appinit="system/appinit";
     public static final String loginApi="user/login";
@@ -106,6 +117,7 @@ public class AppApi {
     public static final String emailCodeSend="user/email/send";
     public static final String emailUnbind="user/email/removebind";
     public static final String loginThird="user/loginoauth";//第三登录
+    public static final String balance="user/balance/balance_list";
 
     public static final String addressUpdateApi="user/address/update";
     public static final String userGmlistApi="user/game/gmlist";

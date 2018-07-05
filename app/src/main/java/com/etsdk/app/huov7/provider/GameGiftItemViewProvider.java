@@ -35,7 +35,7 @@ public class GameGiftItemViewProvider
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull GameGiftItem gameBean) {
         holder.listGameItem.showLine(!isViewTypeStart(gameBean));
-        holder.listGameItem.setGameBean(gameBean, 0);
+        holder.listGameItem.setGameBean(gameBean);
         holder.listGameItem.setIsHotRank(false,holder.getAdapterPosition());
 
         String startTime=null;

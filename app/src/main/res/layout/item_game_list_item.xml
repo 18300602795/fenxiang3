@@ -95,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="返利"
-                    android:background="@color/light_red"
+                    android:background="@color/red"
                     android:textColor="@color/white"
                     android:lines="1"
                     android:layout_marginLeft="4dp"

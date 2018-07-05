@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.etsdk.app.huov7.R;
+import com.etsdk.app.huov7.base.AileApplication;
 import com.etsdk.app.huov7.down.BaseDownView;
 import com.etsdk.app.huov7.down.DownloadHelper;
 import com.etsdk.app.huov7.down.TasksManager;
@@ -34,6 +38,7 @@ import com.etsdk.app.huov7.ui.WebViewActivity;
 import com.etsdk.app.huov7.ui.WebViewH5Activity;
 import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
 import com.etsdk.app.huov7.ui.dialog.Open4gDownHintDialog;
+import com.etsdk.app.huov7.util.StringUtils;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
 import com.game.sdk.log.L;
@@ -46,6 +51,10 @@ import com.liang530.views.imageview.roundedimageview.RoundedImageView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static android.R.attr.category;
+import static android.R.attr.name;
+import static com.etsdk.app.huov7.R.id.discount_tv;
 
 /**
  * Created by liu hong liang on 2016/12/6.
@@ -124,7 +133,7 @@ public class NewListGameItem extends BaseDownView {
         ButterKnife.bind(this);
     }
 
-    public void setGameBean(GameBean gameBean, int category) {
+    public void setGameBean(GameBean gameBean) {
         if (gameBean instanceof GameGiftItem && !"0".equals(gameBean.getGiftcnt())) {
             tvSize.setTextColor(getResources().getColor(R.color.text_red));
             tvSize.setText("礼包");
@@ -133,7 +142,7 @@ public class NewListGameItem extends BaseDownView {
             tvSize.setText(gameBean.getSize());
         }
         this.gameBean = gameBean;
-        if (category == 2) {
+        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
             isH5 = true;
             tvDownStatus.setText("开启");
         } else {
@@ -148,24 +157,35 @@ public class NewListGameItem extends BaseDownView {
         gameTagView.setGameType(gameBean.getType());
 
         //返利、打折
-        if (gameBean.getDiscounttype() != 0) {
+        if (gameBean.getCategory().equals("4")) {
             tvRate.setVisibility(VISIBLE);
-            if (gameBean.getDiscounttype() == 1) {
-                tvRate.setText((gameBean.getDiscount() * 10) + "折");
-                if (gameBean.getFirst_discount() > 0 && gameBean.getFirst_discount() < 1) {
-                    tvRate.setText(Math.round(gameBean.getFirst_discount() * 1000) / 100f + "折");
-                } else if (gameBean.getDiscount() > 0 && gameBean.getDiscount() < 1) {
-                    tvRate.setText(Math.round(gameBean.getDiscount() * 1000) / 100f + "折");
-                } else {
-                    tvRate.setVisibility(GONE);
-                }
+            if (StringUtils.isEmpty(gameBean.getMem_rate()) || gameBean.getMem_rate().equals("0")) {
+                tvRate.setText("10折");
             } else {
-                if (gameBean.getDiscount() > 0 && gameBean.getDiscount() < 1) {
-                    tvRate.setText("赠送" + Math.round(gameBean.getDiscount() * 1000) / 10f + "%");
+                double dis = Double.valueOf(gameBean.getMem_rate()) * 10;
+                if (dis >= 10) {
+                    tvRate.setText("10折");
                 } else {
-                    tvRate.setVisibility(GONE);
+                    tvRate.setText(dis + "折");
                 }
             }
+//            tvRate.setVisibility(VISIBLE);
+//            if (gameBean.getDiscounttype() == 1) {
+//                tvRate.setText((gameBean.getDiscount() * 10) + "折");
+//                if (gameBean.getFirst_discount() > 0 && gameBean.getFirst_discount() < 1) {
+//                    tvRate.setText(Math.round(gameBean.getFirst_discount() * 1000) / 100f + "折");
+//                } else if (gameBean.getDiscount() > 0 && gameBean.getDiscount() < 1) {
+//                    tvRate.setText(Math.round(gameBean.getDiscount() * 1000) / 100f + "折");
+//                } else {
+//                    tvRate.setVisibility(GONE);
+//                }
+//            } else {
+//                if (gameBean.getDiscount() > 0 && gameBean.getDiscount() < 1) {
+//                    tvRate.setText("赠送" + Math.round(gameBean.getDiscount() * 1000) / 10f + "%");
+//                } else {
+//                    tvRate.setVisibility(GONE);
+//                }
+//            }
         } else {
             tvRate.setVisibility(GONE);
         }
@@ -261,7 +281,7 @@ public class NewListGameItem extends BaseDownView {
     @Override
     public void pending(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" pending");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -272,7 +292,7 @@ public class NewListGameItem extends BaseDownView {
     @Override
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" progress");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -282,7 +302,7 @@ public class NewListGameItem extends BaseDownView {
     @Override
     public void completed(TasksManagerModel tasksManagerModel) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" completed");
-        if (isH5){
+        if (isH5) {
             return;
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
@@ -293,7 +313,7 @@ public class NewListGameItem extends BaseDownView {
     @Override
     public void paused(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" paused");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -303,7 +323,7 @@ public class NewListGameItem extends BaseDownView {
     @Override
     public void error(TasksManagerModel tasksManagerModel, Throwable e) {
 //        L.e(TAG, tasksManagerModel.getGameName()+" error");
-        if (isH5){
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -433,8 +453,8 @@ public class NewListGameItem extends BaseDownView {
                 }
                 if (isH5) {
                     Intent intent = new Intent(context, WebViewH5Activity.class);
-                    intent.putExtra("url", "http://play.11h5.com/game/?gameid=365&code=c-2aa0a0202dd295c8f27390cbdf3baeb1&cp_stat_from=msg0613&cp_wx=plus");
-                    intent.putExtra("titleName", gameBean.getGamename());
+                    intent.putExtra("url", gameBean.getDownlink());
+//                    intent.putExtra("titleName", gameBean.getGamename());
                     context.startActivity(intent);
                 } else {
                     DownloadHelper.onClick(gameBean.getGameid(), this);
@@ -444,7 +464,7 @@ public class NewListGameItem extends BaseDownView {
                 if (gameBean == null) {
                     return;
                 }
-                GameDetailV2Activity.start(getContext(), gameBean.getGameid(), isH5);
+                GameDetailV2Activity.start(getContext(), gameBean.getGameid());
 //                NewGameDetailActivity.start(getContext(),gameBean.getGameid());
                 break;
             case R.id.btn_gift:

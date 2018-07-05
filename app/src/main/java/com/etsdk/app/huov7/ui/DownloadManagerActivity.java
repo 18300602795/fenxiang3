@@ -106,7 +106,7 @@ public class DownloadManagerActivity extends ImmerseActivity {
         curHotRcyGame.setLayoutManager(new LinearLayoutManager(this));
         curHotRcyGame.setNestedScrollingEnabled(false);
         MultiTypeAdapter hotGameAdapter=new MultiTypeAdapter(hotGameItems);
-        hotGameAdapter.register(GameBean.class,new GameItemViewProvider(0));
+        hotGameAdapter.register(GameBean.class,new GameItemViewProvider());
         curHotRcyGame.setAdapter(hotGameAdapter);
         updateDownListData();
         getHotGameListData();

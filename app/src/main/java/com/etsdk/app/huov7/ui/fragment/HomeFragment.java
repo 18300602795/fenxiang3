@@ -7,6 +7,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,9 +21,11 @@ import com.etsdk.app.huov7.model.AdImage;
 import com.etsdk.app.huov7.model.HomePage1Data;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.MainActivity;
+import com.etsdk.app.huov7.ui.MainActivity2;
 import com.etsdk.app.huov7.ui.SearchActivity;
 import com.etsdk.app.huov7.ui.ServiceActivity;
 import com.etsdk.app.huov7.util.StringUtils;
+import com.game.sdk.SdkConstant;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.liang530.rxvolley.HttpJsonCallBackDialog;
 import com.liang530.rxvolley.NetRequest;
@@ -32,6 +35,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.etsdk.app.huov7.R.id.kefu_img;
 
 /**
  * Created by Administrator on 2018\2\28 0028.
@@ -56,6 +61,8 @@ public class HomeFragment extends AutoLazyFragment {
     TextView text4;
     @BindView(R.id.text5)
     TextView text5;
+    @BindView(R.id.ll_gift)
+    LinearLayout ll_gift;
 
     @BindView(R.id.bg1)
     View bg1;
@@ -84,16 +91,20 @@ public class HomeFragment extends AutoLazyFragment {
 
     private void addList() {
         bgs = new ArrayList<>();
+        txts = new ArrayList<>();
         bgs.add(bg1);
         bgs.add(bg2);
         bgs.add(bg3);
-        bgs.add(bg4);
-        bgs.add(bg5);
-        txts = new ArrayList<>();
+
         txts.add(text1);
         txts.add(text2);
         txts.add(text3);
-        txts.add(text4);
+        if (StringUtils.isEmpty(SdkConstant.HS_AGENT)) {
+            bgs.add(bg4);
+            txts.add(text4);
+        }
+        bgs.add(bg5);
+
         txts.add(text5);
     }
 
@@ -122,8 +133,11 @@ public class HomeFragment extends AutoLazyFragment {
         fragments.add(new MainTjFragment(5));
         fragments.add(new MainTjFragment(4));
         fragments.add(new MainTjFragment(3));
-        fragments.add(new MainTjFragment(2));
-        fragments.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 1, null));
+        if (StringUtils.isEmpty(SdkConstant.HS_AGENT)) {
+            fragments.add(new MainTjFragment(1));
+            ll_gift.setVisibility(View.VISIBLE);
+        }
+        fragments.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 2, null));
         mAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
@@ -208,11 +222,11 @@ public class HomeFragment extends AutoLazyFragment {
         });
     }
 
-    @OnClick({R.id.rl_goto_mine, R.id.main_gameSearch, R.id.iv_tj_downManager, R.id.ll_hotGame, R.id.ll_newGame, R.id.ll_startGame, R.id.ll_gift, R.id.ll_h5, R.id.kefu_img})
+    @OnClick({R.id.rl_goto_mine, R.id.main_gameSearch, R.id.iv_tj_downManager, R.id.ll_hotGame, R.id.ll_newGame, R.id.ll_startGame, R.id.ll_gift, R.id.ll_h5, kefu_img})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_goto_mine:
-                ((MainActivity) getActivity()).switchFragment(4);
+                ((MainActivity2) getActivity()).show(4);
                 break;
             case R.id.main_gameSearch:
                 SearchActivity.start(mContext);
@@ -233,9 +247,13 @@ public class HomeFragment extends AutoLazyFragment {
                 select(3);
                 break;
             case R.id.ll_h5:
-                select(4);
+                if (StringUtils.isEmpty(SdkConstant.HS_AGENT)){
+                    select(4);
+                }else {
+                    select(3);
+                }
                 break;
-            case R.id.kefu_img:
+            case kefu_img:
                 ServiceActivity.start(mContext);
                 break;
         }

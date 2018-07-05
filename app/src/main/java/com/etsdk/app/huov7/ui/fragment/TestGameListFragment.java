@@ -52,7 +52,7 @@ public class TestGameListFragment extends AutoLazyFragment implements AdvRefresh
     private void setupUI() {
         Bundle arguments = getArguments();
         MultiTypeAdapter multiTypeAdapter =new MultiTypeAdapter(items);
-        multiTypeAdapter.register(GameBean.class,new GameItemViewProvider(0));
+        multiTypeAdapter.register(GameBean.class,new GameItemViewProvider());
         if(arguments.getBoolean("showRank")){
             for(int i=0;i<20;i++){
                 items.add(new GameBean());

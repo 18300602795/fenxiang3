@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.adapter.GamelikeItemAdapter;
+import com.etsdk.app.huov7.base.AileApplication;
 import com.etsdk.app.huov7.model.GamelikeBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static android.R.attr.category;
 
 /**
  * 猜你喜欢
@@ -22,8 +25,6 @@ import me.drakeet.multitype.ItemViewProvider;
 
 public class GamelikeListProvider
         extends ItemViewProvider<GamelikeBean, GamelikeListProvider.ViewHolder> {
-
-
 
     @NonNull
     @Override
@@ -40,7 +41,7 @@ public class GamelikeListProvider
         @BindView(R.id.recyclerView)
         RecyclerView recyclerView;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             GridLayoutManager layoutManager = new GridLayoutManager(itemView.getContext(), 5);
@@ -49,7 +50,7 @@ public class GamelikeListProvider
             recyclerView.setLayoutManager(layoutManager);
         }
 
-        void setData(GamelikeBean gamelikeBean){
+        void setData(GamelikeBean gamelikeBean) {
             recyclerView.setAdapter(new GamelikeItemAdapter(gamelikeBean));
         }
     }

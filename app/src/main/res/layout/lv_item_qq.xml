@@ -1,82 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="40.0dip"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:background="@color/bg_comm"
-    >
+    android:paddingBottom="5dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="5dp">
 
-    <LinearLayout
-        android:id="@+id/ll_serviceqqLeft"
-        android:layout_width="0.0dip"
-        android:layout_height="50.0dip"
-        android:layout_weight="1.0"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_marginRight="8dp"
-        >
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@mipmap/pic_qq_logo" />
 
-        <ImageView
-            android:layout_width="20.0dip"
-            android:layout_height="20.0dip"
-            android:src="@mipmap/pic_qq_logo" />
+    <TextView
+        android:id="@+id/tv_qq_group_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="客服1号"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/cs_qq_name1"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="沐沐"
-            android:textColor="@color/text_main_black"
-            android:textSize="12sp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"/>
+    <TextView
+        android:id="@+id/qqGroupTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1"
+        android:text="321313211"
+        android:textSize="12sp" />
 
-        <ImageView
-            android:id="@+id/btn_contact_me1"
-            android:layout_width="30.0dip"
-            android:layout_height="30.0dip"
-            android:padding="5dp"
-            android:src="@mipmap/contact_qq" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_serviceqqRight"
-        android:layout_width="0.0dip"
-        android:layout_height="50.0dip"
-        android:layout_weight="1.0"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="8dp"
-        android:layout_marginLeft="8dp"
-        >
-
-        <ImageView
-            android:layout_width="20.0dip"
-            android:layout_height="20.0dip"
-            android:src="@mipmap/pic_qq_logo" />
-
-        <TextView
-            android:id="@+id/cs_qq_name2"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="沐沐"
-            android:textColor="@color/text_main_black"
-            android:textSize="12sp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:singleLine="true"/>
-
-        <ImageView
-            android:id="@+id/btn_contact_me2"
-            android:layout_width="30.0dip"
-            android:layout_height="30.0dip"
-            android:padding="5dp"
-            android:src="@mipmap/contact_qq" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/qqGroupStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_circle_rect_blue"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp"
+        android:text="戳我"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
 </LinearLayout>

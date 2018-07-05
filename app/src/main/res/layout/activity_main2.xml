@@ -101,7 +101,7 @@
                     android:id="@+id/chat_iv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@mipmap/tab_icon_find_us" />
+                    android:src="@mipmap/ic_main_center_button" />
 
                 <TextView
                     android:id="@+id/chat_tv"

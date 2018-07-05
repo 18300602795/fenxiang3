@@ -6,11 +6,13 @@
     android:background="@color/bg_blue"
     android:gravity="center"
     android:orientation="horizontal">
+
     <RelativeLayout
         android:id="@+id/rl_goto_msg"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp">
+
         <ImageView
             android:id="@+id/iv_gotoMsg"
             android:layout_width="30dp"
@@ -19,6 +21,7 @@
             android:padding="5dp"
             android:src="@mipmap/syxiaoxi_nomal" />
     </RelativeLayout>
+
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="30dp"

@@ -29,8 +29,8 @@
             android:id="@+id/shop_rl"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
             android:layout_weight="1"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -53,7 +53,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="商城"
+                    android:text="返利"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -62,7 +62,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:text="积分兑换有好礼"
+                    android:text="超级返利百分百"
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
@@ -73,11 +73,66 @@
             android:background="@color/aile_line_gray" />
 
         <RelativeLayout
+            android:id="@+id/deal_rl"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/deal_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_discovery_deal" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/deal_iv"
+                android:layout_alignTop="@+id/deal_iv"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/deal_iv"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="交易"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="无需账号直交易"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/aile_line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
             android:id="@+id/earn_rl"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
             android:layout_weight="1"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -114,60 +169,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/aile_line_gray" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/deal_rl"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/deal_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_deal" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/deal_iv"
-                android:layout_alignTop="@+id/deal_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/deal_iv"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="账号交易"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="无需账号直交易"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
 
         <View
             android:layout_width="1dp"
@@ -178,8 +179,8 @@
             android:id="@+id/apply_rl"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
             android:layout_weight="1"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -202,7 +203,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="转游申请"
+                    android:text="论坛"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -230,11 +231,58 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:id="@+id/news_rl"
+            android:id="@+id/evaluation_rl"
             android:layout_width="0dp"
-            android:background="@drawable/btn_bg"
             android:layout_height="80dp"
             android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/evaluation_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_discovery_awake" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/evaluation_iv"
+                android:layout_alignTop="@+id/evaluation_iv"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/evaluation_iv"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="礼包"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="纷享独家大礼包"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/aile_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/news_rl"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -270,6 +318,61 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/aile_line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/event_rl"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/event_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_discovery_life" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBottom="@+id/event_iv"
+                android:layout_alignTop="@+id/event_iv"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/event_iv"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="活动"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:text="纷享活动享好礼"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <View
             android:layout_width="1dp"
@@ -280,8 +383,8 @@
             android:id="@+id/strategy_rl"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
             android:layout_weight="1"
+            android:background="@drawable/btn_bg"
             android:gravity="center"
             android:orientation="horizontal"
             android:padding="10dp">
@@ -317,107 +420,7 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
-    </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/aile_line_gray" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:id="@+id/event_rl"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/event_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_life" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/event_iv"
-                android:layout_alignTop="@+id/event_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/event_iv"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="活动"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="纷享活动享好礼"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/aile_line_gray" />
-
-        <RelativeLayout
-            android:id="@+id/evaluation_rl"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:background="@drawable/btn_bg"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
-
-            <ImageView
-                android:id="@+id/evaluation_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_awake" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignBottom="@+id/evaluation_iv"
-                android:layout_alignTop="@+id/evaluation_iv"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/evaluation_iv"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="测评"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="bottom"
-                    android:text="好玩游戏一眼收"
-                    android:textSize="12sp" />
-            </LinearLayout>
-        </RelativeLayout>
     </LinearLayout>
 
 

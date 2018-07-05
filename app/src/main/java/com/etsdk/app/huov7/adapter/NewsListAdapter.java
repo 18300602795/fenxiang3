@@ -91,9 +91,6 @@ public class NewsListAdapter extends RecyclerView.Adapter implements IDataAdapte
             }
             ((ViewHolder)holder).tvNewsTime.setText(news.getPudate());
             int placehoder = R.mipmap.icon_load;
-            if(BuildConfig.projectCode == 74){
-                placehoder = R.mipmap.news_default;
-            }
 //            GlideDisplay.display(((ViewHolder)holder).ivNewsImage, news.getImg(), placehoder);
             Glide.with(context).load(news.getImg()).placeholder(placehoder).into(((ViewHolder)holder).ivNewsImage);
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -121,9 +118,6 @@ public class NewsListAdapter extends RecyclerView.Adapter implements IDataAdapte
             }
             ((AcrossViewHolder)holder).tvNewsTime.setText(news.getPudate());
             int placehoder = R.mipmap.gg;
-            if(BuildConfig.projectCode == 74){
-                placehoder = R.mipmap.news_default;
-            }
 //            GlideDisplay.display(((AcrossViewHolder)holder).ivNewsImage, news.getImg(), placehoder);
             Glide.with(((AcrossViewHolder)holder).context).load(news.getImg()).placeholder(placehoder).into(((AcrossViewHolder)holder).ivNewsImage);
             holder.itemView.setOnClickListener(new View.OnClickListener() {

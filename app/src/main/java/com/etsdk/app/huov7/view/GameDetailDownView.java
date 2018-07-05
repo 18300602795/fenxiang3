@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
+import com.etsdk.app.huov7.base.AileApplication;
 import com.etsdk.app.huov7.down.ApklDownloadListener;
 import com.etsdk.app.huov7.down.DownloadHelper;
 import com.etsdk.app.huov7.down.TasksManager;
@@ -51,6 +52,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
+
+import static android.R.attr.category;
 
 /**
  * Created by liu hong liang on 2017/1/19.
@@ -99,9 +102,13 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         ButterKnife.bind(this);
     }
 
-    public void setGameBean(GameBean gameBean, boolean isH5) {
+    public void setGameBean(GameBean gameBean) {
         this.gameBean = gameBean;
-        this.isH5 = isH5;
+        if (gameBean.getCategory().equals(AileApplication.selectH5)){
+            isH5 = true;
+        }else {
+            isH5 = false;
+        }
         if (isH5){
             tvDownStatus.setText("开启");
         }else {
@@ -277,8 +284,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
             case R.id.pb_down:
                 if (isH5) {
                     Intent intent = new Intent(getContext(), WebViewH5Activity.class);
-                    intent.putExtra("url", "http://play.11h5.com/game/?gameid=123&code=c-c28b0dc48d19dafcde90101dfc5432b9&statid=1602&backGC=1");
-                    intent.putExtra("titleName", gameBean.getGamename());
+                    intent.putExtra("url", gameBean.getDownlink());
+//                    intent.putExtra("titleName", gameBean.getGamename());
                     getContext().startActivity(intent);
                 } else {
                     DownloadHelper.onClick(gameBean.getGameid(), this);

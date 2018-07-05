@@ -14,17 +14,13 @@ import com.etsdk.app.huov7.model.GamelikeBean;
 import com.etsdk.app.huov7.model.HomePage1Data;
 import com.etsdk.app.huov7.model.MessageEvent;
 import com.etsdk.app.huov7.model.SplitLine;
-import com.etsdk.app.huov7.model.TjAdText;
 import com.etsdk.app.huov7.model.TjColumnHead;
-import com.etsdk.app.huov7.model.TjTestNewVp;
 import com.etsdk.app.huov7.provider.AdImageViewProvider;
 import com.etsdk.app.huov7.provider.GameItemViewProvider;
 import com.etsdk.app.huov7.provider.GamelikeListProvider;
 import com.etsdk.app.huov7.provider.NewGameProvider;
-import com.etsdk.app.huov7.provider.TjAdTextViewProvider;
 import com.etsdk.app.huov7.provider.TjAdTopViewProvider;
 import com.etsdk.app.huov7.provider.TjColumnHeadViewProvider;
-import com.etsdk.app.huov7.provider.TjTestNewVpViewProvider;
 import com.etsdk.app.huov7.util.RecyclerViewNoAnimator;
 import com.etsdk.hlrefresh.AdvRefreshListener;
 import com.etsdk.hlrefresh.BaseRefreshLayout;
@@ -49,7 +45,7 @@ import me.drakeet.multitype.MultiTypeAdapter;
  */
 
 public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListener {
-//    public static final float BANNER_WH_RATA = 1/AppApi.AD_IMAGE_HW_RATA;
+    //    public static final float BANNER_WH_RATA = 1/AppApi.AD_IMAGE_HW_RATA;
     @BindView(R.id.recy_main_tj)
     RecyclerView recyMainTj;
     @BindView(R.id.srf_main_tj)
@@ -82,9 +78,9 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
 //        multiTypeAdapter.register(TjOptionColumn.class, new TjOptionColumnViewProvider());
         multiTypeAdapter.register(TjColumnHead.class, new TjColumnHeadViewProvider(baseRefreshLayout, category));
         multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
-        multiTypeAdapter.register(HomePage1Data.DataBean.class, new NewGameProvider(category));
-        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(category));
-        multiTypeAdapter.register(TjTestNewVp.class, new TjTestNewVpViewProvider());
+        multiTypeAdapter.register(HomePage1Data.DataBean.class, new NewGameProvider());
+        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider());
+//        multiTypeAdapter.register(TjTestNewVp.class, new TjTestNewVpViewProvider());
         multiTypeAdapter.register(GamelikeBean.class, new GamelikeListProvider());
         recyMainTj.setLayoutManager(new LinearLayoutManager(mContext));
         recyMainTj.setItemAnimator(new RecyclerViewNoAnimator());
@@ -125,7 +121,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
     @Override
     public void getPageData(int requestPageNo) {
         HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.hompageApi2);
-        httpParams.put("category",category);
+        httpParams.put("category", category);
         //成功，失败，null数据
         NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.hompageApi2), new HttpJsonCallBackDialog<HomePage1Data>() {
             @Override
@@ -274,7 +270,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
                 i++;
-                if(i>5){
+                if (i > 5) {
                     break;
                 }
                 allItems.add(gameBean);
@@ -300,7 +296,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
                 i++;
-                if(i>20){
+                if (i > 20) {
                     break;
                 }
                 allItems.add(gameBean);
@@ -328,13 +324,13 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
             tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_LIKE);
             allItems.add(tjColumnHead);
             int size = homePage1Data.getLikegame().getList().size();//最多取4个
-            int maxSize=size ;
-            if(size < 5){
+            int maxSize = size;
+            if (size < 5) {
                 maxSize = size;
-            }else{
+            } else {
                 maxSize = 5;
             }
-            List<GameBean> gameBeanList = homePage1Data.getLikegame().getList().subList(0,maxSize);
+            List<GameBean> gameBeanList = homePage1Data.getLikegame().getList().subList(0, maxSize);
             GamelikeBean gamelikeBean = new GamelikeBean();
             gamelikeBean.setGameBeanList(gameBeanList);
             allItems.add(gamelikeBean);

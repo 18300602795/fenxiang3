@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.ImmerseActivity;
+import com.etsdk.app.huov7.getcash.ui.AccountListActivity;
+import com.etsdk.app.huov7.getcash.ui.CommRecordActivity;
+import com.etsdk.app.huov7.getcash.ui.GetCashActivity;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.dialog.CouponExchangeDialogUtil;
@@ -63,7 +66,8 @@ public class MyWalletActivity extends ImmerseActivity {
                 finish();
                 break;
             case R.id.item_ll1:
-                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
+                YXBListActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.item_ll2:
                 UserSpendRecordActivity.start(mContext);
@@ -72,13 +76,16 @@ public class MyWalletActivity extends ImmerseActivity {
                 UserChargeRecordActivity.start(mContext);
                 break;
             case R.id.item_ll4:
-                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
+                AccountListActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.item_ll5:
-                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
+                GetCashActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.item_ll6:
-                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
+                CommRecordActivity.start(mContext, CommRecordActivity.TYPE_GET_CASH_RECORD_LIST);
+//                new CouponExchangeDialogUtil().showExchangeDialog(mContext, "友情提示", "该功能正在开发中，敬请期待");
                 break;
         }
     }

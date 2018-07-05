@@ -43,6 +43,7 @@ public class GameBean {
     private String give_first;//	1否 2是 2017-09-30 龙川奇点新增
     private String welfare;
     private String app_video;
+    private String mem_rate;
 
 
     //    2016.10.26 欧忠富沟通的那个用户需要显示的充值按钮是否显示折扣返利
@@ -75,6 +76,14 @@ public class GameBean {
     }
 
     public GameBean() {
+    }
+
+    public String getMem_rate() {
+        return mem_rate;
+    }
+
+    public void setMem_rate(String mem_rate) {
+        this.mem_rate = mem_rate;
     }
 
     public String getWelfare() {

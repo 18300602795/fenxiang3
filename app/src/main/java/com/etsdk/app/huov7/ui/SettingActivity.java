@@ -3,6 +3,7 @@ package com.etsdk.app.huov7.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,10 @@ import com.etsdk.app.huov7.down.ApkDownloadStatus;
 import com.etsdk.app.huov7.down.TasksManager;
 import com.etsdk.app.huov7.down.TasksManagerModel;
 import com.etsdk.app.huov7.http.AppApi;
+import com.etsdk.app.huov7.model.StartupResultBean;
+import com.etsdk.app.huov7.update.NoVersionDialog;
+import com.etsdk.app.huov7.update.UpdateVersionDialog;
+import com.etsdk.app.huov7.update.UpdateVersionService;
 import com.etsdk.app.huov7.util.AileConstants;
 import com.liang530.log.SP;
 import com.liang530.log.T;
@@ -22,6 +27,8 @@ import com.liang530.utils.BaseAppUtil;
 import com.liang530.utils.BaseFileUtil;
 import com.liang530.views.btn.SwitchButton;
 import com.liulishuo.filedownloader.util.FileDownloadUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.List;
@@ -62,6 +69,7 @@ public class SettingActivity extends ImmerseActivity {
     SwitchButton sbtnInstallDel;
     @BindView(R.id.sbtn_4gDown)
     SwitchButton sbtn4gDown;
+    NoVersionDialog noVersionDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +80,7 @@ public class SettingActivity extends ImmerseActivity {
     }
 
     private void setupUI() {
+        noVersionDialog = new NoVersionDialog();
         tvTitleName.setText("设置");
 //        tvCacheSize.setText(BaseAppUtil.getCacheSize(mContext));
         tvCacheSize.setText(getCacheSize());
@@ -153,8 +162,48 @@ public class SettingActivity extends ImmerseActivity {
                 WebViewActivity.start(mContext, "平台协议", AppApi.getUrl(AppApi.agreementPlatformUrl));
                 break;
             case R.id.ll_aboutUs:
-                AboutUsActivity.start(mContext);
+//                AboutUsActivity.start(mContext);
+                handleUpdate();
                 break;
+        }
+    }
+
+    /**
+     * 处理版本更新信息
+     */
+    private void handleUpdate() {
+        final boolean showCancel;
+        final StartupResultBean.UpdateInfo updateInfo = EventBus.getDefault().getStickyEvent(StartupResultBean.UpdateInfo.class);
+        if (updateInfo != null) {//有更新
+            if ("1".equals(updateInfo.getUp_status())) {//强制更新
+                showCancel = false;
+            } else if ("2".equals(updateInfo.getUp_status())) {//选择更新
+                showCancel = true;
+            } else {
+                return;
+            }
+            if (TextUtils.isEmpty(updateInfo.getUrl()) ||
+                    (!updateInfo.getUrl().startsWith("http") && !updateInfo.getUrl().startsWith("https"))) {
+                return;//url不可用
+            }
+            new UpdateVersionDialog().showDialog(mContext, showCancel, updateInfo.getContent(), new UpdateVersionDialog.ConfirmDialogListener() {
+                @Override
+                public void ok() {
+                    Intent intent = new Intent(mContext, UpdateVersionService.class);
+                    intent.putExtra("url", updateInfo.getUrl());
+                    mContext.startService(intent);
+                    T.s(mContext, "开始下载,请在下载完成后确认安装！");
+                    if (!showCancel) {//是强更则关闭界面
+                        finish();
+                    }
+                }
+
+                @Override
+                public void cancel() {
+                }
+            });
+        }else {
+            noVersionDialog.showDialog(mContext);
         }
     }
 

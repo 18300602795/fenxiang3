@@ -157,7 +157,9 @@ public class GameListFragment extends AutoLazyFragment implements AdvRefreshList
                     resultItems.addAll(data.getData().getList());
                     baseRefreshLayout.resultLoadData(items,resultItems,maxPage);
                 }else{
-                    baseRefreshLayout.resultLoadData(items,new ArrayList(),requestPageNo-1);
+                    if (requestPageNo == 1){
+                        baseRefreshLayout.resultLoadData(items,new ArrayList(),requestPageNo-1);
+                    }
                 }
             }
             @Override

@@ -214,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="我的卡包"
+                android:text="提现账户"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -242,14 +242,14 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_user_item_15" />
+                    android:src="@mipmap/ic_user_item_12" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="我的地址"
+                android:text="提现"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -278,14 +278,14 @@
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@mipmap/ic_user_item_12" />
+                    android:src="@mipmap/ic_user_item_15" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="我的奖品"
+                android:text="提现记录"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

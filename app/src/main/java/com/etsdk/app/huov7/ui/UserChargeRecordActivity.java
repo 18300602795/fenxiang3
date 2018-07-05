@@ -51,7 +51,7 @@ public class UserChargeRecordActivity extends ImmerseActivity {
     }
 
     private void setupUI() {
-        if ("0".equals(BuildConfig.USE_PLATFORM_MONEY)) {//不使用平台，隐藏
+        if ("1".equals(BuildConfig.USE_PLATFORM_MONEY)) {//不使用平台，隐藏
             tvTitleName.setText("游戏币充值记录");
             vp.setCanScroll(false);
             vp.setCurrentItem(0);

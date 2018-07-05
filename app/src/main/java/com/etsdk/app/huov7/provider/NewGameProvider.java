@@ -16,16 +16,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.drakeet.multitype.ItemViewProvider;
 
+import static android.R.attr.category;
+
 /**
  * Created by liu hong liang on 2016/12/21.
  */
 public class NewGameProvider
         extends ItemViewProvider<HomePage1Data.DataBean, NewGameProvider.ViewHolder> {
-    int category;
-
-    public NewGameProvider(int category) {
-        this.category = category;
-    }
 
     @NonNull
     @Override
@@ -41,14 +38,14 @@ public class NewGameProvider
         if (dataBean.getNewgame().getList().size() <= 10) {
             for (int i = 0; i < dataBean.getNewgame().getList().size(); i++) {
                 GameItemView gameItemView = new GameItemView(holder.mContext);
-                gameItemView.setData(dataBean.getNewgame().getList().get(i), category);
+                gameItemView.setData(dataBean.getNewgame().getList().get(i));
                 holder.game_ll.addView(gameItemView);
             }
 //            game_ll.addView(new MoreItemView(mContext));
         } else {
             for (int i = 0; i < 10; i++) {
                 GameItemView gameItemView = new GameItemView(holder.mContext);
-                gameItemView.setData(dataBean.getNewgame().getList().get(i), category);
+                gameItemView.setData(dataBean.getNewgame().getList().get(i));
                 holder.game_ll.addView(gameItemView);
             }
 //            game_ll.addView(new MoreItemView(mContext));

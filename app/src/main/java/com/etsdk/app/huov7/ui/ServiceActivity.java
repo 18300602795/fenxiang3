@@ -30,18 +30,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ServiceActivity extends ImmerseActivity {
-    @BindView(R.id.iv_back)
-    ImageView btnBack;
-    @BindView(R.id.ll_tel)
-    LinearLayout llTel;
-    @BindView(R.id.lv_service_qq)
+    @BindView(R.id.tv_titleName)
+    TextView tvTitleName;
+    @BindView(R.id.qq_list)
     ListView lvServiceQq;
-    @BindView(R.id.lv_qq_group)
+    @BindView(R.id.group_list)
     ListView lvQqGroup;
-    @BindView(R.id.tv_tel)
+    @BindView(R.id.phone_tv)
     TextView tvTel;
-    @BindView(R.id.stv_service_time)
-    StrokeTextView stvServiceTime;
+    @BindView(R.id.time_tv)
+    TextView time_tv;
+    @BindView(R.id.email_tv)
+    TextView email_tv;
+    @BindView(R.id.qq_tv)
+    TextView qq_tv;
     private ServiceQqAdapter serviceQqAdapter;
     private ServiceQqGroupAdapter serviceQqGroupAdapter;
 
@@ -50,12 +52,13 @@ public class ServiceActivity extends ImmerseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
         ButterKnife.bind(this);
+        tvTitleName.setText("客服中心");
         setupUI();
     }
 
     @Override
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.bg_black_80), 0);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.bg_blue), 0);
     }
 
 
@@ -72,9 +75,10 @@ public class ServiceActivity extends ImmerseActivity {
             return;
         }
         tvTel.setText(helpInfo.getTel());
-        stvServiceTime.setText(helpInfo.getService_time().replace("| ", "\n").replace('|', '\n'));//以竖线分隔
+        time_tv.setText("工作日：" + helpInfo.getService_time().replace("| ", "\n").replace('|', '\n'));//以竖线分隔
         serviceQqAdapter.setQqList(helpInfo.getQq());
         serviceQqGroupAdapter.setServiceQqGroupList(helpInfo.getQqgroup(), helpInfo.getQqgroupkey());
+        email_tv.setText("邮箱：" + helpInfo.getEmail());
     }
 
     private void getAboutUsInfo() {
@@ -87,9 +91,10 @@ public class ServiceActivity extends ImmerseActivity {
                     updateServiceInfoData(data);
                 }
             }
+
             @Override
             public void onFailure(String code, String msg) {
-                L.e(TAG, code+" "+msg);
+                L.e(TAG, code + " " + msg);
             }
         };
         httpCallbackDecode.setShowTs(false);
@@ -109,14 +114,86 @@ public class ServiceActivity extends ImmerseActivity {
         return starter;
     }
 
-    @OnClick({R.id.iv_back, R.id.ll_tel})
+    @OnClick({R.id.iv_titleLeft, R.id.call_tv, R.id.item1,
+            R.id.item1_1, R.id.item1_2, R.id.item1_3, R.id.item1_4,
+            R.id.item1_5, R.id.item1_6, R.id.item1_7, R.id.item1_8,
+            R.id.item2, R.id.item2_1, R.id.item2_2,
+            R.id.item3, R.id.item3_1, R.id.item3_2, R.id.item3_3, R.id.item3_4,
+            R.id.item4, R.id.item4_1, R.id.item4_2, R.id.item4_3, R.id.item4_4,
+            R.id.email_tv, R.id.qq_tv})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_titleLeft:
                 finish();
                 break;
-            case R.id.ll_tel:
+            case R.id.call_tv:
                 BasePhone.callDial(this, tvTel.getText().toString());
+                break;
+            case R.id.item1:
+                ServiceListActivity.start(mContext, 0, 0);
+                break;
+            case R.id.item1_1:
+                ServiceListActivity.start(mContext, 0, 0);
+                break;
+            case R.id.item1_2:
+                ServiceListActivity.start(mContext, 0, 1);
+                break;
+            case R.id.item1_3:
+                ServiceListActivity.start(mContext, 0, 2);
+                break;
+            case R.id.item1_4:
+                ServiceListActivity.start(mContext, 0, 3);
+                break;
+            case R.id.item1_5:
+                ServiceListActivity.start(mContext, 0, 4);
+                break;
+            case R.id.item1_6:
+                ServiceListActivity.start(mContext, 0, 5);
+                break;
+            case R.id.item1_7:
+                ServiceListActivity.start(mContext, 0, 6);
+                break;
+            case R.id.item1_8:
+                ServiceListActivity.start(mContext, 0, 7);
+                break;
+            case R.id.item2:
+                ServiceListActivity.start(mContext, 1, 0);
+                break;
+            case R.id.item2_1:
+                ServiceListActivity.start(mContext, 1, 0);
+                break;
+            case R.id.item2_2:
+                ServiceListActivity.start(mContext, 1, 1);
+                break;
+            case R.id.item3:
+                ServiceListActivity.start(mContext, 2, 0);
+                break;
+            case R.id.item3_1:
+                ServiceListActivity.start(mContext, 2, 0);
+                break;
+            case R.id.item3_2:
+                ServiceListActivity.start(mContext, 2, 1);
+                break;
+            case R.id.item3_3:
+                ServiceListActivity.start(mContext, 2, 2);
+                break;
+            case R.id.item3_4:
+                ServiceListActivity.start(mContext, 2, 3);
+                break;
+            case R.id.item4:
+                ServiceListActivity.start(mContext, 3, 0);
+                break;
+            case R.id.item4_1:
+                ServiceListActivity.start(mContext, 3, 0);
+                break;
+            case R.id.item4_2:
+                ServiceListActivity.start(mContext, 3, 1);
+                break;
+            case R.id.item4_3:
+                ServiceListActivity.start(mContext, 3, 2);
+                break;
+            case R.id.item4_4:
+                ServiceListActivity.start(mContext, 3, 3);
                 break;
         }
     }

@@ -195,6 +195,7 @@
                     android:gravity="center"
                     android:orientation="vertical"
                     android:paddingTop="8dp"
+                    android:visibility="gone"
                     app:layout_columnWeight="1">
 
                     <LinearLayout
@@ -280,7 +281,7 @@
 
     </android.support.design.widget.CoordinatorLayout>
 
-    <ImageView
+    <com.etsdk.app.huov7.view.MoveImageView
         android:id="@+id/kefu_img"
         android:layout_width="50dp"
         android:layout_height="50dp"

@@ -89,7 +89,7 @@ public class GameListActivity extends ImmerseActivity implements AdvRefreshListe
         // 设置适配器
         multiTypeAdapter = new MultiTypeAdapter(items);
         multiTypeAdapter.register(SplitLine.class, new SplitLineViewProvider());
-        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(showRank, category));
+        multiTypeAdapter.register(GameBean.class, new GameItemViewProvider(showRank));
         baseRefreshLayout.setAdapter(multiTypeAdapter);
         baseRefreshLayout.setAdvRefreshListener(this);
         baseRefreshLayout.refresh();
@@ -97,16 +97,16 @@ public class GameListActivity extends ImmerseActivity implements AdvRefreshListe
     @Override
     public void getPageData(final int requestPageNo) {
         HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.gameListApi);
-        httpParams.put("hot", hot);
-        httpParams.put("isnew", isnew);
-        httpParams.put("remd", remd);
-        httpParams.put("server", server);
-        httpParams.put("test", test);
-        httpParams.put("category", category);
-        httpParams.put("welfare",welfare);
-        if (type != null) {
-            httpParams.put("type", type);
-        }
+//        httpParams.put("hot", hot);
+//        httpParams.put("isnew", isnew);
+//        httpParams.put("remd", remd);
+//        httpParams.put("server", server);
+//        httpParams.put("test", test);
+//        httpParams.put("category", category);
+//        httpParams.put("welfare",welfare);
+//        if (type != null) {
+//            httpParams.put("type", type);
+//        }
         httpParams.put("page", requestPageNo);
         httpParams.put("offset", 20);
         //成功，失败，null数据

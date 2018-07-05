@@ -28,7 +28,7 @@ public class TestServerGameItemViewProvider
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull TestGameBean gameBean) {
-        holder.listGameItem.setGameBean(gameBean, 0);
+        holder.listGameItem.setGameBean(gameBean);
 //        holder.listGameItem.showTimeLine(true, !isViewTypeEnd(gameBean));
         //设置开服状态信息显示
         String startTime=null;

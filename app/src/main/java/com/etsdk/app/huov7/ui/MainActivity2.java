@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -101,6 +102,7 @@ public class MainActivity2 extends ImmerseActivity {
         }
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         initDate();
         getPageData();
@@ -165,7 +167,6 @@ public class MainActivity2 extends ImmerseActivity {
         super.onResume();
     }
 
-
     private void initDate() {
         handleUpdate();
         textViews = new ArrayList<>();
@@ -214,27 +215,22 @@ public class MainActivity2 extends ImmerseActivity {
 //                DownloadManagerActivity.start(mContext);
 //                break;
             case R.id.group_ll:
-                mViewPager.setCurrentItem(0);
                 clear();
                 show(0);
                 break;
             case R.id.event_ll:
-                mViewPager.setCurrentItem(3);
                 clear();
                 show(3);
                 break;
             case R.id.chat_ll:
-                mViewPager.setCurrentItem(2);
                 clear();
                 show(2);
                 break;
             case R.id.house_ll:
-                mViewPager.setCurrentItem(1);
                 clear();
                 show(1);
                 break;
             case R.id.mine_ll:
-                mViewPager.setCurrentItem(4);
                 clear();
                 show(4);
                 break;
@@ -249,12 +245,14 @@ public class MainActivity2 extends ImmerseActivity {
         }
         group_iv.setImageResource(R.mipmap.tab_icon_tj_us);
         house_iv.setImageResource(R.mipmap.tab_icon_game_us);
-        chat_iv.setImageResource(R.mipmap.tab_icon_find_us);
+//        chat_iv.setImageResource(R.mipmap.tab_icon_find_us);
         event_iv.setImageResource(R.mipmap.zixun_us);
         mine_iv.setImageResource(R.mipmap.tab_icon_my_us);
     }
 
-    private void show(int position) {
+    public void show(int position) {
+        getPageData();
+        mViewPager.setCurrentItem(position);
         textViews.get(position).setTextColor(getResources().getColor(R.color.text_green));
         switch (position) {
             case 0:
@@ -264,7 +262,7 @@ public class MainActivity2 extends ImmerseActivity {
                 house_iv.setImageResource(R.mipmap.tab_icon_game_s);
                 break;
             case 2:
-                chat_iv.setImageResource(R.mipmap.tab_icon_find_s);
+//                chat_iv.setImageResource(R.mipmap.tab_icon_find_s);
                 break;
             case 3:
                 event_iv.setImageResource(R.mipmap.zixun_s);
@@ -317,8 +315,10 @@ public class MainActivity2 extends ImmerseActivity {
                     }
                 }
                 if (num == 0) {
+                    L.i("333", "没有消息");
                     EventBus.getDefault().postSticky(new ShowMsg(false, false));
                 } else {
+                    L.i("333", "新消息");
                     EventBus.getDefault().postSticky(new ShowMsg(true, false, String.valueOf(num)));
                 }
             }

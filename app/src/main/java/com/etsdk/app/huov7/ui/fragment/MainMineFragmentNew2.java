@@ -1,15 +1,21 @@
 package com.etsdk.app.huov7.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.R;
+import com.etsdk.app.huov7.adapter.MineGameImgAdapter;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
+import com.etsdk.app.huov7.getcash.ui.AccountListActivity;
+import com.etsdk.app.huov7.getcash.ui.CommRecordActivity;
+import com.etsdk.app.huov7.getcash.ui.GetCashActivity;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.GameBean;
+import com.etsdk.app.huov7.model.MessageEvent;
 import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.pay.ChargeActivityForWap;
@@ -21,14 +27,17 @@ import com.etsdk.app.huov7.ui.LoginActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.MineGiftCouponListActivityNew;
 import com.etsdk.app.huov7.ui.MyWalletActivity;
+import com.etsdk.app.huov7.ui.NewScoreShopActivity;
 import com.etsdk.app.huov7.ui.ServiceActivity;
 import com.etsdk.app.huov7.ui.SettingActivity;
+import com.etsdk.app.huov7.ui.UserChargeRecordActivity;
 import com.etsdk.app.huov7.ui.UserSpendRecordActivity;
 import com.etsdk.app.huov7.ui.VIPInfoActivity;
 import com.etsdk.app.huov7.ui.dialog.CouponExchangeDialogUtil;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpNoLoginCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
+import com.game.sdk.log.L;
 import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.liang530.control.LoginControl;
@@ -44,6 +53,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.etsdk.app.huov7.R.id.loadview;
 
 /**
  * 2017/5/5.
@@ -79,35 +90,31 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_main_mine_new2);
         EventBus.getDefault().register(this);
-        EventBus.getDefault().post(new ShowMsg(true));
         setupUI();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLoginEvent(Boolean isLogin) {
-        if (isLogin) {
-            EventBus.getDefault().post(new ShowMsg(true));
-//            getUserInfoData();
+    public void onMsgShow(ShowMsg showMsg) {
+        if (showMsg.isShow()) {
+//            iv_msg_tip.setVisibility(View.VISIBLE);
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_red);
+        } else {
+//            iv_msg_tip.setVisibility(View.GONE);
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginEvent(Boolean isLogin) {
+        L.i("333", "登录成功");
+        if (isLogin) {
+            EventBus.getDefault().post(new ShowMsg(true));
+            getUserInfoData();
+        }
+    }
 
     private void setupUI() {
         iv_msg_tip.setVisibility(View.GONE);
-//        recyMineGame.setLayoutManager(new GridLayoutManager(mContext, 4));
-//        recyMineGame.setAdapter(new MineGameImgAdapter(gameBeanList));
-//        setMoneyGameListItemHeight();
-//        getMyGameList();
-//        getUserAdText();
-//        mHandler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                loadview.showSuccess();
-//            }
-//        }, 3000);
-//        loadview.showLoading();
-//        MessageEvent messageEvent = EventBus.getDefault().getStickyEvent(MessageEvent.class);
-//        onMessageEvent(messageEvent);
     }
 
     @Override
@@ -118,11 +125,8 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
 
     private void updateUserInfoData(UserInfoResultBean userInfoResultBean) {
         int errorImage = R.mipmap.ic_launcher;
-        if (BuildConfig.projectCode == 177) {//177七二网络
-            errorImage = R.mipmap.touxiang;
-        }
         if (userInfoResultBean != null) {
-            tv_vip.setVisibility(View.VISIBLE);
+//            tv_vip.setVisibility(View.VISIBLE);
             bindPhoneClickable = true;
             phone = userInfoResultBean.getMobile();
             email = userInfoResultBean.getEmail();
@@ -176,17 +180,6 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
         RxVolley.post(AppApi.getUrl(AppApi.userDetailApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMsgShow(ShowMsg showMsg) {
-        if (showMsg.isShow()) {
-            iv_msg_tip.setVisibility(View.VISIBLE);
-            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_red);
-        } else {
-            iv_msg_tip.setVisibility(View.GONE);
-            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
-        }
-    }
-
     @Override
     protected void onDestroyViewLazy() {
         if (EventBus.getDefault().isRegistered(this)) {
@@ -222,14 +215,15 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
                 //充值
                 ChargeActivityForWap.start(mContext, AppApi.getUrl(AppApi.chargePingtaibi), "平台币充值", null);
                 break;
-
             case R.id.item_ll1:
                 //我的游戏
                 DownloadManagerActivity.start(mContext);
                 break;
             case R.id.item_ll2:
                 //我的VIP
-                VIPInfoActivity.start(mContext);
+                NewScoreShopActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
+//                VIPInfoActivity.start(mContext);
                 break;
             case R.id.item_ll3:
                 //我的礼包
@@ -251,6 +245,7 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
                 //我的钱包
                 MyWalletActivity.start(mContext);
 //                UserChargeRecordActivity.start(mContext);
+//                GetCashActivity.start(mContext);
 //                CommRecordActivity.start(mContext, CommRecordActivity.TYPE_GET_CASH_RECORD_LIST);
                 break;
             case R.id.item_ll7:

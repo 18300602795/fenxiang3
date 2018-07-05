@@ -41,7 +41,11 @@ public class MineGiftViewProvider
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final GiftListItem mineGift) {
 //        GlideDisplay.display(holder.ivGameImg,mineGift.getIcon(),R.mipmap.ic_launcher);
         Glide.with(holder.context).load(mineGift.getIcon()).placeholder(R.mipmap.ic_launcher).into(holder.ivGameImg);
-        holder.tvGiftName.setText(mineGift.getGiftname());
+        if (mineGift.getGiftname().contains(mineGift.getGamename())){
+            holder.tvGiftName.setText(mineGift.getGiftname());
+        }else {
+            holder.tvGiftName.setText(mineGift.getGamename() + "：" + mineGift.getGiftname());
+        }
         holder.tvGiftCode.setText(mineGift.getGiftcode());
         String startTime=null;
         try {

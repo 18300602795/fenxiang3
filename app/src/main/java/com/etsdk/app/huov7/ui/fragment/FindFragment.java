@@ -9,15 +9,21 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.AdImage;
+import com.etsdk.app.huov7.model.BackRecordList;
 import com.etsdk.app.huov7.model.HomePage1Data;
+import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.TjAdTop;
 import com.etsdk.app.huov7.provider.NetImageHolderView;
 import com.etsdk.app.huov7.shop.ui.MainShopActivity;
+import com.etsdk.app.huov7.ui.BackRecordActivity;
+import com.etsdk.app.huov7.ui.CommentListActivity;
 import com.etsdk.app.huov7.ui.CouponDetailActivity;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.EarnActivity;
+import com.etsdk.app.huov7.ui.FuliGiftActivity;
 import com.etsdk.app.huov7.ui.GameDetailV2Activity;
 import com.etsdk.app.huov7.ui.GiftDetailActivity;
+import com.etsdk.app.huov7.ui.GiftListActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.NewsListActivity;
 import com.etsdk.app.huov7.ui.SearchActivity;
@@ -32,6 +38,8 @@ import com.liang530.views.convenientbanner.holder.CBViewHolderCreator;
 import com.liang530.views.convenientbanner.listener.OnItemClickListener;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -50,11 +58,11 @@ public class FindFragment extends AutoLazyFragment {
     @BindView(R.id.iv_gotoMsg)
     ImageView ivGotoMsg;
 
-
     @Override
     protected void onCreateViewLazy(Bundle savedInstanceState) {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_find);
+        EventBus.getDefault().register(this);
         setupUI();
     }
 
@@ -78,6 +86,15 @@ public class FindFragment extends AutoLazyFragment {
             public void onFailure(int errorNo, String strMsg, String completionInfo) {
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgShow(ShowMsg showMsg) {
+        if (showMsg.isShow()) {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_red);
+        } else {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
+        }
     }
 
 
@@ -126,13 +143,15 @@ public class FindFragment extends AutoLazyFragment {
                 MessageActivity.start(mContext);
                 break;
             case R.id.shop_rl:
-                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
+                BackRecordActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.earn_rl:
                 EarnActivity.start(mContext);
                 break;
             case R.id.apply_rl:
-                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
+                CommentListActivity.start(mContext);
+//                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.deal_rl:
                 MainShopActivity.start(mContext);
@@ -147,7 +166,8 @@ public class FindFragment extends AutoLazyFragment {
                 NewsListActivity.start(mContext, "2", "");
                 break;
             case R.id.evaluation_rl:
-                NewsListActivity.start(mContext, "5", "");
+                FuliGiftActivity.start(mContext);
+//                NewsListActivity.start(mContext, "5", "");
                 break;
         }
     }

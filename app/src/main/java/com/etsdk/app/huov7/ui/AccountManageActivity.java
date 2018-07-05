@@ -210,6 +210,7 @@ public class AccountManageActivity extends ImmerseActivity {
         httpCallbackDecode.setShowLoading(false);
         RxVolley.post(AppApi.getUrl(AppApi.logoutApi), httpParamsBuild.getHttpParams(),httpCallbackDecode);
         LoginControl.clearLogin();
+        EventBus.getDefault().post(true);
         LoginActivity.start(mActivity);
         finish();
         HuosdkManager.getInstance().initSdk(this, new OnInitSdkListener() {

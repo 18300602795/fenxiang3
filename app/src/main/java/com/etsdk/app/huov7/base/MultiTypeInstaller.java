@@ -29,7 +29,7 @@ import me.drakeet.multitype.GlobalMultiTypePool;
 class MultiTypeInstaller {
 
     static void start() {
-        GlobalMultiTypePool.register(GameBean.class, new GameItemViewProvider(0));
+        GlobalMultiTypePool.register(GameBean.class, new GameItemViewProvider());
         GlobalMultiTypePool.register(SplitLine.class, new SplitLineViewProvider());
     }
 }

@@ -55,7 +55,6 @@ public class HuosdkManager {
                     break;
                 case CODE_INIT_SUCCESS:
                     L.e("hongliangsdk1", SdkConstant.HS_AGENT);
-                    L.e("hongliangsdk1", SdkConstant.HS_AGENT);
                     initRequestCount++;
                     //去初始化
                     gotoStartup(1);
@@ -129,7 +128,6 @@ public class HuosdkManager {
                         @Override
                         public void onFail(int code, final String msg) {
                             L.e("hongliangsdk", "native 失败code=" + code);
-                            L.e("hongliangsdk", "native 失败msg=" + msg);
                             Message message = Message.obtain();
                             message.what = CODE_INIT_FAIL;
                             message.arg1 = code;

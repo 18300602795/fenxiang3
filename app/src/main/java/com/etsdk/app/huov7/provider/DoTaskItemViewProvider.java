@@ -13,6 +13,7 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.model.DoTaskItem;
 import com.etsdk.app.huov7.ui.AccountManageActivity;
 import com.etsdk.app.huov7.ui.BindPhoneActivity;
+import com.etsdk.app.huov7.ui.EarnActivity;
 import com.etsdk.app.huov7.ui.RecommandTaskActivity;
 import com.etsdk.app.huov7.ui.SelectGamePayActivity;
 import com.etsdk.app.huov7.ui.SignInActivity;
@@ -42,7 +43,7 @@ public class DoTaskItemViewProvider
     private void initIntentMap(Context context){
         if (intentMap == null) {
             intentMap=new HashMap<>();
-            intentMap.put("sign", SignInActivity.getIntent(context));
+            intentMap.put("sign", EarnActivity.getIntent(context));
             intentMap.put("uploadportrait", AccountManageActivity.getIntent(context));
             intentMap.put("tguser", RecommandTaskActivity.getIntent(context));
             intentMap.put("firstcharge", SelectGamePayActivity.getIntent(context));

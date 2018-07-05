@@ -3,7 +3,9 @@ package com.etsdk.app.huov7.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
@@ -30,6 +32,9 @@ import butterknife.OnClick;
  */
 
 public class EarnActivity extends ImmerseActivity {
+
+    @BindView(R.id.active_ll)
+    LinearLayout active_ll;
     @BindView(R.id.tv_titleName)
     TextView tvTitleName;
 
@@ -45,10 +50,15 @@ public class EarnActivity extends ImmerseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(Boolean isLogin) {
-        if (isLogin){
-        }else {
+        if (isLogin) {
+        } else {
             finish();
         }
+    }
+
+    public static Intent getIntent(Context context) {
+        Intent starter = new Intent(context, EarnActivity.class);
+        return starter;
     }
 
     @OnClick({R.id.iv_titleLeft, R.id.sign_ll, R.id.attention_ll, R.id.invite_ll, R.id.active_ll, R.id.demo_ll, R.id.play_ll})
@@ -67,13 +77,14 @@ public class EarnActivity extends ImmerseActivity {
                 InviteActivity.start(EarnActivity.this);
                 break;
             case R.id.active_ll:
-                EventActivity.start(EarnActivity.this, "2", null);
+                BindPhoneActivity.start(mContext);
+//                EventActivity.start(EarnActivity.this, "2", null);
                 break;
             case R.id.demo_ll:
                 new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.play_ll:
-                new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");
+//                new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");
                 break;
         }
     }
@@ -84,6 +95,9 @@ public class EarnActivity extends ImmerseActivity {
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(EarnActivity.this, httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(UserInfoResultBean data) {
+                if (!TextUtils.isEmpty(data.getMobile())) {
+                    active_ll.setVisibility(View.GONE);
+                }
             }
 
             @Override

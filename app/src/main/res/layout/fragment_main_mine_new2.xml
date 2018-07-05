@@ -73,7 +73,7 @@
                                 android:text="VIP 1"
                                 android:textColor="@color/white"
                                 android:textSize="10sp"
-                                android:visibility="visible" />
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <TextView
@@ -216,7 +216,8 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
-                    android:src="@mipmap/news_tip" />
+                    android:src="@mipmap/news_tip"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -274,8 +275,8 @@
                             android:id="@+id/item_ll2"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:background="@drawable/btn_bg"
                             android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -296,7 +297,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="我的VIP"
+                                android:text="积分兑换"
                                 android:textSize="14sp" />
                         </LinearLayout>
 
@@ -309,8 +310,8 @@
                             android:id="@+id/item_ll3"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:background="@drawable/btn_bg"
                             android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -498,41 +499,6 @@
                             android:background="#cccccc" />
 
                         <LinearLayout
-                            android:id="@+id/item_ll8"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:background="@drawable/btn_bg"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/user_item8"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@mipmap/ic_user_item_14" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="消费记录"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="0.1dp"
-                            android:layout_height="match_parent"
-                            android:background="#cccccc" />
-
-                        <LinearLayout
                             android:id="@+id/item_ll9"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -562,6 +528,41 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="0.1dp"
+                            android:layout_height="match_parent"
+                            android:background="#cccccc" />
+
+                        <LinearLayout
+                            android:id="@+id/item_ll8"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="invisible">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/user_item8"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@mipmap/ic_user_item_14" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="消费记录"
+                                android:textSize="14sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View

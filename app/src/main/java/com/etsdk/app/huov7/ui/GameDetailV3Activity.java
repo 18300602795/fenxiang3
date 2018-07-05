@@ -36,6 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.category;
+
 public class GameDetailV3Activity extends BaseActivity {
     @BindView(R.id.view_bg_detail)
     View detailBGView;
@@ -167,7 +169,7 @@ public class GameDetailV3Activity extends BaseActivity {
         gameTagView.setGameType(gameBean.getType());
         loadview.showSuccess();
         detailDescFragment.setupGameData(gameBean);
-        gameDetailDownView.setGameBean(gameBean, false);
+        gameDetailDownView.setGameBean(gameBean);
     }
 
     public GameBean getGameBean() {

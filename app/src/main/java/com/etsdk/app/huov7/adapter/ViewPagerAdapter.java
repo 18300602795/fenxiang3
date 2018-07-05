@@ -12,12 +12,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.etsdk.app.huov7.R;
+import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.AdImage;
 import com.etsdk.app.huov7.ui.CouponDetailActivity;
 import com.etsdk.app.huov7.ui.GameDetailV2Activity;
 import com.etsdk.app.huov7.ui.GiftDetailActivity;
 import com.etsdk.app.huov7.ui.WebViewActivity;
 import com.etsdk.app.huov7.util.ImgUtil;
+import com.etsdk.app.huov7.util.StringUtils;
+import com.liang530.utils.BaseAppUtil;
 
 import java.util.List;
 
@@ -54,7 +57,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         View view = LayoutInflater.from(context).inflate(R.layout.header_img, null);
         ImageView img = (ImageView) view.findViewById(R.id.img_header);
 //        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
-//                StringUtils.dip2px(container.getContext(), 300), StringUtils.dip2px(container.getContext(), 160));
+//                StringUtils.dip2px(container.getContext(), 720), StringUtils.dip2px(container.getContext(), 300));
 //        img.setLayoutParams(layoutParams);
 //        img.setScaleType(ImageView.ScaleType.FIT_XY);
         final AdImage listBean = listbean.get(position % listbean.size());

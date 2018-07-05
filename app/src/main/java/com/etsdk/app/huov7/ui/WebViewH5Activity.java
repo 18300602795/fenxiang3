@@ -1,60 +1,51 @@
 package com.etsdk.app.huov7.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.ImmerseActivity;
-import com.liang530.log.L;
-import com.liang530.log.T;
-import com.liang530.utils.BaseAppUtil;
+import com.etsdk.app.huov7.ui.dialog.ExitGameDialog;
+import com.game.sdk.log.L;
+import com.jude.swipbackhelper.SwipeBackHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by liu hong liang on 2016/8/31.
  * 网页activity
  */
 public class WebViewH5Activity extends ImmerseActivity {
-    public final static String TITLE_NAME = "titleName";
     public final static String URL = "url";
     private String rootUrl = "";
-    String titleName;
-    @BindView(R.id.tv_titleName)
-    TextView tvTitleName;
     @BindView(R.id.webView)
     WebView gameWebView;
+    ExitGameDialog gameDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //取消标题栏
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //取消状态栏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_webview_h5);
         ButterKnife.bind(this);
         rootUrl = getIntent().getStringExtra(URL);
-        titleName = getIntent().getStringExtra(TITLE_NAME);
-        tvTitleName.setText(titleName);
+        L.i("333", "url：" + rootUrl);
+        SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);//禁掉滑动finish，会和webview冲突
+        gameDialog = new ExitGameDialog();
         init();
     }
 
-        @OnClick({R.id.iv_titleLeft})
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.iv_titleLeft:
-                finish();
-                break;
-        }
-    }
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     private void init() {
         gameWebView.loadUrl(rootUrl);
@@ -86,8 +77,18 @@ public class WebViewH5Activity extends ImmerseActivity {
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK) && gameWebView.canGoBack()) {
-            gameWebView.goBack();// 返回前一个页面
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            gameDialog.show(mContext, new ExitGameDialog.Listener() {
+                @Override
+                public void ok() {
+                    finish();
+                }
+
+                @Override
+                public void cancel() {
+
+                }
+            });
             return true;
         }
         return super.onKeyDown(keyCode, event);

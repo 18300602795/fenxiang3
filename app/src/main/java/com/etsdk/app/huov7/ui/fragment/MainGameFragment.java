@@ -12,14 +12,18 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.adapter.VpAdapter;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
 import com.etsdk.app.huov7.model.MessageEvent;
+import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.SwitchFragmentEvent;
 import com.etsdk.app.huov7.model.TabEntity;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.SearchActivity;
+import com.etsdk.app.huov7.util.StringUtils;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.game.sdk.SdkConstant;
+import com.game.sdk.log.L;
 import com.liang530.views.viewpager.SViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +53,7 @@ public class MainGameFragment extends AutoLazyFragment {
     ImageView ivGotoMsg;
     private VpAdapter vpAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private String[] titleList = {"分类", "精品", "BT", "折扣", "GM"};
+    private String[] titleList = {"分类", "精选", "BT", "折扣", "H5"};
     private int[] mIconUnselectIds = {R.mipmap.fenlei_u, R.mipmap.remenbang_u, R.mipmap.kaice_u, R.mipmap.xinyoubang_u, R.mipmap.gm_icon};
     private int[] mIconSelectIds = {R.mipmap.fenlei_s, R.mipmap.remenbang_s, R.mipmap.kaice_s, R.mipmap.xinyoubang_s, R.mipmap.gm_icon_s};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -63,6 +67,9 @@ public class MainGameFragment extends AutoLazyFragment {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_main_game);
         EventBus.getDefault().register(this);
+       if (!StringUtils.isEmpty(SdkConstant.HS_AGENT)){
+           titleList[4] = "畅销";
+       }
 //        if(BuildConfig.projectCode == 137){
 //            titleList[1] = "BT榜";
 //            titleList[3] = "开服";
@@ -73,6 +80,15 @@ public class MainGameFragment extends AutoLazyFragment {
         setupUI();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgShow(ShowMsg showMsg) {
+        if (showMsg.isShow()) {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_red);
+        } else {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
+        }
+    }
+
     private void setupUI() {
         for (int i = 0; i < titleList.length; i++) {
             mTabEntities.add(new TabEntity(titleList[i], mIconSelectIds[i], mIconUnselectIds[i]));
@@ -81,7 +97,11 @@ public class MainGameFragment extends AutoLazyFragment {
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 5, null));
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 3, null));
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 4, null));
-        fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 1, null));
+        if (!StringUtils.isEmpty(SdkConstant.HS_AGENT)){
+            fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 2, null));
+        }else {
+            fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 1, null));
+        }
 //        gameTestNewFragment = new GameTestNewFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putInt("position", secondPosition);

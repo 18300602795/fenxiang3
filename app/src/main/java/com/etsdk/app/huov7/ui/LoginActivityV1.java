@@ -1,10 +1,15 @@
 package com.etsdk.app.huov7.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alipay.sdk.app.AuthTask;
 import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.ImmerseActivity;
@@ -27,6 +33,7 @@ import com.etsdk.app.huov7.model.ThirdAuthRequestBean;
 import com.etsdk.app.huov7.sharesdk.ThirdLoginUtil;
 import com.etsdk.app.huov7.ui.dialog.SelectAccountLoginDialog;
 import com.etsdk.app.huov7.ui.dialog.SelectAccountLoginPop;
+import com.etsdk.app.huov7.util.OrderInfoUtil2_0;
 import com.game.sdk.db.impl.UserLoginInfodao;
 import com.game.sdk.domain.UserInfo;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -42,6 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,6 +101,31 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
     @BindView(R.id.rl_login_account)
     RelativeLayout rlLoginAccount;
     private SelectAccountLoginDialog selectAccountLoginDialog;
+    /**
+     * 支付宝支付业务：入参app_id
+     */
+    public static final String APPID = "2018070260510205";
+
+    /**
+     * 支付宝账户登录授权业务：入参pid值
+     */
+    public static final String PID = "2088721389620842";
+    /**
+     * 支付宝账户登录授权业务：入参target_id值
+     */
+    public static final String TARGET_ID = String.valueOf(System.currentTimeMillis());
+
+    /** 商户私钥，pkcs8格式 */
+    /** 如下私钥，RSA2_PRIVATE 或者 RSA_PRIVATE 只需要填入一个 */
+    /** 如果商户两个都设置了，优先使用 RSA2_PRIVATE */
+    /** RSA2_PRIVATE 可以保证商户交易在更加安全的环境下进行，建议使用 RSA2_PRIVATE */
+    /** 获取 RSA2_PRIVATE，建议使用支付宝提供的公私钥生成工具生成， */
+    /**
+     * 工具地址：https://doc.open.alipay.com/docs/doc.htm?treeId=291&articleId=106097&docType=1
+     */
+    public static final String RSA_PRIVATE = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCe27gDuvDRytAmc/Ixe5chzjnqTr2CZcnO430MiFmw2/XUoxZ7xQLctkus+d65eARtvBoxkkEs2J+LzD22mJy2g52SX6euHEjhieGVxSYeXYSftr/4oFvyFaAGceBkPedsPvjuHp363VO3l2beqTL/T0wxhVaIDJ5lHX9NY8g2u4n3CtVpMednSZg2HhE7q+kI87cU2AqLEiEWCslJui7mwxJi6u5LKfNqOh2p886LgMB32nzp6zTr+9jQYy+OxFSJcQWwDWolGh9qj3oaycdaPq4Q0nYj7cwzbDjZn54mlTEhLvD9Mk0gQyU48yuvXBV70a5nN69sAl2bBSwjOGejAgMBAAECggEAHxoHcfuEsJ5TmGO09EktMrosjpox8ji5hR722aBMZxr5i1MO0Namk83BDTGykH9V5qIgQrpOtlgHDJjFMF26uOUV0ZWWv7jb8ARNvUPnDaTjlV1zQlsrBT+EoB5lf1q7V28Qz5YA+h+hB13GDyvzRxcgZMWlRmeqD0PyK5Wwmj5XHbYokd6lLHRBVYhJ+ZCNvzLD/FIoX0eGbr8rj8HYqASxSoEJTLFyb92pBu7+lgO3Qeud5Um+ud6rzq8EwEAWSs9WGPKQCDAENj5mbnpYd6Kg5xXyqF8c7nIq9hBBxF/sXu55g1En+T5jcDYuDLVstq8gbyrAZzscYcV9Mg0FyQKBgQDyP9y1dzHLZoHtZ8ApvnOldjcd0X5717RS7T1Zz1gkUTRaV4L3oy0r8g5QjwnsSZMOmz8Y0+QwNd41yiC24GAVuPEG9pQ+7NBo4E/mYT96ahye5+oVvIxrVce1Rw6bLKkkkcHMuwbhpQY1DOLmPBfwDTfby+MS6GLBPMBQXrhNFwKBgQCn4Bh4us9OhMqqCEEQX4BNoj+3qu+j3FRLSngJP0IM8PL9aaGgtbMD5ZWMFzjctfYg//bA3P4jvnKY9jO37DSCl6UlmstewpJy6ylRRKXVvz/gUabrlJNU0uL+lwgBvyFx4LZqUB9X4YDM2H5cBJCXtozAgTXGUDKfXQO8odcJVQKBgBBXeIcRTF2hQ6CFQDRQsbJ2wA8V48ds7LAvatUVJKgGhlaV0rLr4g812/tZOt0itXXlySLeoGUULTJJuV08056DhFbo6WU5SnHYt+sdok+auuWJVYQz3PEcr0UuTvDu2VYrMvyhnTw5iqqnfOL1KNQ7wAnmviG3ZXoNpBeH3DzvAoGBAKTePcpb1PrNCWhhwNx+njggTylnNACegx6KXUbfnFOvU0SzN+voZo4+LFev+sUv4zBXkZOpteGOyWcV7IcF8DANFEDRPEetGTzJXQOWQrOgJvB74E3e1a7picr0swVcG1GGmj/gvleFfQQw3jAqv4Jv4t2wSAqieoTuSZw46UIdAoGBALX3K0lN9MDIJfviAzNrsEJVREJLorCnOD1tbik0BgTYSIHneizQCTbThgmUfVPzoi9eqddi/mnjnphXS66OfQiLUiZ42l0+38o+zpBIY6GXQ9/Rb4OZN1oVpGzoVYrd7cUpcw+zgd6sEYRSQAMJNABHafKPLjUIA1BR19u/ti1w";
+
+    private static final int SDK_AUTH_FLAG = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +133,73 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
         setContentView(R.layout.activity_login_v1);
         ButterKnife.bind(this);
         setupUI();
+    }
+
+
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_AUTH_FLAG: {
+                    String authResult = (String) msg.obj;
+                    L.i("333", "授权结果：" + authResult);
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
+
+    /**
+     * 支付宝账户授权业务
+     *
+     * @param
+     */
+    public void authV2() {
+        if (TextUtils.isEmpty(PID) || TextUtils.isEmpty(APPID)
+                || TextUtils.isEmpty(RSA_PRIVATE)
+                || TextUtils.isEmpty(TARGET_ID)) {
+            new AlertDialog.Builder(this).setTitle("警告").setMessage("需要配置PARTNER |APP_ID| RSA_PRIVATE| TARGET_ID")
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialoginterface, int i) {
+                        }
+                    }).show();
+            return;
+        }
+
+        /**
+         * 这里只是为了方便直接向商户展示支付宝的整个支付流程；所以Demo中加签过程直接放在客户端完成；
+         * 真实App里，privateKey等数据严禁放在客户端，加签过程务必要放在服务端完成；
+         * 防止商户私密数据泄露，造成不必要的资金损失，及面临各种安全风险；
+         *
+         * authInfo的获取必须来自服务端；
+         */
+        Map<String, String> authInfoMap = OrderInfoUtil2_0.buildAuthInfoMap(PID, APPID, TARGET_ID, false);
+        String info = OrderInfoUtil2_0.buildOrderParam(authInfoMap);
+
+        String privateKey = RSA_PRIVATE;
+        String sign = OrderInfoUtil2_0.getSign(authInfoMap, privateKey, false);
+        final String authInfo = info + "&" + sign;
+        Log.i("333", authInfo);
+        Runnable authRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // 构造AuthTask 对象
+                AuthTask authTask = new AuthTask(LoginActivityV1.this);
+                // 调用授权接口，获取授权结果
+                String result = authTask.auth(authInfo, true);
+                Message msg = new Message();
+                msg.what = SDK_AUTH_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+        // 必须异步调用
+        Thread authThread = new Thread(authRunnable);
+        authThread.start();
     }
 
     private void setupUI() {
@@ -227,8 +327,9 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
                 ThirdLoginUtil.loginByThird(ThirdLoginUtil.LOGIN_QQ, this);
                 break;
             case R.id.iv_weibo:
-                ThirdLoginUtil.initXinNan( BuildConfig.wb_appid, BuildConfig.wb_appkey, BuildConfig.wb_directurl);
-                ThirdLoginUtil.loginByThird(ThirdLoginUtil.LOGIN_XLWB, this);
+//                ThirdLoginUtil.initXinNan( BuildConfig.wb_appid, BuildConfig.wb_appkey, BuildConfig.wb_directurl);
+//                ThirdLoginUtil.loginByThird(ThirdLoginUtil.LOGIN_XLWB, this);
+                authV2();
                 break;
             case R.id.iv_weixin:
                 ThirdLoginUtil.initWx(BuildConfig.wx_appid, BuildConfig.wx_appkey);
@@ -243,7 +344,7 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             EventBus.getDefault().post(false);
         }
         return super.onKeyDown(keyCode, event);
@@ -254,7 +355,7 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
      */
     @Override
     public void onComplete(final Platform plat, final int action, HashMap<String, Object> res) {
-        L.e(TAG, "第三方登录 完成");
+        L.e(TAG, "第三方登录 完成" + plat.getDb().getToken());
         mHandler.post(new Runnable() {
             @Override
             public void run() {
@@ -285,7 +386,9 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
                                 T.s(mActivity, "登陆成功");
                                 //接口回调通知
                                 mActivity.finish();
-                                MainActivity.start(mActivity, 4);
+                                EventBus.getDefault().post(true);
+                                EventBus.getDefault().post(new ShowMsg(true));
+//                                MainActivity.start(mActivity, 4);
                             }
                         }
                     };

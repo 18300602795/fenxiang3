@@ -6,16 +6,19 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.AutoLazyFragment;
+import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.SwitchFragmentEvent;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.SearchActivity;
 import com.flyco.tablayout.SegmentTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.liang530.log.L;
 import com.liang530.views.viewpager.SViewPager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,6 +41,8 @@ public class GameTestNewFragmentNew extends AutoLazyFragment {
     SViewPager vpList;
     @BindView(R.id.tab_line)
     View tab_line;
+    @BindView(R.id.iv_gotoMsg)
+    ImageView ivGotoMsg;
 
     private String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList();
@@ -49,6 +54,14 @@ public class GameTestNewFragmentNew extends AutoLazyFragment {
         setupUI();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMsgShow(ShowMsg showMsg) {
+        if (showMsg.isShow()) {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_red);
+        } else {
+            ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
+        }
+    }
 
     private void setupUI() {
         mFragments.add(new GameStartFragment());
