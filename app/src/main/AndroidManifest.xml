@@ -293,6 +293,18 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+        <!-- 礼包 !-->
+        <activity
+            android:name="com.etsdk.app.huov7.ui.MineGiftRecordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 积分消费记录 !-->
+        <activity
+            android:name="com.etsdk.app.huov7.ui.MineScoreListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <!-- 返利申请 !-->
         <activity
             android:name="com.etsdk.app.huov7.ui.BackActivity"
@@ -396,6 +408,18 @@
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="com.etsdk.app.huov7.ui.FeedBackActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 反馈记录-->
+        <activity
+            android:name="com.etsdk.app.huov7.ui.FeedRecordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 反馈详情-->
+        <activity
+            android:name="com.etsdk.app.huov7.ui.FeedDetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
@@ -575,6 +599,12 @@
         <!-- 我要赚钱 !-->
         <activity
             android:name=".ui.EarnActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <!-- 试玩赚钱 !-->
+        <activity
+            android:name=".ui.TryGameListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />

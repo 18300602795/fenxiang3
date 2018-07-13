@@ -289,6 +289,5 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="60dp"
-        android:src="@mipmap/kefu" />
-
+        android:src="@mipmap/kefu1" />
 </RelativeLayout>

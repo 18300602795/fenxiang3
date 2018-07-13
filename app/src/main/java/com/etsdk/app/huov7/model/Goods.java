@@ -20,6 +20,15 @@ public class Goods {
     private String consignee;//	STRING	收货人	收货人
     private String myintegral;	//	INT	我的实时积分	456456;
     private String note;//STRING	虚拟物品为卡密 实物为说明	虚拟物品为卡密 实物为说明
+    private String create_time;
+
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
 
     public String getMyintegral() {
         return myintegral;

@@ -192,13 +192,13 @@ public class TjColumnHeadViewProvider
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_SCORE_GIFT_CARD) {
-            holder.tvTypeName.setText("礼品卡兑换专区");
+            holder.tvTypeName.setText("平台币兑换专区");
             holder.ivHint.setVisibility(View.GONE);
             holder.tvMore.setVisibility(View.VISIBLE);
             holder.llMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GiftCardListActivity.start(v.getContext(), "礼品卡兑换专区", 1);
+                    GiftCardListActivity.start(v.getContext(), "平台币兑换专区", 1);
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_SCORE_GOODS) {

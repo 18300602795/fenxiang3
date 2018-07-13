@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.category;
+import static com.alipay.sdk.app.statistic.c.v;
+
 /**
  * Created by Administrator on 2017/11/15.
  */
@@ -81,7 +84,9 @@ public class EarnActivity extends ImmerseActivity {
 //                EventActivity.start(EarnActivity.this, "2", null);
                 break;
             case R.id.demo_ll:
-                new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");
+//                new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");
+//                GameListActivity.start(mContext, "试玩赚钱", true, true, 0, 0, 0, 0, 0, 0, 0, null);
+                TryGameListActivity.start(mContext, "玩游戏赚钱");
                 break;
             case R.id.play_ll:
 //                new CouponExchangeDialogUtil().showExchangeDialog(EarnActivity.this, "友情提示", "该功能正在开发中，敬请期待");

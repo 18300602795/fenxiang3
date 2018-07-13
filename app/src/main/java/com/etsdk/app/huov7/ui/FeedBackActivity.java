@@ -31,8 +31,8 @@ public class FeedBackActivity extends ImmerseActivity {
     ImageView ivTitleLeft;
     @BindView(R.id.tv_titleName)
     TextView tvTitleName;
-    @BindView(R.id.tv_titleRight)
-    TextView tvTitleRight;
+    @BindView(R.id.iv_title_down)
+    ImageView iv_down;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
     @BindView(R.id.activity_game_feedback)
@@ -52,6 +52,8 @@ public class FeedBackActivity extends ImmerseActivity {
 
     private void setupUI() {
         tvTitleName.setText("意见反馈");
+        iv_down.setVisibility(View.VISIBLE);
+        iv_down.setImageResource(R.mipmap.right_img);
     }
 
     private void submitFeedBack() {
@@ -62,7 +64,7 @@ public class FeedBackActivity extends ImmerseActivity {
             T.s(mContext, "反馈内容不能为空");
             return;
         }
-        if(!TextUtils.isEmpty(phone)){
+        if (!TextUtils.isEmpty(phone)) {
             feedbackRequestBean.setLinkman(phone);
         }
         feedbackRequestBean.setContent(content);
@@ -80,14 +82,14 @@ public class FeedBackActivity extends ImmerseActivity {
         RxVolley.post(AppApi.getUrl(AppApi.guestbookWriteApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 
-    @OnClick({R.id.iv_titleLeft, R.id.tv_titleRight, R.id.btn_submit})
+    @OnClick({R.id.iv_titleLeft, R.id.iv_title_down, R.id.btn_submit})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
                 finish();
                 break;
-            case R.id.tv_titleRight:
-                finish();
+            case R.id.iv_title_down:
+                FeedRecordActivity.start(mContext);
                 break;
             case R.id.btn_submit:
                 submitFeedBack();

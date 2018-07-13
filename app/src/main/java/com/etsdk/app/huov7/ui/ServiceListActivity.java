@@ -49,18 +49,26 @@ public class ServiceListActivity extends ImmerseActivity {
         titles = getResources().getStringArray(R.array.service_title);
         switch (title) {
             case 0:
+                heads = getResources().getStringArray(R.array.service_item0);
+                conts = getResources().getStringArray(R.array.service_cont0);
+                break;
+            case 1:
                 heads = getResources().getStringArray(R.array.service_item1);
                 conts = getResources().getStringArray(R.array.service_cont1);
                 break;
-            case 1:
+            case 2:
+                heads = getResources().getStringArray(R.array.service_item02);
+                conts = getResources().getStringArray(R.array.service_cont02);
+                break;
+            case 3:
                 heads = getResources().getStringArray(R.array.service_item2);
                 conts = getResources().getStringArray(R.array.service_cont2);
                 break;
-            case 2:
+            case 4:
                 heads = getResources().getStringArray(R.array.service_item3);
                 conts = getResources().getStringArray(R.array.service_cont3);
                 break;
-            case 3:
+            case 5:
                 heads = getResources().getStringArray(R.array.service_item4);
                 conts = getResources().getStringArray(R.array.service_cont4);
                 break;

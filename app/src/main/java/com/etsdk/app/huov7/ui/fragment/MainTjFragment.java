@@ -231,7 +231,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
 //            allItems.remove(tjColumnHead);
 //        }
 
-        //新游推荐头
+        //新游首发头
         isReuqestLine = false;
         tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_NEW_GAME_SF);
         allItems.add(tjColumnHead);

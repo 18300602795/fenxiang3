@@ -93,20 +93,24 @@ public class MineCardFragment extends AutoLazyFragment implements AdvRefreshList
     public void getPageData(int requestPageNo) {
         final MineGoodsRequestBean mineGoodsRequestBean = new MineGoodsRequestBean();
         mineGoodsRequestBean.setIs_real("1");
+        mineGoodsRequestBean.setPage(requestPageNo);
+        mineGoodsRequestBean.setOffset(15);
         HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(mineGoodsRequestBean));
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<GoodsBeanList.DataBean>(getActivity(), httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(GoodsBeanList.DataBean data) {
-                if (data != null&&data.getList()!=null) {
-                    baseRefreshLayout.resultLoadData(items,data.getList(),1);
-                }else{
-                    baseRefreshLayout.resultLoadData(items,new ArrayList(),1);
+                if (data != null && data.getList() != null) {
+                    int maxPage = (int) Math.ceil(data.getCount() / 15);
+                    baseRefreshLayout.resultLoadData(items, data.getList(), maxPage);
+                } else {
+                    baseRefreshLayout.resultLoadData(items, new ArrayList(), 1);
                 }
             }
+
             @Override
             public void onFailure(String code, String msg) {
                 super.onFailure(code, msg);
-                baseRefreshLayout.resultLoadData(items,null,1);
+                baseRefreshLayout.resultLoadData(items, null, 1);
             }
         };
         httpCallbackDecode.setShowTs(true);
@@ -115,9 +119,5 @@ public class MineCardFragment extends AutoLazyFragment implements AdvRefreshList
         RxVolley.post(AppApi.getUrl(AppApi.userGoodsListApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 
-    @OnClick({})
-    public void onClick(View view) {
-        switch (view.getId()) {
-        }
-    }
+
 }

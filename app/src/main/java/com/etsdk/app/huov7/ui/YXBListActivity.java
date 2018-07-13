@@ -33,6 +33,7 @@ import com.game.sdk.log.L;
 import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpParams;
+import com.kymjs.rxvolley.http.VolleyError;
 import com.liang530.rxvolley.HttpJsonCallBackDialog;
 import com.liang530.rxvolley.NetRequest;
 
@@ -90,7 +91,7 @@ public class YXBListActivity extends ImmerseActivity implements AdvRefreshListen
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<YXBListBean>(this, httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(final YXBListBean data) {
-                if (data != null && data.getList() != null) {
+                if (data != null && data.getList() != null && data.getCount() != 0) {
                     int maxPage = (int) Math.ceil(data.getCount() / 20.);
                     Items resultItems = new Items();
                     resultItems.add(new SplitLine());
@@ -104,6 +105,13 @@ public class YXBListActivity extends ImmerseActivity implements AdvRefreshListen
             @Override
             public void onFailure(String code, String msg) {
                 L.e(TAG, code + " " + msg);
+                baseRefreshLayout.resultLoadData(items,null,null);
+            }
+
+            @Override
+            public void onFailure(VolleyError error) {
+                super.onFailure(error);
+                baseRefreshLayout.resultLoadData(items,null,null);
             }
         };
         httpCallbackDecode.setShowTs(true);

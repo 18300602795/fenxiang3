@@ -109,7 +109,71 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/item0"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_new_jifen_0" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="积分说明"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_kefu_divider" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item0_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·如何获取积分"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item0_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·积分如何使用"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -148,106 +212,95 @@
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item1_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·如何申请返利"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/item1_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·如何申请返利"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·返利到账时间"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_5"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·道具申请方式"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_7"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·返利到账不符"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item1_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item1_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·无法申请返利"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·返利到账方式"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_6"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·返利未到怎么办"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item1_8"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·如何查看角色ID"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·返利到账时间"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/item02"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_new_jiaoyi_02" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="交易帮助"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/ic_kefu_divider" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="3"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/item02_1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·如何进行交易"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/item02_2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·交易注意事项"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -286,51 +339,33 @@
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+
+                    <TextView
+                        android:id="@+id/item2_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·充值未到账"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/item2_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·充值未到账"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item2_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item2_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·支付限额怎么办"
-                            android:textSize="12sp" />
-
-
-                    </LinearLayout>
-
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·支付限额怎么办"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -369,67 +404,32 @@
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item3_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·忘记账号或密码"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/item3_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·忘记账户"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item3_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·如何换绑手机号"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item3_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item3_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·忘记密码"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item3_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·账号被盗、交易专栏"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·如何换绑手机号"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
@@ -452,7 +452,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="其他帮助"
+                        android:text="其他问题"
                         android:textColor="@color/black" />
                 </LinearLayout>
 
@@ -468,62 +468,26 @@
                     android:layout_weight="3"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item4_1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item4_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·下载登录异常"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item4_3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·电脑如何玩手游"
-                            android:textSize="12sp" />
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·下载登录异常"
+                        android:textSize="12sp" />
 
 
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/item4_2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/item4_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·游戏内悬浮球"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/item4_4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="·IOS设置信任"
-                            android:textSize="12sp" />
-
-                    </LinearLayout>
+                        android:gravity="center_vertical"
+                        android:singleLine="true"
+                        android:text="·游戏内悬浮窗"
+                        android:textSize="12sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -546,6 +510,7 @@
                     android:id="@+id/email_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingTop="5dp"
                     android:text="邮箱" />
 
@@ -553,6 +518,7 @@
                     android:id="@+id/qq_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
                     android:paddingTop="5dp"
                     android:text="QQ" />
             </LinearLayout>

@@ -165,7 +165,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:text="赚钱赚分赚大礼"
+                    android:text="赚钱免费玩游戏"
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>

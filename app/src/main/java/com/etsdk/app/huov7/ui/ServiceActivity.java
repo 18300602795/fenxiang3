@@ -2,6 +2,7 @@ package com.etsdk.app.huov7.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,11 +20,14 @@ import com.etsdk.app.huov7.view.StrokeTextView;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
+import com.game.sdk.log.T;
 import com.game.sdk.util.GsonUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.liang530.log.L;
 import com.liang530.system.BasePhone;
+
+import java.net.URI;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +50,7 @@ public class ServiceActivity extends ImmerseActivity {
     TextView qq_tv;
     private ServiceQqAdapter serviceQqAdapter;
     private ServiceQqGroupAdapter serviceQqGroupAdapter;
+    HelpInfoBean infoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +79,15 @@ public class ServiceActivity extends ImmerseActivity {
         if (helpInfo == null) {
             return;
         }
+        infoBean = helpInfo;
         tvTel.setText(helpInfo.getTel());
         time_tv.setText("工作日：" + helpInfo.getService_time().replace("| ", "\n").replace('|', '\n'));//以竖线分隔
         serviceQqAdapter.setQqList(helpInfo.getQq());
         serviceQqGroupAdapter.setServiceQqGroupList(helpInfo.getQqgroup(), helpInfo.getQqgroupkey());
         email_tv.setText("邮箱：" + helpInfo.getEmail());
+        if (helpInfo.getQq().length != 0) {
+            qq_tv.setText("QQ：" + helpInfo.getQq()[0]);
+        }
     }
 
     private void getAboutUsInfo() {
@@ -114,12 +123,13 @@ public class ServiceActivity extends ImmerseActivity {
         return starter;
     }
 
-    @OnClick({R.id.iv_titleLeft, R.id.call_tv, R.id.item1,
-            R.id.item1_1, R.id.item1_2, R.id.item1_3, R.id.item1_4,
-            R.id.item1_5, R.id.item1_6, R.id.item1_7, R.id.item1_8,
+    @OnClick({R.id.iv_titleLeft, R.id.call_tv,
+            R.id.item0, R.id.item0_1, R.id.item0_2,
+            R.id.item1, R.id.item1_1, R.id.item1_2,
+            R.id.item02, R.id.item02_1, R.id.item02_2,
             R.id.item2, R.id.item2_1, R.id.item2_2,
-            R.id.item3, R.id.item3_1, R.id.item3_2, R.id.item3_3, R.id.item3_4,
-            R.id.item4, R.id.item4_1, R.id.item4_2, R.id.item4_3, R.id.item4_4,
+            R.id.item3, R.id.item3_1, R.id.item3_2,
+            R.id.item4, R.id.item4_1, R.id.item4_2,
             R.id.email_tv, R.id.qq_tv})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -129,72 +139,91 @@ public class ServiceActivity extends ImmerseActivity {
             case R.id.call_tv:
                 BasePhone.callDial(this, tvTel.getText().toString());
                 break;
-            case R.id.item1:
+            case R.id.item0:
                 ServiceListActivity.start(mContext, 0, 0);
                 break;
-            case R.id.item1_1:
+            case R.id.item0_1:
                 ServiceListActivity.start(mContext, 0, 0);
                 break;
-            case R.id.item1_2:
+            case R.id.item0_2:
                 ServiceListActivity.start(mContext, 0, 1);
                 break;
-            case R.id.item1_3:
-                ServiceListActivity.start(mContext, 0, 2);
-                break;
-            case R.id.item1_4:
-                ServiceListActivity.start(mContext, 0, 3);
-                break;
-            case R.id.item1_5:
-                ServiceListActivity.start(mContext, 0, 4);
-                break;
-            case R.id.item1_6:
-                ServiceListActivity.start(mContext, 0, 5);
-                break;
-            case R.id.item1_7:
-                ServiceListActivity.start(mContext, 0, 6);
-                break;
-            case R.id.item1_8:
-                ServiceListActivity.start(mContext, 0, 7);
-                break;
-            case R.id.item2:
+            case R.id.item1:
                 ServiceListActivity.start(mContext, 1, 0);
                 break;
-            case R.id.item2_1:
+            case R.id.item1_1:
                 ServiceListActivity.start(mContext, 1, 0);
                 break;
-            case R.id.item2_2:
+            case R.id.item1_2:
                 ServiceListActivity.start(mContext, 1, 1);
                 break;
-            case R.id.item3:
+            case R.id.item02:
                 ServiceListActivity.start(mContext, 2, 0);
                 break;
-            case R.id.item3_1:
+            case R.id.item02_1:
                 ServiceListActivity.start(mContext, 2, 0);
                 break;
-            case R.id.item3_2:
+            case R.id.item02_2:
                 ServiceListActivity.start(mContext, 2, 1);
                 break;
-            case R.id.item3_3:
-                ServiceListActivity.start(mContext, 2, 2);
-                break;
-            case R.id.item3_4:
-                ServiceListActivity.start(mContext, 2, 3);
-                break;
-            case R.id.item4:
+            case R.id.item2:
                 ServiceListActivity.start(mContext, 3, 0);
                 break;
-            case R.id.item4_1:
+            case R.id.item2_1:
                 ServiceListActivity.start(mContext, 3, 0);
                 break;
-            case R.id.item4_2:
+            case R.id.item2_2:
                 ServiceListActivity.start(mContext, 3, 1);
                 break;
-            case R.id.item4_3:
-                ServiceListActivity.start(mContext, 3, 2);
+            case R.id.item3:
+                ServiceListActivity.start(mContext, 4, 0);
                 break;
-            case R.id.item4_4:
-                ServiceListActivity.start(mContext, 3, 3);
+            case R.id.item3_1:
+                ServiceListActivity.start(mContext, 4, 0);
+                break;
+            case R.id.item3_2:
+                ServiceListActivity.start(mContext, 4, 1);
+                break;
+            case R.id.item4:
+                ServiceListActivity.start(mContext, 5, 0);
+                break;
+            case R.id.item4_1:
+                ServiceListActivity.start(mContext, 5, 0);
+                break;
+            case R.id.item4_2:
+                ServiceListActivity.start(mContext, 5, 1);
+                break;
+            case R.id.email_tv:
+                if (infoBean != null)
+                    sendMail(infoBean.getEmail());
+                break;
+            case R.id.qq_tv:
+                if (infoBean != null && infoBean.getQq().length != 0) {
+                    openQq(mContext, infoBean.getQq()[0]);
+                }
                 break;
         }
+    }
+
+    protected void openQq(Context context, String qq) {
+        try {
+            String url = "mqqwpa://im/chat?chat_type=wpa&uin=" + qq;
+            context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        } catch (Exception e) {
+            e.printStackTrace();
+            T.s(context, "请先安装最新版qq");
+        }
+    }
+
+    protected void sendMail(String email) {
+        Intent i = new Intent(Intent.ACTION_SEND);
+//         i.setType("text/plain"); //模拟器请使用这行
+        i.setType("message/rfc822"); // 真机上使用这行
+        i.putExtra(Intent.EXTRA_EMAIL,
+                new String[]{email});
+        i.putExtra(Intent.EXTRA_SUBJECT, "");
+        i.putExtra(Intent.EXTRA_TEXT, "");
+        startActivity(Intent.createChooser(i,
+                "请选择邮箱"));
     }
 }

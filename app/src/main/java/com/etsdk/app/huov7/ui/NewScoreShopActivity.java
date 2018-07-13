@@ -23,7 +23,6 @@ import com.etsdk.app.huov7.model.GoodsBeanList;
 import com.etsdk.app.huov7.model.ScoreShopAd;
 import com.etsdk.app.huov7.model.ScoreShopOption;
 import com.etsdk.app.huov7.model.SplitLine;
-import com.etsdk.app.huov7.model.TjColumnHead;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.provider.AdImageViewProvider;
 import com.etsdk.app.huov7.provider.CouponListItemViewProvider;
@@ -32,23 +31,17 @@ import com.etsdk.app.huov7.provider.EntityGoodGridViewProvider;
 import com.etsdk.app.huov7.provider.GiftCardViewProvider;
 import com.etsdk.app.huov7.provider.ScoreShopOptionViewProvider;
 import com.etsdk.app.huov7.provider.SplitLineViewProvider;
-import com.etsdk.app.huov7.provider.TjColumnHeadViewProvider;
 import com.etsdk.hlrefresh.AdvRefreshListener;
 import com.etsdk.hlrefresh.BaseRefreshLayout;
 import com.etsdk.hlrefresh.MVCSwipeRefreshHelper;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
-import com.game.sdk.log.L;
 import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.liang530.rxvolley.HttpJsonCallBackDialog;
 import com.liang530.rxvolley.NetRequest;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +52,6 @@ import butterknife.OnClick;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 
-import static android.R.attr.data;
-
 public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshListener {
 
 
@@ -68,6 +59,8 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
     ImageView ivTitleLeft;
     @BindView(R.id.tv_titleName)
     TextView tvTitleName;
+    @BindView(R.id.iv_title_down)
+    ImageView iv_down;
     @BindView(R.id.tv_titleRight)
     TextView tvTitleRight;
     @BindView(R.id.recyclerView)
@@ -87,6 +80,7 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_score_shop);
+//        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         setupUI();
     }
@@ -103,6 +97,8 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
 
     private void setupUI() {
         tvTitleName.setText("积分商城");
+        iv_down.setVisibility(View.VISIBLE);
+        iv_down.setImageResource(R.mipmap.integral);
         baseRefreshLayout = new MVCSwipeRefreshHelper(swrefresh);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -121,16 +117,16 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
         });
         recyclerView.setLayoutManager(gridLayoutManager);
         multiTypeAdapter = new MultiTypeAdapter(items);
-//        multiTypeAdapter.register(CouponListItem.class, new CouponListItemViewProvider());
+        multiTypeAdapter.register(CouponListItem.class, new CouponListItemViewProvider());
         multiTypeAdapter.register(SplitLine.class, new SplitLineViewProvider());
-//        multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
-//        multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
+        multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
+        multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
 //        TjColumnHeadViewProvider tjColumnHeadViewProvider = new TjColumnHeadViewProvider();
 //        tjColumnHeadViewProvider.setRequestBackGroundColor(true);//设置需要背景颜色
 //        multiTypeAdapter.register(TjColumnHead.class,tjColumnHeadViewProvider );
         multiTypeAdapter.register(GiftCard.class, new GiftCardViewProvider());
 //        multiTypeAdapter.register(Goods.class, new EntityGridViewProvider());
-//        multiTypeAdapter.register(EntityGoodGrid.class, new EntityGoodGridViewProvider());
+        multiTypeAdapter.register(EntityGoodGrid.class, new EntityGoodGridViewProvider());
         multiTypeAdapter.register(ScoreShopOption.class, new ScoreShopOptionViewProvider());
         // 设置适配器
         baseRefreshLayout.setAdapter(multiTypeAdapter);
@@ -151,30 +147,19 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
     private void getMyScore() {
         final BaseRequestBean baseRequestBean = new BaseRequestBean();
         HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(baseRequestBean));
-        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(this, httpParamsBuild.getAuthkey()) {
+        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(this, httpParamsBuild.getAuthkey(), 1) {
             @Override
             public void onDataSuccess(UserInfoResultBean data) {
                 if (data != null) {
                     scoreShopOption.setMyintegral(data.getMyintegral());
                     multiTypeAdapter.notifyDataSetChanged();
-                } else {
-                    scoreShopOption.setMyintegral("0");
-                    multiTypeAdapter.notifyDataSetChanged();
                 }
-            }
-
-            @Override
-            public void onFailure(String code, String msg) {
-                scoreShopOption.setMyintegral("0");
-                multiTypeAdapter.notifyDataSetChanged();
             }
         };
         httpCallbackDecode.setShowTs(true);
         httpCallbackDecode.setLoadingCancel(false);
         httpCallbackDecode.setShowLoading(false);
         RxVolley.post(AppApi.getUrl(AppApi.userIntegralApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
-
-
     }
 
     private void getCoupon() {
@@ -281,42 +266,42 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
 
     private synchronized void updateListData() {
         Items newItems = new Items();
-//        if(scoreShopAd!=null&&scoreShopAd.getShoptopper()!=null
-//                &&scoreShopAd.getShoptopper().getList()!=null&&scoreShopAd.getShoptopper().getList().size()>0){
-//            AdImage adImage = scoreShopAd.getShoptopper().getList().get(0);
-//            adImage.setRequestPadding(false);
-//            newItems.add(adImage);
-//        }
+        if (scoreShopAd != null && scoreShopAd.getShoptopper() != null
+                && scoreShopAd.getShoptopper().getList() != null && scoreShopAd.getShoptopper().getList().size() > 0) {
+            AdImage adImage = scoreShopAd.getShoptopper().getList().get(0);
+            adImage.setRequestPadding(false);
+            newItems.add(adImage);
+        }
         newItems.add(scoreShopOption);
-//        if(couponListItems.size()>0){
+        if (couponListItems.size() > 0) {
 //            newItems.add(new TjColumnHead(TjColumnHead.TYPE_SCORE_COUPONE));
-//            newItems.addAll(couponListItems.subList(0,couponListItems.size()>5?5:couponListItems.size()));
-////            for(CouponListItem couponListItem:couponListItems){
-////                newItems.add(couponListItem);
-////            }
-//        }
-//        if(scoreShopAd!=null&&scoreShopAd.getShopcoupon()!=null
-//                &&scoreShopAd.getShopcoupon().getList()!=null&&scoreShopAd.getShopcoupon().getList().size()>0){
-//            AdImage adImage = scoreShopAd.getShopcoupon().getList().get(0);
-//            adImage.setRequestPadding(true);
-//            newItems.add(adImage);
-//        }
+            newItems.addAll(couponListItems.subList(0, couponListItems.size() > 5 ? 5 : couponListItems.size()));
+//            for(CouponListItem couponListItem:couponListItems){
+//                newItems.add(couponListItem);
+//            }
+        }
+        if (scoreShopAd != null && scoreShopAd.getShopcoupon() != null
+                && scoreShopAd.getShopcoupon().getList() != null && scoreShopAd.getShopcoupon().getList().size() > 0) {
+            AdImage adImage = scoreShopAd.getShopcoupon().getList().get(0);
+            adImage.setRequestPadding(true);
+            newItems.add(adImage);
+        }
         if (giftCardList.size() > 0) {
-            newItems.add(new TjColumnHead(TjColumnHead.TYPE_SCORE_GIFT_CARD));
+//            newItems.add(new TjColumnHead(TjColumnHead.TYPE_SCORE_GIFT_CARD));
             for (GiftCard giftCard : giftCardList) {
                 newItems.add(giftCard);
             }
         }
-//        if(scoreShopAd!=null&&scoreShopAd.getShopgiftcard()!=null
-//                &&scoreShopAd.getShopgiftcard().getList()!=null&&scoreShopAd.getShopgiftcard().getList().size()>0){
-//            AdImage adImage = scoreShopAd.getShopgiftcard().getList().get(0);
-//            adImage.setRequestPadding(true);
-//            newItems.add(adImage);
-//        }
-//        if(goodsList.size()>0){
+        if (scoreShopAd != null && scoreShopAd.getShopgiftcard() != null
+                && scoreShopAd.getShopgiftcard().getList() != null && scoreShopAd.getShopgiftcard().getList().size() > 0) {
+            AdImage adImage = scoreShopAd.getShopgiftcard().getList().get(0);
+            adImage.setRequestPadding(true);
+            newItems.add(adImage);
+        }
+        if (goodsList.size() > 0) {
 //            newItems.add(new TjColumnHead(TjColumnHead.TYPE_SCORE_GOODS));
-//            newItems.add(new EntityGoodGrid(goodsList));
-//        }
+            newItems.add(new EntityGoodGrid(goodsList));
+        }
         items.clear();
         baseRefreshLayout.resultLoadData(items, newItems, 1);
     }
@@ -326,14 +311,14 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
         context.startActivity(starter);
     }
 
-    @OnClick({R.id.iv_titleLeft, R.id.tv_titleRight})
+    @OnClick({R.id.iv_titleLeft, R.id.iv_title_down})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
                 finish();
                 break;
-            case R.id.tv_titleRight:
-                finish();
+            case R.id.iv_title_down:
+                MineScoreListActivity.start(mContext, "积分消费记录");
                 break;
         }
     }

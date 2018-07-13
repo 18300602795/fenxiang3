@@ -3,6 +3,7 @@ package com.game.sdk.http;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.LoginActivity;
 import com.game.sdk.SdkConstant;
 import com.game.sdk.domain.NotProguard;
@@ -37,6 +38,7 @@ public abstract class HttpCallbackDecode<E> extends HttpCallback {
     private String authkey;
     private LoadWaitDialogUtil loadingDialogView;
     private boolean isBack;
+    private int shop;
 
 
     public HttpCallbackDecode(Context activity, String authkey) {
@@ -48,6 +50,12 @@ public abstract class HttpCallbackDecode<E> extends HttpCallback {
         this.activity = activity;
         this.authkey = authkey;
         this.isBack = isBack;
+    }
+
+    public HttpCallbackDecode(Context activity, String authkey, int shop) {
+        this.activity = activity;
+        this.authkey = authkey;
+        this.shop = shop;
     }
 
     @Override
@@ -74,7 +82,14 @@ public abstract class HttpCallbackDecode<E> extends HttpCallback {
                     LoginActivity.start(activity);
                     return;
                 }
-                onFailure(code + "", msg);
+                if (shop == 1) {
+                    String responcedata = "{\"myintegral\":0}";
+                    E dataObject = new Gson().fromJson(responcedata, getTClass());
+                    onDataSuccess(dataObject);
+                } else {
+                    onFailure(code + "", msg);
+                }
+
                 return;
             } else if (TextUtils.isEmpty(data) || "null".equals(data)) {//数据是null的
                 onDataSuccess(null);

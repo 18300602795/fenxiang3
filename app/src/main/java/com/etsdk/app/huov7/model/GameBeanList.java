@@ -18,10 +18,10 @@ public class GameBeanList extends BaseModel{
     }
 
     public static class DataBean {
-        private int count;
+        private double count;
         private List<GameBean> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 

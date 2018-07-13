@@ -21,11 +21,13 @@ import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.pay.ChargeActivityForWap;
 import com.etsdk.app.huov7.ui.AccountManageActivity;
 import com.etsdk.app.huov7.ui.AccountSaveActivity;
+import com.etsdk.app.huov7.ui.AwardRecordActivity;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.FeedBackActivity;
 import com.etsdk.app.huov7.ui.LoginActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.MineGiftCouponListActivityNew;
+import com.etsdk.app.huov7.ui.MineGiftRecordActivity;
 import com.etsdk.app.huov7.ui.MyWalletActivity;
 import com.etsdk.app.huov7.ui.NewScoreShopActivity;
 import com.etsdk.app.huov7.ui.ServiceActivity;
@@ -228,6 +230,7 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
             case R.id.item_ll3:
                 //我的礼包
                 MineGiftCouponListActivityNew.start(mContext, MineGiftCouponListActivityNew.TYPE_GIFT, "礼包");
+//                MineGiftRecordActivity.start(mContext);
                 break;
             case R.id.item_ll4:
                 //账号安全

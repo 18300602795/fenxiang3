@@ -68,7 +68,7 @@ public class AppApi {
     //广告图
     public static final String slideListApi="slide/list";
     public static final String gameListApi ="game/list";
-
+    public static final String trygameApi ="trygame/selete";
     public static final String gameDetail="game/detail";
     public static final String aboutus="system/aboutus";
 
@@ -121,6 +121,7 @@ public class AppApi {
 
     public static final String addressUpdateApi="user/address/update";
     public static final String userGmlistApi="user/game/gmlist";
+    public static final String guestbookListApi="guestbook/lists";
     public static final String guestbookWriteApi="guestbook/write";
     public static final String userGiftListApi="user/gift/list";
     public static final String userCouponListApi="user/coupon/list";
@@ -128,6 +129,8 @@ public class AppApi {
     public static final String userGoodsListApi="user/goods/list";
     public static final String userGiftAddApi="user/gift/add";
     public static final String userGoodsAddApi="user/goods/add";
+    public static final String userExchangeApi="integral/exchange";
+
     public static final String userGetinvlistApi="user/integral/getinvlist";
     public static final String userActlistApi="integral/actlist";
     public static final String userPhoneVerifyApi="user/phone/verify";

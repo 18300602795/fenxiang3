@@ -18,6 +18,7 @@ import com.etsdk.app.huov7.util.RecyclerViewNoAnimator;
 import com.etsdk.hlrefresh.AdvRefreshListener;
 import com.etsdk.hlrefresh.BaseRefreshLayout;
 import com.etsdk.hlrefresh.MVCSwipeRefreshHelper;
+import com.game.sdk.log.L;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.liang530.rxvolley.HttpJsonCallBackDialog;
 import com.liang530.rxvolley.NetRequest;
@@ -140,13 +141,13 @@ public class GameListFragment extends AutoLazyFragment implements AdvRefreshList
             httpParams.put("type",type);
         }
         httpParams.put("page",requestPageNo);
-        httpParams.put("offset",20);
+        httpParams.put("offset",15);
         //成功，失败，null数据
         NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.gameListApi),new HttpJsonCallBackDialog<GameBeanList>(){
             @Override
             public void onDataSuccess(GameBeanList data) {
                 if(data!=null&&data.getData()!=null&&data.getData().getList()!=null){
-                    int maxPage = (int)Math.ceil(data.getData().getCount() / 20.);
+                    int maxPage = (int) Math.ceil(data.getData().getCount() / 15);
                     if(isnew==1||hot==1){//热门和新游只要20个
                         maxPage=1;
                     }

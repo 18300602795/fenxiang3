@@ -17,6 +17,7 @@ import com.etsdk.app.huov7.ui.EarnActivity;
 import com.etsdk.app.huov7.ui.RecommandTaskActivity;
 import com.etsdk.app.huov7.ui.SelectGamePayActivity;
 import com.etsdk.app.huov7.ui.SignInActivity;
+import com.etsdk.app.huov7.ui.TryGameListActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class DoTaskItemViewProvider
         if (intentMap == null) {
             intentMap=new HashMap<>();
             intentMap.put("sign", EarnActivity.getIntent(context));
+            intentMap.put("try", TryGameListActivity.getIntent(context, "玩游戏赚钱"));
             intentMap.put("uploadportrait", AccountManageActivity.getIntent(context));
             intentMap.put("tguser", RecommandTaskActivity.getIntent(context));
             intentMap.put("firstcharge", SelectGamePayActivity.getIntent(context));

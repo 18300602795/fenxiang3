@@ -6,8 +6,26 @@ import com.game.sdk.domain.BaseRequestBean;
  * Created by liu hong liang on 2017/1/22.
  */
 
-public class MineGoodsRequestBean extends BaseRequestBean{
+public class MineGoodsRequestBean extends BaseRequestBean {
     private String is_real;//	是	INT	1 表示虚拟物品 2 表示实物
+    private int page = 1;
+    private int offset = 10;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 
     public String getIs_real() {
         return is_real;

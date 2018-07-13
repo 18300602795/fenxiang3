@@ -15,16 +15,20 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.model.Goods;
 import com.etsdk.app.huov7.ui.dialog.HintDialogUtil;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.drakeet.multitype.ItemViewProvider;
+
+import static android.R.attr.format;
 
 /**
  * Created by liu hong liang on 2017/1/13.
  */
 public class MineGiftCardViewProvider
         extends ItemViewProvider<Goods, MineGiftCardViewProvider.ViewHolder> {
-
 
 
     @NonNull
@@ -37,30 +41,17 @@ public class MineGiftCardViewProvider
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final Goods mineGoods) {
-        holder.tvGoodsIntro.setText(mineGoods.getGoodsname());
-        holder.tvMoney.setText(mineGoods.getMarket_price()+"元");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        holder.tvGoodsIntro.setText("消耗积分：" + mineGoods.getIntegral());
+        holder.tvMoney.setText(mineGoods.getMarket_price());
 //        GlideDisplay.display(holder.ivEntityImg,mineGoods.getOriginal_img(),R.mipmap.ic_launcher);
         Glide.with(holder.context).load(mineGoods.getOriginal_img()).placeholder(R.mipmap.ic_launcher).into(holder.ivEntityImg);
-        if(isViewTypeStart(mineGoods)){
+        if (isViewTypeStart(mineGoods)) {
             holder.vLine.setVisibility(View.GONE);
-        }else{
+        } else {
             holder.vLine.setVisibility(View.VISIBLE);
         }
-        if(TextUtils.isEmpty(mineGoods.getNote())){//虚拟物品
-            holder.tvOption.setText("尚未发货");
-            holder.tvOption.setClickable(false);
-            holder.tvOption.setEnabled(false);
-        }else{
-            holder.tvOption.setText("查看卡密");
-            holder.tvOption.setClickable(true);
-            holder.tvOption.setEnabled(true);
-        }
-        holder.tvOption.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new HintDialogUtil().showHintDialog(v.getContext(),"查看卡密",mineGoods.getNote(),"确定",null,null);
-            }
-        });
+        holder.tvOption.setText(format.format(new Date((Long.valueOf(mineGoods.getCreate_time())) * 1000)));
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -77,9 +68,10 @@ public class MineGiftCardViewProvider
         @BindView(R.id.v_line)
         View vLine;
         Context context;
+
         ViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this,itemView);
+            ButterKnife.bind(this, itemView);
             context = itemView.getContext();
         }
     }

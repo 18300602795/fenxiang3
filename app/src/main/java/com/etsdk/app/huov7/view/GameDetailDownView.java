@@ -306,13 +306,15 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     }
 
     private void share() {
-        String url = "http://tui.idielian.com/agent.php/Front/Appdown/prelink/name/";
-        if (resultBean.getName().equals("官网")) {
-            url = "http://fxyouxi.com/index.html#/home";
-        } else {
-            String name_code = Base64.encodeToString(resultBean.getName().getBytes(), Base64.DEFAULT);
-            url = url + name_code;
-        }
+//        String url = "http://tui.idielian.com/agent.php/Front/Appdown/prelink/name/";
+//        if (resultBean.getName().equals("官网")) {
+//            url = "http://fxyouxi.com/index.html#/home";
+//        } else {
+//            String name_code = Base64.encodeToString(resultBean.getName().getBytes(), Base64.DEFAULT);
+//            url = url + name_code;
+//        }
+        String url = "http://m.fxyouxi.com/mobile/index.html#/appDetail/" + gameBean.getGameid();
+//        String url =  gameBean.getDownlink();
         L.i("333", "downlink：" + url);
         ShareUtil.showShare(getContext(), gameBean.getGamename(), gameBean.getWelfare() == null ? gameBean.getOneword() : gameBean.getWelfare(), gameBean.getIcon(), url);
     }
