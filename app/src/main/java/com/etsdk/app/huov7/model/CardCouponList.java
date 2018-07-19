@@ -18,14 +18,14 @@ public class CardCouponList extends BaseModel{
     }
 
     public static class DataBean{
-        private int count;//	INT	轮播图数量	5
+        private double count;//	INT	轮播图数量	5
         private List<CardCoupon>  list;//	JSON二维数组	轮播图列表
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

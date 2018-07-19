@@ -59,6 +59,14 @@ public class EarnActivity extends ImmerseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
     public static Intent getIntent(Context context) {
         Intent starter = new Intent(context, EarnActivity.class);
         return starter;
@@ -80,7 +88,7 @@ public class EarnActivity extends ImmerseActivity {
                 InviteActivity.start(EarnActivity.this);
                 break;
             case R.id.active_ll:
-                BindPhoneActivity.start(mContext);
+                BindPhoneActivity.start(mContext, false);
 //                EventActivity.start(EarnActivity.this, "2", null);
                 break;
             case R.id.demo_ll:

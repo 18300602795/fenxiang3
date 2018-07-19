@@ -64,7 +64,7 @@ public class UserSpendRecordActivity extends ImmerseActivity implements AdvRefre
         tvTitleName.setText("消费记录");
         tvTitleRight.setVisibility(View.GONE);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL, 30, getResources().getColor(R.color.line_lowgray)));
+//        recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL, 30, getResources().getColor(R.color.line_lowgray)));
 
         baseRefreshLayout = new MVCSwipeRefreshHelper(swrefresh);
         // 设置适配器
@@ -78,13 +78,14 @@ public class UserSpendRecordActivity extends ImmerseActivity implements AdvRefre
     public void getPageData(final int i) {
         final ChargeRrcordListRequestBean requestBean =new ChargeRrcordListRequestBean();
         requestBean.setPage(i);
-        requestBean.setOffset(10);
+        requestBean.setOffset(15);
         HttpParamsBuild httpParamsBuild=new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<ChargeRecordListBean>(this, httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(final ChargeRecordListBean data) {
                 if(data!=null&&data.getList()!=null){
-                    baseRefreshLayout.resultLoadData(adapter.getData(),data.getList(),10);
+                    int maxPage = (int) Math.ceil(data.getCount() / 15);
+                    baseRefreshLayout.resultLoadData(adapter.getData(),data.getList(),maxPage);
                 }else{
                     baseRefreshLayout.resultLoadData(adapter.getData(),new ArrayList(),i-1);
                 }

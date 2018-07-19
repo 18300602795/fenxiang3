@@ -108,13 +108,13 @@ public class TryGameListActivity extends ImmerseActivity implements AdvRefreshLi
 
             @Override
             public void onJsonSuccess(int code, String msg, String data) {
-                baseRefreshLayout.resultLoadData(items, null, null);
+                baseRefreshLayout.resultLoadData(items, new ArrayList(), requestPageNo - 1);
                 L.i("333", "code：" + code + " mag：" + msg + " data：" + data);
             }
 
             @Override
             public void onFailure(int errorNo, String strMsg, String completionInfo) {
-                baseRefreshLayout.resultLoadData(items, null, null);
+                baseRefreshLayout.resultLoadData(items, new ArrayList(), requestPageNo - 1);
                 L.i("333", "errorNo：" + errorNo + " strMsg：" + strMsg + " completionInfo：" + completionInfo);
             }
         });

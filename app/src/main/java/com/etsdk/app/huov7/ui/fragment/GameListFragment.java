@@ -179,6 +179,8 @@ public class GameListFragment extends AutoLazyFragment implements AdvRefreshList
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 }

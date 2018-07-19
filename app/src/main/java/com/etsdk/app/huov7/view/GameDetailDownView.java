@@ -30,9 +30,11 @@ import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.sharesdk.ShareDataEvent;
 import com.etsdk.app.huov7.sharesdk.ShareUtil;
 import com.etsdk.app.huov7.ui.LoginActivityV1;
+import com.etsdk.app.huov7.ui.SettingActivity;
 import com.etsdk.app.huov7.ui.WebViewActivity;
 import com.etsdk.app.huov7.ui.WebViewH5Activity;
 import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
+import com.etsdk.app.huov7.ui.dialog.Open4gDownHintDialog;
 import com.game.sdk.SdkConstant;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -54,6 +56,7 @@ import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 
 import static android.R.attr.category;
+import static android.R.attr.track;
 
 /**
  * Created by liu hong liang on 2017/1/19.
@@ -62,7 +65,7 @@ import static android.R.attr.category;
 public class GameDetailDownView extends FrameLayout implements ApklDownloadListener {
 
 
-    private static final String TAG = GameDetailDownView.class.getSimpleName();
+    private static final String TAG = "333";
     @BindView(R.id.pb_down)
     ProgressBar pbDown;
     @BindView(R.id.tv_down_status)
@@ -104,17 +107,17 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     public void setGameBean(GameBean gameBean) {
         this.gameBean = gameBean;
-        if (gameBean.getCategory().equals(AileApplication.selectH5)){
+        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
             isH5 = true;
-        }else {
+        } else {
             isH5 = false;
         }
-        if (isH5){
+        if (isH5) {
             tvDownStatus.setText("开启");
-        }else {
+        } else {
             tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
         }
-         if ("下载".equals(tvDownStatus.getText().toString().trim()) && !TextUtils.isEmpty(gameBean.getSize())) {
+        if ("下载".equals(tvDownStatus.getText().toString().trim()) && !TextUtils.isEmpty(gameBean.getSize())) {
             tvDownStatus.setText("下载（" + gameBean.getSize() + "）");
         }
         pbDown.setProgress(100);
@@ -139,8 +142,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void pending(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" pending");
-        if (isH5){
+        L.e(TAG, tasksManagerModel.getGameName() + " pending");
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -149,8 +152,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" progress");
-        if (isH5){
+        L.e(TAG, tasksManagerModel.getGameName() + " progress");
+        if (isH5) {
             return;
         }
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
@@ -159,8 +162,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void completed(TasksManagerModel tasksManagerModel) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" completed");
-        if (isH5){
+        L.e(TAG, tasksManagerModel.getGameName() + " completed");
+        if (isH5) {
             return;
         }
         pbDown.setProgress(100);
@@ -169,8 +172,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void paused(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" paused");
-        if (isH5){
+        L.e(TAG, tasksManagerModel.getGameName() + " paused");
+        if (isH5) {
             return;
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
@@ -180,8 +183,8 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void error(TasksManagerModel tasksManagerModel, Throwable e) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" error");
-        if (isH5){
+        L.e(TAG, tasksManagerModel.getGameName() + " error");
+        if (isH5) {
             return;
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
@@ -190,7 +193,7 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     @Override
     public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" prepareDown");
+        L.e(TAG, " prepareDown");
         if (tasksManagerModel == null) {
             tasksManagerModel = new TasksManagerModel();
             tasksManagerModel.setGameId(gameBean.getGameid());
@@ -203,6 +206,45 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
             DownloadHelper.start(tasksManagerModel);
         }
     }
+
+    @Override
+    public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint, boolean isError) {
+//        L.e(TAG, tasksManagerModel.getGameName()+" prepareDown");
+        if (noWifiHint) {//需要提示跳转到设置去打开非wifi下载
+            new Open4gDownHintDialog().showDialog(getContext(), new Open4gDownHintDialog.ConfirmDialogListener() {
+                @Override
+                public void ok() {
+                    SettingActivity.start(getContext());
+                }
+
+                @Override
+                public void cancel() {
+
+                }
+            });
+            return;
+        }
+        if (tasksManagerModel == null) {
+            tasksManagerModel = new TasksManagerModel();
+            tasksManagerModel.setGameId(gameBean.getGameid());
+            tasksManagerModel.setGameIcon(gameBean.getIcon());
+            tasksManagerModel.setGameName(gameBean.getGamename());
+            tasksManagerModel.setOnlyWifi(noWifiHint == true ? 0 : 1);
+            tasksManagerModel.setGameType(gameBean.getType());
+            if (isError) {
+                tasksManagerModel.setUrl(gameBean.getDownlink());
+                DownloadHelper.start(tasksManagerModel);
+            } else {
+                getDownUrl(tasksManagerModel);
+            }
+        } else if (isError && !tasksManagerModel.getUrl().equals(gameBean.getDownlink())) {
+            TasksManager.getImpl().deleteDbTaskByGameId(gameBean.getGameid());
+            DownloadHelper.onClick(gameBean.getGameid(), this, isError);
+        } else {
+            DownloadHelper.start(tasksManagerModel);
+        }
+    }
+
 
     private void getDownUrl(final TasksManagerModel tasksManagerModel) {
         final GameDownRequestBean gameDownRequestBean = new GameDownRequestBean();

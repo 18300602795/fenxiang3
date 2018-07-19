@@ -117,6 +117,13 @@ public class BackEditActivity extends ImmerseActivity {
         back_game_name.setText(selectGameEvent.getGameName());
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     @OnClick({R.id.back_return, R.id.back_post})
     public void onClick(View view) {

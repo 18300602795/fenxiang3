@@ -44,13 +44,13 @@ public class DoTaskItemViewProvider
     private void initIntentMap(Context context){
         if (intentMap == null) {
             intentMap=new HashMap<>();
-            intentMap.put("sign", EarnActivity.getIntent(context));
+            intentMap.put("sign", SignInActivity.getIntent(context));
             intentMap.put("try", TryGameListActivity.getIntent(context, "玩游戏赚钱"));
             intentMap.put("uploadportrait", AccountManageActivity.getIntent(context));
             intentMap.put("tguser", RecommandTaskActivity.getIntent(context));
             intentMap.put("firstcharge", SelectGamePayActivity.getIntent(context));
             intentMap.put("charge", SelectGamePayActivity.getIntent(context));
-            intentMap.put("bindmobile", BindPhoneActivity.getIntent(context));
+            intentMap.put("bindmobile", EarnActivity.getIntent(context));
         }
     }
     @Override

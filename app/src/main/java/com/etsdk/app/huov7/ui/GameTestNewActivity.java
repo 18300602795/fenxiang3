@@ -132,6 +132,14 @@ public class GameTestNewActivity extends ImmerseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
     private class MPagerAdapter extends FragmentPagerAdapter {
         public MPagerAdapter(FragmentManager fm) {
             super(fm);

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class CommRecordListBean {
 
-    private int count;
+    private double count;
     private List<DataBean> list;//收入记录、提现记录
     private List<DataBean> product_list;//商品列表
     private List<DataBean> share_list;//分享用户列表
@@ -30,11 +30,11 @@ public class CommRecordListBean {
         this.product_list = product_list;
     }
 
-    public int getCount() {
+    public double getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
     }
 

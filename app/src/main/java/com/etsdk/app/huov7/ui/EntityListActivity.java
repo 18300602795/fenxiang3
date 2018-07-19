@@ -69,6 +69,13 @@ public class EntityListActivity extends ImmerseActivity implements AdvRefreshLis
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     private void setupUI() {
         tvTitleName.setText("更多礼品卡");

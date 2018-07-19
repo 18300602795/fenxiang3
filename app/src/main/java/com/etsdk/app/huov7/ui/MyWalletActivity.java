@@ -13,6 +13,7 @@ import com.etsdk.app.huov7.getcash.ui.CommRecordActivity;
 import com.etsdk.app.huov7.getcash.ui.GetCashActivity;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
+import com.etsdk.app.huov7.pay.ChargeActivityForWap;
 import com.etsdk.app.huov7.ui.dialog.CouponExchangeDialogUtil;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -59,11 +60,17 @@ public class MyWalletActivity extends ImmerseActivity {
         getUserInfoData();
     }
 
-    @OnClick({R.id.iv_titleLeft, R.id.item_ll1, R.id.item_ll2, R.id.item_ll3, R.id.item_ll4, R.id.item_ll5, R.id.item_ll6})
+    @OnClick({R.id.iv_titleLeft, R.id.ptb_ll, R.id.integral_ll, R.id.item_ll1, R.id.item_ll2, R.id.item_ll3, R.id.item_ll4, R.id.item_ll5, R.id.item_ll6})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
                 finish();
+                break;
+            case R.id.ptb_ll:
+                ChargeActivityForWap.start(mContext, AppApi.getUrl(AppApi.chargePingtaibi), "平台币充值", null);
+                break;
+            case R.id.integral_ll:
+                EarnActivity.start(mContext);
                 break;
             case R.id.item_ll1:
                 YXBListActivity.start(mContext);

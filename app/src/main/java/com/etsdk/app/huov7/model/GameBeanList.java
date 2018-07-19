@@ -42,14 +42,14 @@ public class GameBeanList extends BaseModel{
      * 测试表新服表专用带礼包点击按钮
      */
     public static class GameGiftBean{
-        private int count;
+        private double count;
         private List<GameGiftItem> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

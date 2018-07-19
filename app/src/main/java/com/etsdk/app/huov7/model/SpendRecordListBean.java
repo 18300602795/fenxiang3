@@ -48,14 +48,14 @@ public class SpendRecordListBean {
          * list : [{"id":97,"order_id":"1493975570655810001","mem_id":77713,"agent_id":946,"app_id":100,"amount":100.99,"ptb_cnt":101,"from":1,"status":2,"create_time":1493975570,"update_time":1493975570},{"id":96,"order_id":"1493975517516970001","mem_id":77713,"agent_id":946,"app_id":100,"amount":100.99,"ptb_cnt":101,"from":1,"status":2,"create_time":1493975517,"update_time":1493975517},{"id":95,"order_id":"1493975317354150001","mem_id":77713,"agent_id":946,"app_id":100,"amount":100.99,"ptb_cnt":101,"from":1,"status":2,"create_time":1493975317,"update_time":1493975317},{"id":94,"order_id":"1493966313143780001","mem_id":77713,"agent_id":946,"app_id":100,"amount":100.99,"ptb_cnt":101,"from":1,"status":2,"create_time":1493966313,"update_time":1493966313},{"id":93,"order_id":"1493966213123110001","mem_id":77713,"agent_id":946,"app_id":100,"amount":100.99,"ptb_cnt":101,"from":1,"status":2,"create_time":1493966213,"update_time":1493966213}]
          */
 
-        private int count;
+        private double count;
         private List<ListBean> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

@@ -6,8 +6,8 @@ package com.etsdk.app.huov7.down;
  * TasksManager设置是否移动网络下载
  */
 
-public interface ApklDownloadListener<T>{
-    
+public interface ApklDownloadListener<T> {
+
     public void pending(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes);
 
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes);
@@ -21,10 +21,13 @@ public interface ApklDownloadListener<T>{
 
     public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint);
 
+    public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint, boolean isError);
+
     public void netOff();
 
     public void delete();
 
     public void netRecover();
+
     public void installSuccess();
 }

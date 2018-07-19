@@ -78,13 +78,14 @@ public class ChargeRecordFragment extends AutoLazyFragment implements AdvRefresh
     public void getPageData(final int requestPageNo) {
         final ChargeRrcordListRequestBean requestBean =new ChargeRrcordListRequestBean();
         requestBean.setPage(requestPageNo);
-        requestBean.setOffset(10);
+        requestBean.setOffset(15);
         HttpParamsBuild httpParamsBuild=new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<ChargeRecordListBean>(getActivity(), httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(final ChargeRecordListBean data) {
                 if(data!=null&&data.getList()!=null){
-                    baseRefreshLayout.resultLoadData(adapter.getData(),data.getList(),data.getCount(),10);
+                    int maxPage = (int) Math.ceil(data.getCount() / 15);
+                    baseRefreshLayout.resultLoadData(adapter.getData(),data.getList(),maxPage);
                 }else{
                     baseRefreshLayout.resultLoadData(adapter.getData(),new ArrayList(),requestPageNo-1);
                 }

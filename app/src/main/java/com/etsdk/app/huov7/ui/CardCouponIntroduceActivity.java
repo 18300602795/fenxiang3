@@ -83,6 +83,14 @@ public class CardCouponIntroduceActivity extends ImmerseActivity implements AdvR
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
     @OnClick({R.id.iv_titleLeft, R.id.tv_titleRight})
     public void onClick(View view) {
         switch (view.getId()) {

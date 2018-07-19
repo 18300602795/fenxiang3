@@ -123,7 +123,9 @@ public class SellFragment extends AutoLazyFragment {
     @Override
     protected void onDestroyViewLazy() {
         super.onDestroyViewLazy();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         if (imagebox != null) {
             imagebox = null;
         }

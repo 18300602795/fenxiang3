@@ -326,8 +326,14 @@ public class NewListGameItem extends BaseDownView {
         if (isH5) {
             return;
         }
-        pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
-        tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
+        if (tasksManagerModel.getUrl().equals(gameBean.getDownlink())){
+            pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
+            tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
+        }else {
+            DownloadHelper.onClick(gameBean.getGameid(), this);
+//            DownloadHelper.start(tasksManagerModel);
+        }
+
     }
 
     @Override
@@ -356,6 +362,44 @@ public class NewListGameItem extends BaseDownView {
             tasksManagerModel.setGameType(gameBean.getType());
 //            tasksManagerModel.setUrl(gameBean.getDownlink());
             getDownUrl(tasksManagerModel);
+        } else{
+            DownloadHelper.start(tasksManagerModel);
+        }
+    }
+
+    @Override
+    public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint, boolean isError) {
+//        L.e(TAG, tasksManagerModel.getGameName()+" prepareDown");
+        if (noWifiHint) {//需要提示跳转到设置去打开非wifi下载
+            new Open4gDownHintDialog().showDialog(getContext(), new Open4gDownHintDialog.ConfirmDialogListener() {
+                @Override
+                public void ok() {
+                    SettingActivity.start(getContext());
+                }
+
+                @Override
+                public void cancel() {
+
+                }
+            });
+            return;
+        }
+        if (tasksManagerModel == null) {
+            tasksManagerModel = new TasksManagerModel();
+            tasksManagerModel.setGameId(gameBean.getGameid());
+            tasksManagerModel.setGameIcon(gameBean.getIcon());
+            tasksManagerModel.setGameName(gameBean.getGamename());
+            tasksManagerModel.setOnlyWifi(noWifiHint == true ? 0 : 1);
+            tasksManagerModel.setGameType(gameBean.getType());
+            if (isError) {
+                tasksManagerModel.setUrl(gameBean.getDownlink());
+                DownloadHelper.start(tasksManagerModel);
+            } else {
+                getDownUrl(tasksManagerModel);
+            }
+        } else if (isError && !tasksManagerModel.getUrl().equals(gameBean.getDownlink())) {
+            TasksManager.getImpl().deleteDbTaskByGameId(gameBean.getGameid());
+            DownloadHelper.onClick(gameBean.getGameid(), this, isError);
         } else {
             DownloadHelper.start(tasksManagerModel);
         }
@@ -407,7 +451,6 @@ public class NewListGameItem extends BaseDownView {
         httpCallbackDecode.setShowTs(true);
         httpCallbackDecode.setLoadingCancel(false);
         httpCallbackDecode.setShowLoading(true);
-        L.i("333", "url:" + AppApi.getUrl(AppApi.gameDownApi));
         RxVolley.post(AppApi.getUrl(AppApi.gameDownApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 

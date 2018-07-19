@@ -58,6 +58,11 @@ public class BaseDownView extends FrameLayout implements ApklDownloadListener<Ba
     }
 
     @Override
+    public void prepareDown(TasksManagerModel tasksManagerModel, boolean noWifiHint, boolean isError) {
+        DownloadHelper.start(tasksManagerModel);
+    }
+
+    @Override
     public void netOff() {
 
     }

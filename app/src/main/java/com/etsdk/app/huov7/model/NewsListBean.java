@@ -48,14 +48,14 @@ public class NewsListBean {
          * list : [{"id":4,"title":"测试","gameid":101,"img":"http://statics.niudaosy.com/upload/20170412/58edd9d952fe2.jpg","pudate":"2017-04-12","author":1,"commentcnt":0,"likecnt":0,"type":1}]
          */
 
-        private int count;
+        private double count;
         private List<ListBean> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

@@ -196,7 +196,9 @@ public class DownloadingManagerActivity extends ImmerseActivity implements Downl
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         downloadingListAdapter.release();
     }
 

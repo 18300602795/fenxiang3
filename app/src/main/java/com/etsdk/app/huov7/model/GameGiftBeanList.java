@@ -18,14 +18,14 @@ public class GameGiftBeanList extends BaseModel {
     }
 
     public static class DataBean {
-        private int count;
+        private double count;
         private List<GameGiftItem> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

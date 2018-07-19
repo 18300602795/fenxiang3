@@ -20,6 +20,7 @@ import com.etsdk.app.huov7.model.SmsSendRequestBean;
 import com.etsdk.app.huov7.model.SmsSendResultBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
+import com.game.sdk.log.L;
 import com.game.sdk.log.T;
 import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
@@ -47,6 +48,7 @@ public class BindPhoneActivity extends ImmerseActivity {
     Button btnBind;
     @BindView(R.id.activity_bind_phone)
     LinearLayout activityBindPhone;
+    private boolean isChange = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,12 @@ public class BindPhoneActivity extends ImmerseActivity {
     }
 
     private void setupUI() {
-        tvTitleName.setText("绑定手机号");
+        isChange = getIntent().getBooleanExtra("isChange", false);
+        if (isChange) {
+            tvTitleName.setText("换绑手机号");
+        } else {
+            tvTitleName.setText("绑定手机号");
+        }
     }
 
 
@@ -110,7 +117,12 @@ public class BindPhoneActivity extends ImmerseActivity {
         httpCallbackDecode.setShowTs(true);
         httpCallbackDecode.setLoadingCancel(false);
         httpCallbackDecode.setShowLoading(true);
-        RxVolley.post(AppApi.getUrl(AppApi.phoneBindApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
+        if (isChange) {
+            RxVolley.post(AppApi.getUrl(AppApi.phoneBindApi1), httpParamsBuild.getHttpParams(), httpCallbackDecode);
+        } else {
+            RxVolley.post(AppApi.getUrl(AppApi.phoneBindApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
+        }
+
 
     }
 
@@ -160,8 +172,9 @@ public class BindPhoneActivity extends ImmerseActivity {
         }, 1000);
     }
 
-    public static void start(Context context) {
+    public static void start(Context context, boolean isChange) {
         Intent starter = new Intent(context, BindPhoneActivity.class);
+        starter.putExtra("isChange", isChange);
         context.startActivity(starter);
     }
 

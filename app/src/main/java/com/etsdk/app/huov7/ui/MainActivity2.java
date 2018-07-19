@@ -293,6 +293,9 @@ public class MainActivity2 extends ImmerseActivity {
 
     @Override
     protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         super.onDestroy();
     }
 

@@ -145,7 +145,7 @@ public class GiftListItemViewProvider
                         applyGift(context, giftData);
                     }else {
                         T.s(context, "请先去绑定手机");
-                        BindPhoneActivity.start(context);
+                        BindPhoneActivity.start(context, false);
                     }
                 }
             }

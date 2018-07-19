@@ -20,6 +20,7 @@ import com.etsdk.app.huov7.model.SmsSendRequestBean;
 import com.etsdk.app.huov7.model.SmsSendResultBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
+import com.game.sdk.log.L;
 import com.game.sdk.log.T;
 import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
@@ -128,7 +129,7 @@ public class AuthPhoneActivity extends ImmerseActivity {
             @Override
             public void onDataSuccess(AuthSmsCodeResultBean data) {
                 if(data!=null&&"2".equals(data.getStatus())){
-                    BindPhoneActivity.start(mContext);
+                    BindPhoneActivity.start(mContext, true);
                     finish();
                 }else{
                     T.s(mContext,"验证失败");

@@ -9,14 +9,14 @@ import java.util.List;
 
 public class ChargeRecordListBean {
 
-    private int count;
+    private double count;
     private List<DataBean> list;
 
-    public int getCount() {
+    public double getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
     }
 

@@ -17,6 +17,7 @@ import com.etsdk.app.huov7.base.ImmerseActivity;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.LoginResultBean;
 import com.etsdk.app.huov7.model.RegisterMobileRequestBean;
+import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.SmsSendRequestBean;
 import com.etsdk.app.huov7.model.SmsSendResultBean;
 import com.game.sdk.db.impl.UserLoginInfodao;
@@ -28,6 +29,8 @@ import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.liang530.control.LoginControl;
 import com.liang530.utils.BaseTextUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.regex.Pattern;
 
@@ -173,6 +176,8 @@ public class PhoneRegisterActivityV1 extends ImmerseActivity {
             public void onDataSuccess(LoginResultBean data) {
                 if(data!=null){
                     LoginControl.saveToken(data.getUser_token());
+                    EventBus.getDefault().post(true);
+                    EventBus.getDefault().post(new ShowMsg(true));
                     T.s(mActivity,"注册成功");
                     //接口回调通知
                     //保存账号到数据库

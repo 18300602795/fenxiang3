@@ -9,14 +9,14 @@ import java.util.List;
 
 public class YXBListBean {
 
-    private int count;
+    private double count;
     private List<YXBBean> list;
 
-    public int getCount() {
+    public double getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
     }
 

@@ -63,6 +63,14 @@ public class GameTestNewFragmentNew extends AutoLazyFragment {
         }
     }
 
+    @Override
+    protected void onDestroyViewLazy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyViewLazy();
+    }
+
     private void setupUI() {
         mFragments.add(new GameStartFragment());
         if(BuildConfig.projectCode != 137){

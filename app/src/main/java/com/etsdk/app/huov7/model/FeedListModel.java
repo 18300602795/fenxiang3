@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FeedListModel implements Serializable {
     private List<FeedInfoModel> list;
-    private int count;
+    private double count;
 
     public List<FeedInfoModel> getList() {
         return list;
@@ -19,11 +19,11 @@ public class FeedListModel implements Serializable {
         this.list = list;
     }
 
-    public int getCount() {
+    public double getCount() {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(double count) {
         this.count = count;
     }
 }

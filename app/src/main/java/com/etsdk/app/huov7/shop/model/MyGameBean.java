@@ -48,14 +48,14 @@ public class MyGameBean {
          * count : 234
          */
 
-        private int count;
+        private double count;
         private List<ListBean> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

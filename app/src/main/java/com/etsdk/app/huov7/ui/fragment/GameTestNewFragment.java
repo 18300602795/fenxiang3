@@ -112,6 +112,13 @@ public class GameTestNewFragment extends AutoLazyFragment implements AdvRefreshL
         }
     }
 
+    @Override
+    protected void onDestroyViewLazy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroyViewLazy();
+    }
 
     @Override
     public void getPageData(final int requestPageNo) {

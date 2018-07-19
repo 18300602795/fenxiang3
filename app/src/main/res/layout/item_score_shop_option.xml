@@ -39,6 +39,7 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/text_gray"
             android:textSize="@dimen/text_hint"
+            android:visibility="gone"
             />
     </RelativeLayout>
     <View

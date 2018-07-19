@@ -226,7 +226,9 @@ public class SearchActivity extends ImmerseActivity implements AdvRefreshListene
         if(searchHistoryAdapter != null){
             searchHistoryAdapter.closeDb();
         }
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     /**

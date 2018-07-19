@@ -36,6 +36,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.R.attr.data;
+
 /**
  * Created by Administrator on 2017/12/29.
  */
@@ -67,10 +69,10 @@ public class BackRecordActivity extends ImmerseActivity implements AdvRefreshLis
 
     private void setupUI() {
         tvTitleName.setText("返利记录");
-        ivTitleRight.setVisibility(View.VISIBLE);
+        ivTitleRight.setVisibility(View.GONE);
         ivTitleRight.setText("申请返利");
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL, 30, getResources().getColor(R.color.line_lowgray)));
+//        recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL, 30, getResources().getColor(R.color.line_lowgray)));
 
         baseRefreshLayout = new MVCSwipeRefreshHelper(swrefresh);
         // 设置适配器
@@ -82,13 +84,22 @@ public class BackRecordActivity extends ImmerseActivity implements AdvRefreshLis
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLoginEvent(Boolean isLogin) {
-        if (isLogin){
+        if (isLogin) {
             baseRefreshLayout.refresh();
-        }else {
+        } else {
             finish();
         }
     }
-    @OnClick({R.id.iv_titleLeft,R.id.tv_titleRight})
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
+
+    @OnClick({R.id.iv_titleLeft, R.id.tv_titleRight})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
@@ -107,29 +118,31 @@ public class BackRecordActivity extends ImmerseActivity implements AdvRefreshLis
 
     @Override
     public void getPageData(final int requestPageNo) {
-        final ChargeRrcordListRequestBean requestBean =new ChargeRrcordListRequestBean();
+        final ChargeRrcordListRequestBean requestBean = new ChargeRrcordListRequestBean();
         requestBean.setPage(requestPageNo);
-        requestBean.setOffset(10);
-        HttpParamsBuild httpParamsBuild=new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
-        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<BackRecordList>(this, httpParamsBuild.getAuthkey()) {
+        requestBean.setOffset(15);
+        HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
+        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<BackRecordList.DataBean>(this, httpParamsBuild.getAuthkey()) {
             @Override
-            public void onDataSuccess(final BackRecordList data) {
-                if(data!=null&&data.getList()!=null){
-                    baseRefreshLayout.resultLoadData(adapter.getData(),data.getList(),10);
-                }else{
-                    baseRefreshLayout.resultLoadData(adapter.getData(),new ArrayList(),requestPageNo-1);
+            public void onDataSuccess(final BackRecordList.DataBean data) {
+                if (data != null && data.getList() != null) {
+                    int maxPage = (int) Math.ceil(data.getCount() / 15);
+                    baseRefreshLayout.resultLoadData(adapter.getData(), data.getList(), maxPage);
+                } else {
+                    baseRefreshLayout.resultLoadData(adapter.getData(), new ArrayList(), requestPageNo - 1);
                 }
             }
+
             @Override
             public void onFailure(String code, String msg) {
-                L.e(TAG, code+" "+msg);
-                baseRefreshLayout.resultLoadData(adapter.getData(),null,null);
+                L.e(TAG, code + " " + msg);
+                baseRefreshLayout.resultLoadData(adapter.getData(), null, null);
             }
         };
         httpCallbackDecode.setShowTs(true);
         httpCallbackDecode.setLoadingCancel(false);
         httpCallbackDecode.setShowLoading(false);
 
-        RxVolley.post(AppApi.getUrl(AppApi.backRecord), httpParamsBuild.getHttpParams(),httpCallbackDecode);
+        RxVolley.post(AppApi.getUrl(AppApi.backRecord), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 }

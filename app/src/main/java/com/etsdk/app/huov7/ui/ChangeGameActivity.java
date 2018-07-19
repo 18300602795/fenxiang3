@@ -91,6 +91,13 @@ public class ChangeGameActivity extends ImmerseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     @OnClick({R.id.iv_titleLeft, R.id.back_post, R.id.old_game, R.id.new_game})
     public void onClick(View view) {

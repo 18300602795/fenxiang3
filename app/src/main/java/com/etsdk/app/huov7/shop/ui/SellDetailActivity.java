@@ -129,8 +129,10 @@ public class SellDetailActivity extends ImmerseActivity {
 
     @Override
     protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void setupUI() {
@@ -160,8 +162,8 @@ public class SellDetailActivity extends ImmerseActivity {
     public void getDetailInfo() {
         loadview.showLoading();
         HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.dealAccountRead);
-        httpParams.put("id",getIntent().getIntExtra("id", 0));
-        NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.dealAccountRead),new HttpJsonCallBackDialog<ShopAccountDetailBean>(){
+        httpParams.put("id", getIntent().getIntExtra("id", 0));
+        NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.dealAccountRead), new HttpJsonCallBackDialog<ShopAccountDetailBean>() {
             @Override
             public void onDataSuccess(ShopAccountDetailBean data) {
                 updateInfo(data.getData());
@@ -174,12 +176,12 @@ public class SellDetailActivity extends ImmerseActivity {
         });
     }
 
-    public void setFavor(final boolean isFavor){
+    public void setFavor(final boolean isFavor) {
         AccountOperationFavorRequestBean requestBean = new AccountOperationFavorRequestBean();
-        requestBean.setId(getIntent().getIntExtra("id", 0)+"");
-        requestBean.setOperation(isFavor?"2":"1");//1收藏，2取消
+        requestBean.setId(getIntent().getIntExtra("id", 0) + "");
+        requestBean.setOperation(isFavor ? "2" : "1");//1收藏，2取消
 //        requestBean.setOperation("1");//1收藏，2取消
-        final int imaginId = isFavor? R.mipmap.huosdk_shoucang: R.mipmap.huosdk_shoucang2;//成功后的显示，与当前相反
+        final int imaginId = isFavor ? R.mipmap.huosdk_shoucang : R.mipmap.huosdk_shoucang2;//成功后的显示，与当前相反
         HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<ResultBean>(mContext, httpParamsBuild.getAuthkey()) {
             @Override
@@ -188,21 +190,21 @@ public class SellDetailActivity extends ImmerseActivity {
 
             @Override
             public void onDataSuccess(ResultBean data, String code, String msg) {
-                if("200".equals(code)){
+                if ("200".equals(code)) {
                     Drawable drawable = mContext.getResources().getDrawable(imaginId);
                     drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
                     tvFavor.setCompoundDrawables(null, drawable, null, null);
                     SellDetailActivity.this.isFavor = !SellDetailActivity.this.isFavor;
                     EventBus.getDefault().post(new ShopListRefreshEvent());
-                }else{
-                    T.s(mContext, "操作失败 "+msg);
+                } else {
+                    T.s(mContext, "操作失败 " + msg);
                 }
             }
 
             @Override
             public void onFailure(String code, String msg) {
                 L.e(TAG, code + " " + msg);
-                T.s(mContext, "操作失败 "+msg);
+                T.s(mContext, "操作失败 " + msg);
             }
         };
         httpCallbackDecode.setShowTs(true);
@@ -211,9 +213,9 @@ public class SellDetailActivity extends ImmerseActivity {
         RxVolley.post(AppApi.getUrl(AppApi.dealAccountOperationCollect), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 
-    private void cancelSell(final Context context, int id){
+    private void cancelSell(final Context context, int id) {
         SellCancelRequestBean requestBean = new SellCancelRequestBean();
-        requestBean.setId(id+"");
+        requestBean.setId(id + "");
         HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<ResultBean>(context, httpParamsBuild.getAuthkey()) {
             @Override
@@ -222,18 +224,18 @@ public class SellDetailActivity extends ImmerseActivity {
 
             @Override
             public void onDataSuccess(ResultBean data, String code, String msg) {
-                if("200".equals(code)){
+                if ("200".equals(code)) {
                     T.s(context, "已取消出售");
                     EventBus.getDefault().post(new ShopListRefreshEvent());
                     finish();
-                }else{
-                    T.s(context, "操作失败 "+msg);
+                } else {
+                    T.s(context, "操作失败 " + msg);
                 }
             }
 
             @Override
             public void onFailure(String code, String msg) {
-                T.s(context, "操作失败 "+msg);
+                T.s(context, "操作失败 " + msg);
             }
         };
         httpCallbackDecode.setShowTs(true);
@@ -259,20 +261,20 @@ public class SellDetailActivity extends ImmerseActivity {
             tvCreateTime.setText("");
         }
         tvMoney.setText("￥" + data.getTotal_price());
-        tvBuy.setText("立即购买 "+data.getTotal_price()+"元");
+        tvBuy.setText("立即购买 " + data.getTotal_price() + "元");
         tvDesc.setText(data.getDescription());
-        if(data.getImage()!=null) {
+        if (data.getImage() != null) {
             imageList.addAll(data.getImage());
         }
         sellScreenshortAdapter.notifyDataSetChanged();
-        if(data.getIs_self()==1){//不是自己发布
+        if (data.getIs_self() == 1) {//不是自己发布
             llOptionBuy.setVisibility(View.VISIBLE);
             llOptionSell.setVisibility(View.GONE);
-        }else if(data.getIs_self()==2){//是自己发布
+        } else if (data.getIs_self() == 2) {//是自己发布
             llOptionBuy.setVisibility(View.GONE);
             llOptionSell.setVisibility(View.VISIBLE);
         }
-        if(data.getOrder()!=null && (data.getOrder().getIs_buy()==2 || data.getOrder().getIs_sell()==2)){
+        if (data.getOrder() != null && (data.getOrder().getIs_buy() == 2 || data.getOrder().getIs_sell() == 2)) {
             llOptionBuy.setVisibility(View.VISIBLE);
             llOptionSell.setVisibility(View.GONE);
             tvBuy.setText("已交易");
@@ -287,17 +289,17 @@ public class SellDetailActivity extends ImmerseActivity {
             tvState.setText("已出售");
         } else if (data.getStatus() == SellOptionEvent.STATUS_VARIFY_FAIL) {
             tvState.setText("审核失败");
-        } else if (data.getStatus() == SellOptionEvent.STATUS_ON){
+        } else if (data.getStatus() == SellOptionEvent.STATUS_ON) {
             tvState.setText("审核通过");
         }
-        int imaginId = data.getIs_collect()==2? R.mipmap.huosdk_shoucang2: R.mipmap.huosdk_shoucang;
-        isFavor = data.getIs_collect()==2?true:false;
+        int imaginId = data.getIs_collect() == 2 ? R.mipmap.huosdk_shoucang2 : R.mipmap.huosdk_shoucang;
+        isFavor = data.getIs_collect() == 2 ? true : false;
         Drawable drawable = mContext.getResources().getDrawable(imaginId);
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());//必须设置图片大小，否则不显示
         tvFavor.setCompoundDrawables(null, drawable, null, null);
         tvDesc.setText(data.getDescription());
         GameBean gameBean = new GameBean();
-        gameBean.setGameid(data.getGameid()+"");
+        gameBean.setGameid(data.getGameid() + "");
         gameBean.setGamename(data.getGamename());
         gameBean.setOneword(data.getTitle());
         gameBean.setIcon(data.getIcon());
@@ -361,7 +363,7 @@ public class SellDetailActivity extends ImmerseActivity {
     }
 
     private void showShare(String platform) {
-        if(data == null){
+        if (data == null) {
             T.s(mContext, "暂未获取到分享信息，请稍后再试");
             return;
         }
@@ -372,9 +374,9 @@ public class SellDetailActivity extends ImmerseActivity {
         event.url = AppApi.getUrl(AppApi.shareRead);
         event.siteUrl = AppApi.getUrl(AppApi.shareRead);
         event.platform = platform;
-        if(TextUtils.isEmpty(data.getIcon())){
+        if (TextUtils.isEmpty(data.getIcon())) {
             event.resouceId = R.mipmap.ic_launcher;
-        }else{
+        } else {
             event.imageURL = data.getIcon();
         }
         ShareUtil.setCurrentShareTitle("分享");
@@ -388,7 +390,7 @@ public class SellDetailActivity extends ImmerseActivity {
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
                 L.e(TAG, "失败！");
-                T.s(mContext, "分享失败 "+i);
+                T.s(mContext, "分享失败 " + i);
             }
 
             @Override

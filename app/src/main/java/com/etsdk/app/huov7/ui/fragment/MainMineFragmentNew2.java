@@ -24,12 +24,14 @@ import com.etsdk.app.huov7.ui.AccountSaveActivity;
 import com.etsdk.app.huov7.ui.AwardRecordActivity;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.FeedBackActivity;
+import com.etsdk.app.huov7.ui.IntegralRecordActivity;
 import com.etsdk.app.huov7.ui.LoginActivity;
 import com.etsdk.app.huov7.ui.MessageActivity;
 import com.etsdk.app.huov7.ui.MineGiftCouponListActivityNew;
 import com.etsdk.app.huov7.ui.MineGiftRecordActivity;
 import com.etsdk.app.huov7.ui.MyWalletActivity;
 import com.etsdk.app.huov7.ui.NewScoreShopActivity;
+import com.etsdk.app.huov7.ui.ScoreRankActivity;
 import com.etsdk.app.huov7.ui.ServiceActivity;
 import com.etsdk.app.huov7.ui.SettingActivity;
 import com.etsdk.app.huov7.ui.UserChargeRecordActivity;
@@ -190,6 +192,12 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
         super.onDestroyViewLazy();
     }
 
+    @Override
+    protected void onResumeLazy() {
+        super.onResumeLazy();
+        getUserInfoData();
+    }
+
     @OnClick({R.id.iv_gotoMsg, R.id.iv_msg_tip, R.id.user_info_ll, R.id.recharge_btn, R.id.item_ll1,
             R.id.item_ll2, R.id.item_ll3, R.id.item_ll4, R.id.item_ll5,
             R.id.item_ll6, R.id.item_ll7, R.id.item_ll8, R.id.item_ll9,
@@ -256,8 +264,9 @@ public class MainMineFragmentNew2 extends AutoLazyFragment {
                 SettingActivity.start(mContext);
                 break;
             case R.id.item_ll8:
-                //消费记录
-                UserSpendRecordActivity.start(mContext);
+                //积分记录
+                IntegralRecordActivity.start(mContext);
+//                UserSpendRecordActivity.start(mContext);
                 break;
             case R.id.item_ll9:
                 //我的客服

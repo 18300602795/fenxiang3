@@ -16,6 +16,7 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.ImmerseActivity;
 import com.etsdk.app.huov7.http.AppApi;
 import com.etsdk.app.huov7.model.LoginResultBean;
+import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.UserNameRegisterRequestBean;
 import com.game.sdk.db.impl.UserLoginInfodao;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -26,6 +27,8 @@ import com.game.sdk.util.GsonUtil;
 import com.kymjs.rxvolley.RxVolley;
 import com.liang530.control.LoginControl;
 import com.liang530.utils.BaseTextUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.regex.Pattern;
 
@@ -164,6 +167,8 @@ public class UserNameRegisterActivityV1 extends ImmerseActivity {
                     LoginControl.saveToken(data.getUser_token());
 //                    T.s(loginActivity,"登陆成功："+data.getCp_user_token());
                     T.s(mActivity,"注册成功");
+                    EventBus.getDefault().post(true);
+                    EventBus.getDefault().post(new ShowMsg(true));
                     //接口回调通知
                     //保存账号到数据库
                     if (!UserLoginInfodao.getInstance(mActivity).findUserLoginInfoByName(account)) {

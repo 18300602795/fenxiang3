@@ -169,7 +169,7 @@ public class DownloadingGameItem extends FrameLayout implements View.OnClickList
             EventBus.getDefault().unregister(this);
             L.d(TAG, "EventBus unregister");
         }
-        if(tasksManagerModel!=null){
+        if (tasksManagerModel != null) {
 //            TasksManager.getImpl().removeDownloadListenerById(tasksManagerModel.getGameId(), downloadListener);
         }
     }

@@ -7,18 +7,39 @@ import java.util.List;
  * Created by Administrator on 2018/1/18.
  */
 
-public class BackRecordList implements Serializable{
-    private List<BackRecord> list;
+public class BackRecordList implements Serializable {
+    private DataBean data;
 
-    public List<BackRecord> getList() {
-        return list;
+    public DataBean getData() {
+        return data;
     }
 
-    public void setList(List<BackRecord> list) {
-        this.list = list;
+    public void setData(DataBean data) {
+        this.data = data;
     }
 
-    public class BackRecord implements Serializable{
+    public static class DataBean {
+        private double count;
+        private List<BackRecord> list;
+
+        public double getCount() {
+            return count;
+        }
+
+        public void setCount(double count) {
+            this.count = count;
+        }
+
+        public List<BackRecord> getList() {
+            return list;
+        }
+
+        public void setList(List<BackRecord> list) {
+            this.list = list;
+        }
+    }
+
+    public class BackRecord implements Serializable {
         String id;
         String time;
         String money;

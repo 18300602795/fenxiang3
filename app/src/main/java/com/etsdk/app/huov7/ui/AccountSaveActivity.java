@@ -104,7 +104,7 @@ public class AccountSaveActivity extends ImmerseActivity {
                     break;
                 }
                 if(TextUtils.isEmpty(phone)){
-                    BindPhoneActivity.start(mContext);
+                    BindPhoneActivity.start(mContext, false);
                 }else{
                     AuthPhoneActivity.start(mContext,phone);
                 }

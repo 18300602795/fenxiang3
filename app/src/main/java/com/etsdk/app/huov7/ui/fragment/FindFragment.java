@@ -15,6 +15,7 @@ import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.TjAdTop;
 import com.etsdk.app.huov7.provider.NetImageHolderView;
 import com.etsdk.app.huov7.shop.ui.MainShopActivity;
+import com.etsdk.app.huov7.ui.BackActivity;
 import com.etsdk.app.huov7.ui.BackRecordActivity;
 import com.etsdk.app.huov7.ui.CommentListActivity;
 import com.etsdk.app.huov7.ui.CouponDetailActivity;
@@ -97,6 +98,13 @@ public class FindFragment extends AutoLazyFragment {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     private void updateHomeData(HomePage1Data data) {
         final TjAdTop tjAdTop = new TjAdTop(data.getData().getHometopper().getList());
@@ -143,7 +151,8 @@ public class FindFragment extends AutoLazyFragment {
                 MessageActivity.start(mContext);
                 break;
             case R.id.shop_rl:
-                BackRecordActivity.start(mContext);
+//                BackRecordActivity.start(mContext);
+                BackActivity.start(mContext);
 //                new CouponExchangeDialogUtil().showExchangeDialog(getActivity(), "友情提示", "该功能正在开发中，敬请期待");
                 break;
             case R.id.earn_rl:

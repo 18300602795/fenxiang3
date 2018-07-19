@@ -22,7 +22,7 @@
         android:layout_marginTop="5dp"
         android:gravity="center"
         android:padding="5dp"
-        android:text="关注方法：打开微信>添加朋友>公众号>输入新快游戏\n搜索>选择纷享Game点击进入关注" />
+        android:text="关注方法：打开微信>添加朋友>公众号>输入纷享Game\n搜索>选择纷享Game点击进入关注" />
 
     <TextView
         android:layout_width="match_parent"

@@ -219,7 +219,9 @@ public class DownloadManagerActivityNew extends ImmerseActivity implements DownC
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         downCompliteListAdapter.release();
     }
 

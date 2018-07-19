@@ -8,14 +8,13 @@
     <RelativeLayout
         android:id="@+id/title_rl"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="@mipmap/bg_rank_top">
+        android:layout_height="155dp"
+        android:background="@mipmap/bg_rank_top1">
 
         <ImageView
             android:id="@+id/back_return"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:padding="10dp"
             android:src="@mipmap/back" />
 
@@ -28,8 +27,28 @@
             android:padding="10dp"
             android:text="返利申请"
             android:textColor="@android:color/white"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/back_record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:text="返利记录"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+
+        <ImageView
+            android:id="@+id/back_help"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:src="@mipmap/back_help" />
     </RelativeLayout>
 
     <ScrollView
@@ -44,7 +63,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -58,26 +77,23 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="5dp"
+                    android:layout_height="55dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
                     <EditText
                         android:id="@+id/back_select_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="35dp"
-                        android:background="@drawable/back_edit_bg"
+                        style="@style/back_edit_style"
                         android:focusable="false"
                         android:hint="充值时间"
                         android:paddingLeft="10dp"
-                        android:paddingRight="10dp"
-                        android:textSize="12sp" />
+                        android:paddingRight="10dp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -91,7 +107,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -107,7 +123,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -122,7 +138,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -137,7 +153,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal"
                 android:visibility="gone">
 
@@ -152,7 +168,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -168,7 +184,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -182,7 +198,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -197,7 +213,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -211,7 +227,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -226,7 +242,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="55dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -240,7 +256,7 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="55dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp">
 
@@ -266,8 +282,8 @@
                     android:layout_marginTop="15dp"
                     android:gravity="center"
                     android:text="*"
-                    android:visibility="invisible"
-                    android:textColor="@color/red" />
+                    android:textColor="@color/red"
+                    android:visibility="invisible" />
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -277,13 +293,10 @@
 
                     <EditText
                         android:id="@+id/back_explain"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/back_edit_bg"
+                        style="@style/back_edit_style"
                         android:hint="返利说明"
-                        android:minHeight="35dp"
-                        android:padding="10dp"
-                        android:textSize="12sp" />
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
         </LinearLayout>

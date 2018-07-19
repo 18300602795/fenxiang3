@@ -75,7 +75,9 @@ public class ShopListFragment extends AutoLazyFragment implements AdvRefreshList
         if(adapter!=null){
             adapter.release();
         }
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

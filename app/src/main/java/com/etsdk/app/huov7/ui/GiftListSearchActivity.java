@@ -84,6 +84,13 @@ public class GiftListSearchActivity extends ImmerseActivity implements AdvRefres
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     private void setupUI() {
 

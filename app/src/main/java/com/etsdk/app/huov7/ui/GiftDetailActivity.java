@@ -194,7 +194,7 @@ public class GiftDetailActivity extends ImmerseActivity implements View.OnClickL
                         applyGift();
                     }else {
                         T.s(context, "请先去绑定手机");
-                        BindPhoneActivity.start(context);
+                        BindPhoneActivity.start(context, false);
                     }
                 }
             }

@@ -17,14 +17,14 @@ public class AccountTypeListBean {
      */
 
 
-        private int count;
+        private double count;
         private List<TypeListBean> type_list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

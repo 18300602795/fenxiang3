@@ -21,6 +21,7 @@ import com.etsdk.app.huov7.model.DoTaskType;
 import com.etsdk.app.huov7.provider.DoTaskItemViewProvider;
 import com.etsdk.app.huov7.provider.DoTaskTopViewProvider;
 import com.etsdk.app.huov7.provider.DoTaskTypeViewProvider;
+import com.etsdk.app.huov7.util.StringUtils;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
@@ -98,6 +99,10 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         //对数据分类
         if(data.getList()!=null){
             for(DoTaskItem doTaskItem:data.getList()){
+                if (doTaskItem.getActcode().equals("bindmobile")){
+                    data.getList().remove(doTaskItem);
+                    continue;
+                }
                 List<DoTaskItem> doTaskItemList = map.get(doTaskItem.getTypeid());
                 if(doTaskItemList==null){
                     doTaskItemList=new ArrayList<>();
@@ -153,6 +158,9 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
     class DoTaskItemComparator implements Comparator<DoTaskItem> {
         @Override
         public int compare(DoTaskItem o1, DoTaskItem o2) {
+            if (StringUtils.isEmpty(o1.getFinishflag()) || StringUtils.isEmpty(o2.getFinishflag())){
+                return 1;
+            }
             return o1.getFinishflag().compareTo(o2.getFinishflag());
         }
     }

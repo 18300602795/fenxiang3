@@ -106,6 +106,14 @@ public class AccountManageActivity extends ImmerseActivity {
         getUserInfoData();
     }
 
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
     public static void start(Context context) {
         Intent starter = new Intent(context, AccountManageActivity.class);
         context.startActivity(starter);
@@ -165,7 +173,7 @@ public class AccountManageActivity extends ImmerseActivity {
                 if(tvPhoneStatus.getTag()!=null&&(int)tvPhoneStatus.getTag()==1){
                     AuthPhoneActivity.start(mContext,tvBindMobile.getText().toString());
                 }else{
-                    BindPhoneActivity.start(mContext);
+                    BindPhoneActivity.start(mContext, false);
                 }
                 break;
             case R.id.btn_logout:

@@ -88,7 +88,6 @@ public class MainGameFragment extends AutoLazyFragment {
             ivGotoMsg.setImageResource(R.mipmap.syxiaoxi_nomal);
         }
     }
-
     private void setupUI() {
         for (int i = 0; i < titleList.length; i++) {
             mTabEntities.add(new TabEntity(titleList[i], mIconSelectIds[i], mIconUnselectIds[i]));

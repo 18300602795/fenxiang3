@@ -22,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.AuthTask;
+import com.alipay.sdk.app.PayTask;
 import com.etsdk.app.huov7.BuildConfig;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.ImmerseActivity;
 import com.etsdk.app.huov7.http.AppApi;
+import com.etsdk.app.huov7.model.AuthResult;
 import com.etsdk.app.huov7.model.LoginRequestBean;
 import com.etsdk.app.huov7.model.LoginResultBean;
 import com.etsdk.app.huov7.model.ShowMsg;
@@ -141,8 +143,15 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case SDK_AUTH_FLAG: {
-                    String authResult = (String) msg.obj;
+                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
+                    String resultStatus = authResult.getResultStatus();
                     L.i("333", "授权结果：" + authResult);
+                    String authCode = String.format("authCode:%s", authResult.getAuthCode());
+                    String openId = String.format("alipayOpenId:%s", authResult.getAlipayOpenId());
+                    String userId = String.format("userId:%s", authResult.getUserId());
+                    L.i("333", "authCode：" + authCode);
+                    L.i("333", "openId：" + openId);
+                    L.i("333", "userId：" + userId);
                     break;
                 }
                 default:
@@ -188,9 +197,8 @@ public class LoginActivityV1 extends ImmerseActivity implements PlatformActionLi
             @Override
             public void run() {
                 // 构造AuthTask 对象
-                AuthTask authTask = new AuthTask(LoginActivityV1.this);
-                // 调用授权接口，获取授权结果
-                String result = authTask.auth(authInfo, true);
+                AuthTask task = new AuthTask(LoginActivityV1.this);
+                Map<String, String> result = task.authV2(authInfo, true);
                 Message msg = new Message();
                 msg.what = SDK_AUTH_FLAG;
                 msg.obj = result;

@@ -73,7 +73,6 @@ public class BackActivity extends ImmerseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_back);
         ButterKnife.bind(this);
-
         EventBus.getDefault().register(this);
     }
 
@@ -88,12 +87,32 @@ public class BackActivity extends ImmerseActivity {
         gameIcon = selectGameEvent.getGameIcon();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onLoginEvent(Boolean isLogin) {
+        if (!isLogin) {
+            finish();
+        }
+    }
 
-    @OnClick({R.id.back_return, R.id.back_post, R.id.back_select_date, R.id.back_game_name})
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
+
+    @OnClick({R.id.back_return, R.id.back_post, R.id.back_record, R.id.back_help, R.id.back_select_date, R.id.back_game_name})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back_return:
                 finish();
+                break;
+            case R.id.back_record:
+                BackRecordActivity.start(mContext);
+                break;
+            case R.id.back_help:
+                ServiceListActivity.start(mContext, 1, 0);
                 break;
             case R.id.back_post:
                 new BackHintDialogUtil().show(BackActivity.this, new BackHintDialogUtil.Listener() {
@@ -187,10 +206,10 @@ public class BackActivity extends ImmerseActivity {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     Date date = format.parse(time);
-                    if (date.getTime() > System.currentTimeMillis()){
+                    if (date.getTime() > System.currentTimeMillis()) {
                         T.s(mContext, "请选择正确的充值时间");
                         select_date.setText("");
-                    }else {
+                    } else {
                         select_date.setText(time);
                     }
                 } catch (ParseException e) {

@@ -41,7 +41,7 @@ public class MineGiftCardViewProvider
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull final Goods mineGoods) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         holder.tvGoodsIntro.setText("消耗积分：" + mineGoods.getIntegral());
         holder.tvMoney.setText(mineGoods.getMarket_price());
 //        GlideDisplay.display(holder.ivEntityImg,mineGoods.getOriginal_img(),R.mipmap.ic_launcher);

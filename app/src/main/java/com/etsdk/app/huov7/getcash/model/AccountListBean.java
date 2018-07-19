@@ -16,14 +16,14 @@ public class AccountListBean {
          * cash_list : [{"id":1,"paytype":"alipay","bankname":"中国银行","curbank":"广州支行","account":"2233333","cardname":"张三","isdefault":0}]
          */
 
-        private int count;
+        private double count;
         private List<CashListBean> list;
 
-        public int getCount() {
+        public double getCount() {
             return count;
         }
 
-        public void setCount(int count) {
+        public void setCount(double count) {
             this.count = count;
         }
 

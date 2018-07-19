@@ -107,6 +107,9 @@ public class AppApi {
     public static final String passwordUpdateApi="user/passwd/update";
     public static final String passwordFindApi="user/passwd/find";
     public static final String phoneBindApi ="user/phone/bind";
+    public static final String phoneBindApi1 ="user/phone/bind1";
+    public static final String phoneBindApi2 ="user/phone/bindmobile";
+    public static final String phoneBindApi3 ="user/phone/in_tie";
     public static final String userDetailApi="user/detail";
     public static final String nickNameUpdateApi="user/info/update";
     public static final String addressDetailApi="user/address/detail";
@@ -127,6 +130,7 @@ public class AppApi {
     public static final String userCouponListApi="user/coupon/list";
     public static final String userGameCouponListApi="user/game/gmlist";//简版app中的游戏币列表
     public static final String userGoodsListApi="user/goods/list";
+    public static final String userItegralListApi="integral/getintegral";
     public static final String userGiftAddApi="user/gift/add";
     public static final String userGoodsAddApi="user/goods/add";
     public static final String userExchangeApi="integral/exchange";
