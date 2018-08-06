@@ -640,7 +640,7 @@
             android:name=".ui.InviteActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="stateHidden" />
 
         <service android:name="com.etsdk.app.huov7.service.HuoSdkService" />
         <service android:name="com.etsdk.app.huov7.update.UpdateVersionService" />

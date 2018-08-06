@@ -29,6 +29,7 @@ import com.etsdk.app.huov7.model.ShareResultBean;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.sharesdk.ShareDataEvent;
 import com.etsdk.app.huov7.sharesdk.ShareUtil;
+import com.etsdk.app.huov7.ui.EarnActivity;
 import com.etsdk.app.huov7.ui.LoginActivityV1;
 import com.etsdk.app.huov7.ui.SettingActivity;
 import com.etsdk.app.huov7.ui.WebViewActivity;
@@ -57,6 +58,7 @@ import cn.sharesdk.framework.PlatformActionListener;
 
 import static android.R.attr.category;
 import static android.R.attr.track;
+import static com.etsdk.app.huov7.R.id.bind_ll;
 
 /**
  * Created by liu hong liang on 2017/1/19.
@@ -76,19 +78,23 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     private ShareResultBean.DateBean shareResult;
     private UserInfoResultBean resultBean;
     private boolean isH5;
+    private Context context;
 
     public GameDetailDownView(Context context) {
         super(context);
+        this.context = context;
         initUI();
     }
 
     public GameDetailDownView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         initUI();
     }
 
     public GameDetailDownView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context = context;
         initUI();
     }
 
@@ -168,6 +174,7 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         }
         pbDown.setProgress(100);
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
+//        DownloadHelper.installOrOpen(tasksManagerModel);
     }
 
     @Override
@@ -324,14 +331,7 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pb_down:
-                if (isH5) {
-                    Intent intent = new Intent(getContext(), WebViewH5Activity.class);
-                    intent.putExtra("url", gameBean.getDownlink());
-//                    intent.putExtra("titleName", gameBean.getGamename());
-                    getContext().startActivity(intent);
-                } else {
-                    DownloadHelper.onClick(gameBean.getGameid(), this);
-                }
+                getUserInfoData();
                 break;
             case R.id.tv_share:
                 L.i("333", "开始分享");
@@ -345,6 +345,32 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
                 }
                 break;
         }
+    }
+
+    public void getUserInfoData() {
+        final BaseRequestBean baseRequestBean = new BaseRequestBean();
+        HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(baseRequestBean));
+        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(context, httpParamsBuild.getAuthkey()) {
+            @Override
+            public void onDataSuccess(UserInfoResultBean data) {
+                if (isH5) {
+                    Intent intent = new Intent(getContext(), WebViewH5Activity.class);
+                    intent.putExtra("url", gameBean.getDownlink());
+//                    intent.putExtra("titleName", gameBean.getGamename());
+                    getContext().startActivity(intent);
+                } else {
+                    DownloadHelper.onClick(gameBean.getGameid(), GameDetailDownView.this);
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String msg) {
+            }
+        };
+        httpCallbackDecode.setShowTs(true);
+        httpCallbackDecode.setLoadingCancel(false);
+        httpCallbackDecode.setShowLoading(false);
+        RxVolley.post(AppApi.getUrl(AppApi.userDetailApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 
     private void share() {

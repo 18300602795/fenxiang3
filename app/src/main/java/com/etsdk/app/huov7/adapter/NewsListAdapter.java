@@ -85,7 +85,9 @@ public class NewsListAdapter extends RecyclerView.Adapter implements IDataAdapte
             }else if(type == 3){
                 ((ViewHolder) holder).tvNewsType.setText("攻略");
             }else if(type == 5){
-                ((ViewHolder) holder).tvNewsType.setText("评测");
+                ((ViewHolder) holder).tvNewsType.setText("测评");
+            }else if(type == 6){
+                ((ViewHolder) holder).tvNewsType.setText("积分活动");
             }else{
                 ((ViewHolder) holder).tvNewsType.setVisibility(View.GONE);
             }
@@ -112,7 +114,9 @@ public class NewsListAdapter extends RecyclerView.Adapter implements IDataAdapte
             }else if(type == 3){
                 ((AcrossViewHolder) holder).tvNewsType.setText("攻略");
             }else if(type == 5){
-                ((AcrossViewHolder) holder).tvNewsType.setText("评测");
+                ((AcrossViewHolder) holder).tvNewsType.setText("测评");
+            }else if(type == 6){
+                ((ViewHolder) holder).tvNewsType.setText("积分活动");
             }else{
                 ((AcrossViewHolder) holder).tvNewsType.setVisibility(View.GONE);
             }

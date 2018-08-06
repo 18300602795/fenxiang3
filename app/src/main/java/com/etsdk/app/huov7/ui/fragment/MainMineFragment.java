@@ -33,6 +33,7 @@ import com.etsdk.app.huov7.ui.ScoreShopActivity;
 import com.etsdk.app.huov7.ui.SelectGamePayActivity;
 import com.etsdk.app.huov7.ui.SettingActivity;
 import com.etsdk.app.huov7.ui.SignInActivity;
+import com.etsdk.app.huov7.util.ImgUtil;
 import com.etsdk.app.huov7.view.LoadStatusView;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -161,7 +162,8 @@ public class MainMineFragment extends AutoLazyFragment {
         tvCouponCount.setText(userInfoResultBean.getCouponcnt() + "张");
         tvGiftCount.setText(userInfoResultBean.getGiftcnt() + "个");
 //        GlideDisplay.display(ivMineHead, userInfoResultBean.getPortrait(), R.mipmap.ic_launcher);
-        Glide.with(getActivity()).load(userInfoResultBean.getPortrait()).placeholder(R.mipmap.ic_launcher).into(ivMineHead);
+//        Glide.with(getActivity()).load(userInfoResultBean.getPortrait()).placeholder(R.mipmap.ic_launcher).into(ivMineHead);
+        ImgUtil.setPhoto(userInfoResultBean.getPortrait(), ivMineHead);
         loadview.showSuccess();
         //存入用户信息
         LoginControl.saveKey(GsonUtil.getGson().toJson(userInfoResultBean));
@@ -216,27 +218,27 @@ public class MainMineFragment extends AutoLazyFragment {
     /**
      * 设置4个游戏币余额的高度显示
      */
-    private void setMoneyGameListItemHeight(){
+    private void setMoneyGameListItemHeight() {
         int childCount = llMineGameList.getChildCount();
         int deviceWidth = BaseAppUtil.getDeviceWidth(mContext);
-        int height=(deviceWidth-BaseAppUtil.dip2px(mContext,30)*2-BaseAppUtil.dip2px(mContext,20)*3)/4;
-        for(int i=0;i<childCount;i++){
+        int height = (deviceWidth - BaseAppUtil.dip2px(mContext, 30) * 2 - BaseAppUtil.dip2px(mContext, 20) * 3) / 4;
+        for (int i = 0; i < childCount; i++) {
             LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) llMineGameList.getChildAt(i).getLayoutParams();
-            layoutParams.height=height;
-            layoutParams.weight=height;
+            layoutParams.height = height;
+            layoutParams.weight = height;
             llMineGameList.getChildAt(i).setLayoutParams(layoutParams);
         }
     }
 
-    private void updateMoneyGameListShow(){
-        if(gameBeanList==null||gameBeanList.size()==0){
+    private void updateMoneyGameListShow() {
+        if (gameBeanList == null || gameBeanList.size() == 0) {
             llMineGameList.setVisibility(View.GONE);
-        }else{
+        } else {
             llMineGameList.setVisibility(View.VISIBLE);
             int size = gameBeanList.size();
-            for(int i=0;i<4;i++){
+            for (int i = 0; i < 4; i++) {
                 ImageView imageView = (ImageView) llMineGameList.getChildAt(i);
-                if(i<size){
+                if (i < size) {
                     final GameBean gameBean = gameBeanList.get(i);
                     imageView.setVisibility(View.VISIBLE);
                     imageView.setClickable(true);
@@ -244,12 +246,12 @@ public class MainMineFragment extends AutoLazyFragment {
                     imageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            NewGameDetailActivity.start(v.getContext(),gameBean.getGameid());
+                            NewGameDetailActivity.start(v.getContext(), gameBean.getGameid());
                         }
                     });
 //                    GlideDisplay.display(imageView, gameBean.getIcon(), R.mipmap.ic_launcher);
                     Glide.with(getActivity()).load(gameBean.getIcon()).placeholder(R.mipmap.ic_launcher).into(imageView);
-                }else{
+                } else {
                     imageView.setVisibility(View.INVISIBLE);
                     imageView.setClickable(false);
                     imageView.setEnabled(false);

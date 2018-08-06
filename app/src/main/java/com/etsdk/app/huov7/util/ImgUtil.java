@@ -13,10 +13,22 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.base.AileApplication;
+import com.etsdk.app.huov7.http.AppApi;
+import com.etsdk.app.huov7.model.AddressList;
+import com.game.sdk.log.L;
+import com.kymjs.rxvolley.client.HttpParams;
+import com.liang530.log.T;
+import com.liang530.rxvolley.HttpJsonCallBackDialog;
+import com.liang530.rxvolley.NetRequest;
+import com.liang530.utils.GlideDisplay;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.etsdk.app.huov7.base.AileApplication.imgs;
 
 /**
  * Created by admin on 2016/8/17.
@@ -24,6 +36,7 @@ import java.io.IOException;
 public class ImgUtil {
 
     private static RequestManager mManager;
+    private static int errorImage;
 
     public static void loadImage(String url, int icon_horizontal, ImageView imageView, android.app.Fragment fragment) {
         if (mManager == null) {
@@ -85,5 +98,18 @@ public class ImgUtil {
 
     public static void setImg(Context context, String url, int errImg, ImageView imageView) {
         Glide.with(context).load(url).dontAnimate().placeholder(errImg).into(imageView);
+    }
+
+    public static int setPhoto(String url, ImageView imageView) {
+        int error = getError();
+        GlideDisplay.display(imageView, url, error);
+        return error;
+    }
+
+
+    private static int getError() {
+        int photo = (int) (Math.random() * 30);
+        L.i("333", "photo：" + photo);
+        return AileApplication.imgs.get(photo);
     }
 }

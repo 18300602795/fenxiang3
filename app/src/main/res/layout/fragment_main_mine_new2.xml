@@ -83,7 +83,7 @@
                             android:gravity="center"
                             android:text="0.0"
                             android:textColor="@color/white"
-                            android:textSize="32sp" />
+                            android:textSize="18sp" />
 
                     </LinearLayout>
 
@@ -105,7 +105,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:drawablePadding="3dp"
-                                android:text="今日收入(积分)"
+                                android:text="平台币余额"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
@@ -137,7 +137,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:drawablePadding="3dp"
-                                android:text="已邀好友(个)"
+                                android:text="积分余额"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
@@ -169,7 +169,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:drawablePadding="3dp"
-                                android:text="我的积分"
+                                android:text="累计积分"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
@@ -197,6 +197,22 @@
                     android:gravity="center"
                     android:text="充值"
                     android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/sign_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/sign_bg"
+                    android:gravity="center"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="5dp"
+                    android:text="签到"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_gotoMsg"
@@ -237,7 +253,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
-                            android:id="@+id/item_ll1"
+                            android:id="@+id/item_ll6"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -248,23 +264,24 @@
                             <LinearLayout
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:background="@drawable/user_item1"
+                                android:background="@drawable/user_item6"
                                 android:gravity="center"
                                 android:orientation="vertical">
 
                                 <ImageView
                                     android:layout_width="20dp"
                                     android:layout_height="20dp"
-                                    android:src="@mipmap/ic_user_item_1" />
+                                    android:src="@mipmap/ic_user_item_12" />
                             </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
-                                android:text="我的游戏"
+                                android:text="我的钱包"
                                 android:textSize="14sp" />
                         </LinearLayout>
+
 
                         <View
                             android:layout_width="0.1dp"
@@ -351,6 +368,42 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/item_ll1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/user_item1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@mipmap/ic_user_item_1" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="我的游戏"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="0.1dp"
+                            android:layout_height="match_parent"
+                            android:background="#cccccc" />
+
+                        <LinearLayout
                             android:id="@+id/item_ll3"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
@@ -379,6 +432,7 @@
                                 android:text="我的礼包"
                                 android:textSize="14sp" />
                         </LinearLayout>
+
 
                         <View
                             android:layout_width="0.1dp"
@@ -414,6 +468,51 @@
                                 android:text="账号安全"
                                 android:textSize="14sp" />
                         </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.1dp"
+                        android:background="#cccccc" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/item_ll7"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_bg"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/user_item7"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@mipmap/ic_user_item_13" />
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="我的设置"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
 
                         <View
                             android:layout_width="0.1dp"
@@ -451,85 +550,6 @@
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0.1dp"
-                        android:background="#cccccc" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:id="@+id/item_ll6"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/user_item6"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@mipmap/ic_user_item_12" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="我的钱包"
-                                android:textSize="14sp" />
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="0.1dp"
-                            android:layout_height="match_parent"
-                            android:background="#cccccc" />
-
-                        <LinearLayout
-                            android:id="@+id/item_ll7"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:background="@drawable/btn_bg"
-                            android:gravity="center"
-                            android:orientation="vertical">
-
-                            <LinearLayout
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/user_item7"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:src="@mipmap/ic_user_item_13" />
-                            </LinearLayout>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:text="我的设置"
-                                android:textSize="14sp" />
-
-
-                        </LinearLayout>
 
                         <View
                             android:layout_width="0.1dp"

@@ -71,6 +71,7 @@ public class SignInActivity extends ImmerseActivity {
     }
 
     private void setupUI() {
+        tvTitleName.setText("签到");
         recyclerview.setLayoutManager(new GridLayoutManager(mContext, 7));
         recyclerview.setAdapter(new SignInAdapter(datas));
         setAdImageHeight(ivSignTop);

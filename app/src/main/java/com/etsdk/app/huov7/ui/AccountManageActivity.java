@@ -21,6 +21,7 @@ import com.etsdk.app.huov7.model.UpdateNickNameRequest;
 import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.dialog.HintDialogUtil;
 import com.etsdk.app.huov7.ui.dialog.UpdateTextDialogUtil;
+import com.etsdk.app.huov7.util.ImgUtil;
 import com.game.sdk.HuosdkManager;
 import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
@@ -146,7 +147,8 @@ public class AccountManageActivity extends ImmerseActivity {
             errorImage = R.mipmap.touxiang;
         }
         tvNickName.setText(userInfoResultBean.getNickname());
-        GlideDisplay.display(ivMineHead, userInfoResultBean.getPortrait(), errorImage);
+//        GlideDisplay.display(ivMineHead, userInfoResultBean.getPortrait(), errorImage);
+        ImgUtil.setPhoto(userInfoResultBean.getPortrait(), ivMineHead);
 //        Glide.with(mContext).load(userInfoResultBean.getPortrait()).placeholder(errorImage).into(ivMineHead);
         if (TextUtils.isEmpty(userInfoResultBean.getMobile())) {
             tvBindMobile.setText("未设置");

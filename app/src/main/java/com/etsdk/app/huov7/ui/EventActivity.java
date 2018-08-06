@@ -54,7 +54,7 @@ public class EventActivity extends ImmerseActivity implements AdvRefreshListener
     }
 
     private void setupUI() {
-        tvTitleName.setText("最新活动");
+        tvTitleName.setText("活动赚钱");
         catalog = getIntent().getStringExtra("catalog");
         gameId = getIntent().getStringExtra("gameId");
         baseRefreshLayout = new MVCSwipeRefreshHelper(swrefresh);

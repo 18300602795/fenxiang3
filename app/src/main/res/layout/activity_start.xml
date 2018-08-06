@@ -13,4 +13,28 @@
         android:layout_height="match_parent"
         android:scaleType="fitXY"
         android:src="@mipmap/app_splash" />
+
+    <LinearLayout
+        android:id="@+id/skip_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/start_time_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="8dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp">
+
+        <TextView
+            android:id="@+id/skip_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="跳过 5"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </LinearLayout>
 </RelativeLayout>

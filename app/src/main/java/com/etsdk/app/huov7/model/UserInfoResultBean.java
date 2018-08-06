@@ -6,6 +6,7 @@ package com.etsdk.app.huov7.model;
 
 public class UserInfoResultBean {
     private String portrait;//	URL 头像	头像地址
+    private String username;//	STRING	昵称	昵称长城
     private String nickname;//	STRING	昵称	昵称长城
     private String myintegral;//	FLOAT	我的积分	12
     private String couponcnt;//	INT		12
@@ -17,14 +18,22 @@ public class UserInfoResultBean {
     private String agent_id;	//String 渠道
     private float ptbcnt;	// 平台币数量
     private String name;    //String 渠道名字
-    private String give_integral; // 今日积分
+    private String integral_total; // 今日积分
 
-    public String getGive_integral() {
-        return give_integral;
+    public String getUsername() {
+        return username;
     }
 
-    public void setGive_integral(String give_integral) {
-        this.give_integral = give_integral;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getIntegral_total() {
+        return integral_total;
+    }
+
+    public void setIntegral_total(String integral_total) {
+        this.integral_total = integral_total;
     }
 
     public String getName() {

@@ -36,8 +36,8 @@ import static com.alipay.sdk.app.statistic.c.v;
 
 public class EarnActivity extends ImmerseActivity {
 
-    @BindView(R.id.active_ll)
-    LinearLayout active_ll;
+    @BindView(R.id.bind_ll)
+    LinearLayout bind_ll;
     @BindView(R.id.tv_titleName)
     TextView tvTitleName;
 
@@ -72,7 +72,7 @@ public class EarnActivity extends ImmerseActivity {
         return starter;
     }
 
-    @OnClick({R.id.iv_titleLeft, R.id.sign_ll, R.id.attention_ll, R.id.invite_ll, R.id.active_ll, R.id.demo_ll, R.id.play_ll})
+    @OnClick({R.id.iv_titleLeft, R.id.sign_ll, R.id.attention_ll, R.id.invite_ll, R.id.active_ll, R.id.bind_ll, R.id.demo_ll, R.id.play_ll})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
@@ -88,6 +88,9 @@ public class EarnActivity extends ImmerseActivity {
                 InviteActivity.start(EarnActivity.this);
                 break;
             case R.id.active_ll:
+                EventActivity.start(EarnActivity.this, "6", null);
+                break;
+            case R.id.bind_ll:
                 BindPhoneActivity.start(mContext, false);
 //                EventActivity.start(EarnActivity.this, "2", null);
                 break;
@@ -109,7 +112,7 @@ public class EarnActivity extends ImmerseActivity {
             @Override
             public void onDataSuccess(UserInfoResultBean data) {
                 if (!TextUtils.isEmpty(data.getMobile())) {
-                    active_ll.setVisibility(View.GONE);
+                    bind_ll.setVisibility(View.GONE);
                 }
             }
 

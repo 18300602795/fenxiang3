@@ -2,8 +2,8 @@ android {
 	 productFlavors {
 	 	 "dielian249" {
 	 	 	 applicationId "com.dielian249.huosuapp"
-	 	 	 versionCode 463
-	 	 	 versionName "1.1.6"
+	 	 	 versionCode 693
+	 	 	 versionName "1.1.7"
 	 	 	 resValue( "string", "app_name", "纷享" )
 	 	 	 resValue( "string", "accessibility_service_name", "纷享自动安装" )
 	 	 	 buildConfigField( "int", "projectCode", "249" )
@@ -27,7 +27,7 @@ android {
 	 	 	 buildConfigField("String", "DEFAULT_SELLER", '""')
 	 	 	 buildConfigField("String", "PRIVATE", '""')
 	 	 	 buildConfigField("String", "BASE_URL", '"http://api.idielian.com"')
-	 	 	 manifestPlaceholders = [HS_APPID : "100",HS_CLIENTID : "461",HS_APPKEY : "7ac4b599b844381129ed658ad4243029",HS_CLIENTKEY : "7ac4b599b844381129ed658ad4243029"]
+	 	 	 manifestPlaceholders = [HS_APPID : "100",HS_CLIENTID : "690",HS_APPKEY : "26f1be2aaae0bdf74a2ea548361d1090",HS_CLIENTKEY : "26f1be2aaae0bdf74a2ea548361d1090"]
 	 	 }
 	 }
 }

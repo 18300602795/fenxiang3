@@ -204,6 +204,7 @@ public class DownloadingListItem extends BaseDownView {
     public void completed(TasksManagerModel tasksManagerModel) {
         pbDown.setProgress(100);
         tvProgress.setText(TasksManager.getImpl().getDescText(model.getGameId()));
+        DownloadHelper.installOrOpen(tasksManagerModel);
         updateDownLoadManagerActivity();
         tvSpeed.setVisibility(GONE);
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(model.getGameId()));

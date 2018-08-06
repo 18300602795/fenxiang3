@@ -8,14 +8,18 @@ import android.telephony.TelephonyManager;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.etsdk.app.huov7.BuildConfig;
+import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.model.InstallApkRecord;
+import com.etsdk.app.huov7.service.HuoSdkService;
 import com.game.sdk.log.L;
 import com.liang530.application.BaseApplication;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.mob.MobSDK;
 import com.sh.sdk.shareinstall.ShareInstall;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.alipay.api.AlipayConstants.FORMAT;
@@ -30,6 +34,9 @@ public class AileApplication extends BaseApplication {
     public static String agent;
     public static String imei;
     public static String selectH5 = "1";
+    public static List<Integer> imgs;
+
+    public static HuoSdkService.InitListener initListener;
 
     @Override
     public void onCreate() {
@@ -43,9 +50,44 @@ public class AileApplication extends BaseApplication {
         FileDownloader.getImpl().setMaxNetworkThreadCount(8);
         imei = getIMEI(this);
         L.i("333", "imei：" + imei);
+        getError();
         if (isMainProcess()) {
             ShareInstall.getInstance().init(getApplicationContext());
         }
+    }
+
+    private void getError() {
+        imgs = new ArrayList<>();
+        imgs.add(R.mipmap.photo1);
+        imgs.add(R.mipmap.photo2);
+        imgs.add(R.mipmap.photo3);
+        imgs.add(R.mipmap.photo4);
+        imgs.add(R.mipmap.photo5);
+        imgs.add(R.mipmap.photo6);
+        imgs.add(R.mipmap.photo7);
+        imgs.add(R.mipmap.photo8);
+        imgs.add(R.mipmap.photo9);
+        imgs.add(R.mipmap.photo10);
+        imgs.add(R.mipmap.photo11);
+        imgs.add(R.mipmap.photo12);
+        imgs.add(R.mipmap.photo13);
+        imgs.add(R.mipmap.photo14);
+        imgs.add(R.mipmap.photo15);
+        imgs.add(R.mipmap.photo16);
+        imgs.add(R.mipmap.photo17);
+        imgs.add(R.mipmap.photo18);
+        imgs.add(R.mipmap.photo19);
+        imgs.add(R.mipmap.photo20);
+        imgs.add(R.mipmap.photo21);
+        imgs.add(R.mipmap.photo22);
+        imgs.add(R.mipmap.photo23);
+        imgs.add(R.mipmap.photo24);
+        imgs.add(R.mipmap.photo25);
+        imgs.add(R.mipmap.photo26);
+        imgs.add(R.mipmap.photo27);
+        imgs.add(R.mipmap.photo28);
+        imgs.add(R.mipmap.photo29);
+        imgs.add(R.mipmap.photo30);
     }
 
     /**

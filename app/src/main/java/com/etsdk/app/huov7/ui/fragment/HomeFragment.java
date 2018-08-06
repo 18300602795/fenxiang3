@@ -26,6 +26,7 @@ import com.etsdk.app.huov7.ui.SearchActivity;
 import com.etsdk.app.huov7.ui.ServiceActivity;
 import com.etsdk.app.huov7.util.StringUtils;
 import com.game.sdk.SdkConstant;
+import com.game.sdk.log.L;
 import com.kymjs.rxvolley.client.HttpParams;
 import com.liang530.rxvolley.HttpJsonCallBackDialog;
 import com.liang530.rxvolley.NetRequest;
@@ -151,7 +152,6 @@ public class HomeFragment extends AutoLazyFragment {
 
         };
         mViewPager.setAdapter(mAdapter);
-        mViewPager.setCurrentItem(0);
         imgs = new ArrayList<>();
         hunter_pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -187,6 +187,7 @@ public class HomeFragment extends AutoLazyFragment {
 
             @Override
             public void onPageSelected(int position) {
+                L.i("333", "position：" + position);
                 select(position);
             }
 
@@ -204,6 +205,7 @@ public class HomeFragment extends AutoLazyFragment {
         NetRequest.request(this).setParams(httpParams).get(AppApi.getUrl(AppApi.hompageApi), new HttpJsonCallBackDialog<HomePage1Data>() {
             @Override
             public void onDataSuccess(HomePage1Data data) {
+                mViewPager.setCurrentItem(2);
                 if (data != null && data.getData() != null) {
                     imgs = data.getData().getHometopper().getList();
                     showBanner();
@@ -214,10 +216,12 @@ public class HomeFragment extends AutoLazyFragment {
 
             @Override
             public void onJsonSuccess(int code, String msg, String data) {
+                mViewPager.setCurrentItem(2);
             }
 
             @Override
             public void onFailure(int errorNo, String strMsg, String completionInfo) {
+                mViewPager.setCurrentItem(2);
             }
         });
     }

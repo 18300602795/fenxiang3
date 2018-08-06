@@ -99,6 +99,7 @@ public class CommentListActivity extends ImmerseActivity {
             public void onDataSuccess(ArticleList data) {
                 fragment_recycle.refreshComplete();
                 if (data != null && data.getData() != null) {
+                    nodate_ll.setVisibility(View.GONE);
                     if (currentPage == 1) {
                         articleListAdapter.upDate(data.getData());
                     } else {
@@ -107,7 +108,7 @@ public class CommentListActivity extends ImmerseActivity {
 
                 } else {
                     if (currentPage == 1) {
-                        T.s(mContext, "");
+                        articleListAdapter.upDate(new ArrayList<ArticleBean>());
                         nodate_ll.setVisibility(View.VISIBLE);
                         nodate_tv.setText("还没有人发布过内容");
                     } else {
@@ -122,6 +123,7 @@ public class CommentListActivity extends ImmerseActivity {
                 if (currentPage != 1) {
                     fragment_recycle.setNoMore(true);
                 } else {
+                    articleListAdapter.upDate(new ArrayList<ArticleBean>());
                     nodate_ll.setVisibility(View.VISIBLE);
                     nodate_tv.setText("还没有人发布过内容");
                 }

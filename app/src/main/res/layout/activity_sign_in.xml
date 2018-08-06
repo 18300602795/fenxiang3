@@ -44,7 +44,9 @@
                 android:paddingBottom="8dp"
                 android:paddingLeft="3dp"
                 android:paddingRight="3dp"
-                android:paddingTop="8dp"></android.support.v7.widget.RecyclerView>
+                android:paddingTop="8dp">
+
+            </android.support.v7.widget.RecyclerView>
 
             <Button
                 android:id="@+id/btn_submit"
@@ -80,7 +82,7 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="5dp"
-                android:text="fdsafdsafsa"
+                android:text=""
                 android:textColor="@color/text_gray"
                 android:textSize="@dimen/text_content" />
         </LinearLayout>

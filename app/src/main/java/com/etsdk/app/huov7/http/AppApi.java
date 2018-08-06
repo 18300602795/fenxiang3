@@ -67,6 +67,7 @@ public class AppApi {
     public static final String gametypeApi="game/gametype";
     //广告图
     public static final String slideListApi="slide/list";
+    public static final String homeListApi="homepage/app_list";
     public static final String gameListApi ="game/list";
     public static final String trygameApi ="trygame/selete";
     public static final String gameDetail="game/detail";
@@ -111,6 +112,7 @@ public class AppApi {
     public static final String phoneBindApi2 ="user/phone/bindmobile";
     public static final String phoneBindApi3 ="user/phone/in_tie";
     public static final String userDetailApi="user/detail";
+    public static final String introAdd="user/introducer/addcode";
     public static final String nickNameUpdateApi="user/info/update";
     public static final String addressDetailApi="user/address/detail";
     public static final String userMsgDetailApi="user/msg/detail";

@@ -30,6 +30,7 @@ import com.etsdk.app.huov7.model.GameBean;
 import com.etsdk.app.huov7.model.GameDownRequestBean;
 import com.etsdk.app.huov7.model.GameDownResult;
 import com.etsdk.app.huov7.model.GameGiftItem;
+import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.GameDetailV2Activity;
 import com.etsdk.app.huov7.ui.GiftListActivity;
@@ -39,6 +40,7 @@ import com.etsdk.app.huov7.ui.WebViewH5Activity;
 import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
 import com.etsdk.app.huov7.ui.dialog.Open4gDownHintDialog;
 import com.etsdk.app.huov7.util.StringUtils;
+import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
 import com.game.sdk.log.L;
@@ -301,12 +303,13 @@ public class NewListGameItem extends BaseDownView {
 
     @Override
     public void completed(TasksManagerModel tasksManagerModel) {
-//        L.e(TAG, tasksManagerModel.getGameName()+" completed");
+        L.e("333", tasksManagerModel.getGameName() + " completed");
         if (isH5) {
             return;
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
         pbDown.setProgress(100);
+        DownloadHelper.installOrOpen(tasksManagerModel);
         updateDownLoadManagerActivity();
     }
 
@@ -326,10 +329,10 @@ public class NewListGameItem extends BaseDownView {
         if (isH5) {
             return;
         }
-        if (tasksManagerModel.getUrl().equals(gameBean.getDownlink())){
+        if (tasksManagerModel.getUrl().equals(gameBean.getDownlink())) {
             pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
             tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
-        }else {
+        } else {
             DownloadHelper.onClick(gameBean.getGameid(), this);
 //            DownloadHelper.start(tasksManagerModel);
         }
@@ -362,7 +365,7 @@ public class NewListGameItem extends BaseDownView {
             tasksManagerModel.setGameType(gameBean.getType());
 //            tasksManagerModel.setUrl(gameBean.getDownlink());
             getDownUrl(tasksManagerModel);
-        } else{
+        } else {
             DownloadHelper.start(tasksManagerModel);
         }
     }
@@ -494,14 +497,7 @@ public class NewListGameItem extends BaseDownView {
                 if (gameBean == null) {
                     return;
                 }
-                if (isH5) {
-                    Intent intent = new Intent(context, WebViewH5Activity.class);
-                    intent.putExtra("url", gameBean.getDownlink());
-//                    intent.putExtra("titleName", gameBean.getGamename());
-                    context.startActivity(intent);
-                } else {
-                    DownloadHelper.onClick(gameBean.getGameid(), this);
-                }
+                getUserInfoData();
                 break;
             case R.id.game_list_item:
                 if (gameBean == null) {
@@ -517,5 +513,31 @@ public class NewListGameItem extends BaseDownView {
                 GiftListActivity.start(getContext(), gameBean.getGamename(), gameBean.getGameid(), 0, 0, 0, 0);
                 break;
         }
+    }
+
+    public void getUserInfoData() {
+        final BaseRequestBean baseRequestBean = new BaseRequestBean();
+        HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(baseRequestBean));
+        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(getContext(), httpParamsBuild.getAuthkey()) {
+            @Override
+            public void onDataSuccess(UserInfoResultBean data) {
+                if (isH5) {
+                    Intent intent = new Intent(context, WebViewH5Activity.class);
+                    intent.putExtra("url", gameBean.getDownlink());
+//                    intent.putExtra("titleName", gameBean.getGamename());
+                    context.startActivity(intent);
+                } else {
+                    DownloadHelper.onClick(gameBean.getGameid(), NewListGameItem.this);
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String msg) {
+            }
+        };
+        httpCallbackDecode.setShowTs(true);
+        httpCallbackDecode.setLoadingCancel(false);
+        httpCallbackDecode.setShowLoading(false);
+        RxVolley.post(AppApi.getUrl(AppApi.userDetailApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 }

@@ -14,6 +14,7 @@ import com.etsdk.app.huov7.model.DoTaskItem;
 import com.etsdk.app.huov7.ui.AccountManageActivity;
 import com.etsdk.app.huov7.ui.BindPhoneActivity;
 import com.etsdk.app.huov7.ui.EarnActivity;
+import com.etsdk.app.huov7.ui.InviteActivity;
 import com.etsdk.app.huov7.ui.RecommandTaskActivity;
 import com.etsdk.app.huov7.ui.SelectGamePayActivity;
 import com.etsdk.app.huov7.ui.SignInActivity;
@@ -51,6 +52,7 @@ public class DoTaskItemViewProvider
             intentMap.put("firstcharge", SelectGamePayActivity.getIntent(context));
             intentMap.put("charge", SelectGamePayActivity.getIntent(context));
             intentMap.put("bindmobile", EarnActivity.getIntent(context));
+            intentMap.put("invite", InviteActivity.getIntent(context));
         }
     }
     @Override

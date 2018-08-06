@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -102,6 +103,7 @@ public class GameDetailV2Activity extends ImmerseActivity {
     private String gameId = "0";
     private GameBean gameBean;
     private DetailDescFragment detailDescFragment;
+    private boolean isStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,10 +122,15 @@ public class GameDetailV2Activity extends ImmerseActivity {
 
     private void setupUI(Intent intent) {
         fragmentList.clear();
+        viewpager.removeAllViews();
         if (intent != null) {//onNewintent
             gameId = intent.getStringExtra("gameId");
+            isStart = intent.getBooleanExtra("isStart", false);
+            L.i("333", "onNewIntent：" + gameId);
         } else {//onCreate
             gameId = getIntent().getStringExtra("gameId");
+            isStart = getIntent().getBooleanExtra("isStart", false);
+            L.i("333", "onCreate：" + gameId);
         }
         ivPayRound.setVisibility(View.GONE);
         ivPay.setVisibility(View.GONE);
@@ -166,10 +173,24 @@ public class GameDetailV2Activity extends ImmerseActivity {
     }
 
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK){
+            if (isStart){
+                MainActivity.start(mContext, 0);
+            }
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
     @OnClick({R.id.iv_titleLeft, R.id.iv_pay, R.id.iv_downManager, R.id.iv_gotoMsg, R.id.iv_pay_round})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_titleLeft:
+                if (isStart) {
+                    MainActivity.start(mContext, 0);
+                }
                 finish();
                 break;
             case R.id.iv_downManager:
@@ -223,10 +244,10 @@ public class GameDetailV2Activity extends ImmerseActivity {
 
     private void setupData(GameBean gameBean) {
         this.gameBean = gameBean;
-        if (gameBean.getCategory().equals("1")|| gameBean.getCategory().equals("2")){
+        if (gameBean.getCategory().equals("1") || gameBean.getCategory().equals("2")) {
             ivPayRound.setVisibility(View.GONE);
             ivPay.setVisibility(View.GONE);
-        }else {
+        } else {
             ivPayRound.setVisibility(View.VISIBLE);
             ivPay.setVisibility(View.GONE);
         }
@@ -284,6 +305,16 @@ public class GameDetailV2Activity extends ImmerseActivity {
         //TODO 此处可以切换为Detail-V3 的样式
 //        Intent starter = new Intent(context, NewGameDetailActivity.class);
         starter.putExtra("gameId", gameId);
+        context.startActivity(starter);
+    }
+
+
+    public static void start(Context context, String gameId, boolean isStart) {
+        Intent starter = new Intent(context, GameDetailV2Activity.class);
+        //TODO 此处可以切换为Detail-V3 的样式
+//        Intent starter = new Intent(context, NewGameDetailActivity.class);
+        starter.putExtra("gameId", gameId);
+        starter.putExtra("isStart", isStart);
         context.startActivity(starter);
     }
 

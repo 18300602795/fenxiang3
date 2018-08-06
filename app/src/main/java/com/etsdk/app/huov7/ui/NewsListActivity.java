@@ -87,7 +87,7 @@ public class NewsListActivity extends ImmerseActivity implements AdvRefreshListe
                 tvTitleName.setText("攻略");
                 break;
             case "5":
-                tvTitleName.setText("测评");
+                tvTitleName.setText("评测");
                 break;
         }
         baseRefreshLayout = new MVCSwipeRefreshHelper(swrefresh);

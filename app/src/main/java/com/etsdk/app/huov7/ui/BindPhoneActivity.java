@@ -122,8 +122,6 @@ public class BindPhoneActivity extends ImmerseActivity {
         } else {
             RxVolley.post(AppApi.getUrl(AppApi.phoneBindApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
         }
-
-
     }
 
     private void sendSms() {

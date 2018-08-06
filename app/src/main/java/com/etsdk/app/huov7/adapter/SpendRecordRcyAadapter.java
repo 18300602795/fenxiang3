@@ -1,5 +1,6 @@
 package com.etsdk.app.huov7.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.model.ChargeRecordListBean;
 import com.etsdk.app.huov7.model.SpendRecordListBean;
+import com.etsdk.app.huov7.ui.GameDetailV2Activity;
+import com.etsdk.app.huov7.ui.GamePayActivity;
 import com.liang530.views.refresh.mvc.IDataAdapter;
 
 import java.util.ArrayList;
@@ -30,13 +33,19 @@ public class SpendRecordRcyAadapter extends RecyclerView.Adapter implements IDat
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         ((GameListViewHolder) holder).tvGameName.setText(listBeen.get(position).getGamename());
         ((GameListViewHolder) holder).tvCostYuan.setText(listBeen.get(position).getAmount() + "");
         ((GameListViewHolder) holder).tvPayType.setText(listBeen.get(position).getPaytype());
         ((GameListViewHolder) holder).tvOrderid.setText(listBeen.get(position).getOrderid());
         ((GameListViewHolder) holder).tvTime.setText(listBeen.get(position).getPay_time());
         ((GameListViewHolder) holder).tvOrderState.setText(listBeen.get(position).getStatus());
+        ((GameListViewHolder) holder).tvGameName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GameDetailV2Activity.start(((GameListViewHolder) holder).mContext, listBeen.get(position).getGameid());
+            }
+        });
     }
 
     @Override
@@ -77,9 +86,12 @@ public class SpendRecordRcyAadapter extends RecyclerView.Adapter implements IDat
         @BindView(R.id.tv_time)
         TextView tvTime;
 
+        Context mContext;
+
         GameListViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+            mContext = view.getContext();
         }
     }
 }

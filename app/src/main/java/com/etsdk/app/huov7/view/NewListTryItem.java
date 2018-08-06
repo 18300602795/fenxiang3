@@ -27,6 +27,7 @@ import com.etsdk.app.huov7.model.GameDownRequestBean;
 import com.etsdk.app.huov7.model.GameDownResult;
 import com.etsdk.app.huov7.model.GameGiftItem;
 import com.etsdk.app.huov7.model.TryGameBean;
+import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.DownloadManagerActivity;
 import com.etsdk.app.huov7.ui.GameDetailV2Activity;
 import com.etsdk.app.huov7.ui.GiftListActivity;
@@ -37,6 +38,7 @@ import com.etsdk.app.huov7.ui.dialog.DownAddressSelectDialogUtil;
 import com.etsdk.app.huov7.ui.dialog.Open4gDownHintDialog;
 import com.etsdk.app.huov7.util.StringUtils;
 import com.game.sdk.SdkConstant;
+import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
 import com.game.sdk.log.L;
@@ -138,7 +140,14 @@ public class NewListTryItem extends BaseDownView {
         gameTagView.setGameType(tryGameBean.getType());
         tvRate.setVisibility(VISIBLE);
         tvRate.setText("+" + tryGameBean.getIntegral());
-        tvSendFirst.setVisibility(GONE);
+        tvSendFirst.setVisibility(VISIBLE);
+        if (!StringUtils.isEmpty(tryGameBean.getStatu()) && tryGameBean.getStatu().equals("1")) {
+            tvSendFirst.setText("已完成");
+            tvSendFirst.setBackgroundResource(R.color.green1);
+        } else {
+            tvSendFirst.setText("待完成");
+            tvSendFirst.setBackgroundResource(R.color.light_red);
+        }
     }
 
     /**
@@ -245,6 +254,7 @@ public class NewListTryItem extends BaseDownView {
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
         pbDown.setProgress(100);
+        DownloadHelper.installOrOpen(tasksManagerModel);
         updateDownLoadManagerActivity();
     }
 
@@ -389,14 +399,7 @@ public class NewListTryItem extends BaseDownView {
                 if (tryGameBean == null) {
                     return;
                 }
-                if (isH5) {
-                    Intent intent = new Intent(context, WebViewH5Activity.class);
-                    intent.putExtra("url", tryGameBean.getDownlink());
-//                    intent.putExtra("titleName", gameBean.getGamename());
-                    context.startActivity(intent);
-                } else {
-                    DownloadHelper.onClick(tryGameBean.getGameid(), this);
-                }
+                getUserInfoData();
                 break;
             case R.id.game_list_item:
                 if (tryGameBean == null) {
@@ -412,5 +415,31 @@ public class NewListTryItem extends BaseDownView {
                 GiftListActivity.start(getContext(), tryGameBean.getGamename(), tryGameBean.getGameid(), 0, 0, 0, 0);
                 break;
         }
+    }
+
+    public void getUserInfoData() {
+        final BaseRequestBean baseRequestBean = new BaseRequestBean();
+        HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(baseRequestBean));
+        HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<UserInfoResultBean>(getContext(), httpParamsBuild.getAuthkey()) {
+            @Override
+            public void onDataSuccess(UserInfoResultBean data) {
+                if (isH5) {
+                    Intent intent = new Intent(context, WebViewH5Activity.class);
+                    intent.putExtra("url", tryGameBean.getDownlink());
+//                    intent.putExtra("titleName", gameBean.getGamename());
+                    context.startActivity(intent);
+                } else {
+                    DownloadHelper.onClick(tryGameBean.getGameid(), NewListTryItem.this);
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String msg) {
+            }
+        };
+        httpCallbackDecode.setShowTs(true);
+        httpCallbackDecode.setLoadingCancel(false);
+        httpCallbackDecode.setShowLoading(false);
+        RxVolley.post(AppApi.getUrl(AppApi.userDetailApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
 }

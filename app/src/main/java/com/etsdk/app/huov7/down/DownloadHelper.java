@@ -109,6 +109,7 @@ public class DownloadHelper {
 
     public static void installOrOpen(TasksManagerModel tasksManagerModel) {
         //判断包名是否已经存入，可能由于下载成功时意外没有收到回调，导致包名没有设置成功，需要重新设置
+        L.i("333", "开始安装：" + tasksManagerModel.getGameName());
         if (TextUtils.isEmpty(tasksManagerModel.getPackageName())
                 && !TextUtils.isEmpty(tasksManagerModel.getPath())) {
             File file = new File(tasksManagerModel.getPath());

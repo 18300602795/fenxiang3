@@ -178,6 +178,8 @@ public class TasksManager {
         List<TasksManagerModel> downloadingTask = new ArrayList<>();
         for (TasksManagerModel model : allTask) {
             int status = getStatus(model.getGameId());
+            L.i("333", "getGameId：" + model.getGameId());
+            L.i("333", "status：" + status);
             if (status != ApkDownloadStatus.INSTALL && status != ApkDownloadStatus.OPEN) {
                 downloadingTask.add(model);
             }

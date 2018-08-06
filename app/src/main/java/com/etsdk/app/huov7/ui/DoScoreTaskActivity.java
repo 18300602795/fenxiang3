@@ -57,7 +57,7 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
     @BindView(R.id.activity_do_score_task)
     LinearLayout activityDoScoreTask;
     private MultiTypeAdapter multiTypeAdapter;
-    private Items items=new Items();
+    private Items items = new Items();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,8 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         recyclerView.setAdapter(multiTypeAdapter);
         onRefresh();
     }
-    private void initRefreshLayout(){
+
+    private void initRefreshLayout() {
         swrefresh.setColorSchemeResources(R.color.bg_blue,
                 android.R.color.holo_green_light, android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
@@ -92,21 +93,21 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         onRefresh();
     }
 
-    private void updateData(DoTaskResultBean data){
+    private void updateData(DoTaskResultBean data) {
         items.clear();
         items.add(new DoTaskTop(data.getMyintegral()));
-        TreeMap<String,List<DoTaskItem>> map=new TreeMap<>();
+        TreeMap<String, List<DoTaskItem>> map = new TreeMap<>();
         //对数据分类
-        if(data.getList()!=null){
-            for(DoTaskItem doTaskItem:data.getList()){
-                if (doTaskItem.getActcode().equals("bindmobile")){
-                    data.getList().remove(doTaskItem);
+        if (data.getList() != null) {
+            for (DoTaskItem doTaskItem : data.getList()) {
+                if (doTaskItem.getActcode().equals("bindmobile")) {
+//                    data.getList().remove(doTaskItem);
                     continue;
                 }
                 List<DoTaskItem> doTaskItemList = map.get(doTaskItem.getTypeid());
-                if(doTaskItemList==null){
-                    doTaskItemList=new ArrayList<>();
-                    map.put(doTaskItem.getTypeid(),doTaskItemList);
+                if (doTaskItemList == null) {
+                    doTaskItemList = new ArrayList<>();
+                    map.put(doTaskItem.getTypeid(), doTaskItemList);
                 }
                 doTaskItem.setMyMoney(data.getMymoney());//设置money
                 doTaskItemList.add(doTaskItem);
@@ -115,7 +116,7 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         Set<Map.Entry<String, List<DoTaskItem>>> entries = map.entrySet();
         for (Map.Entry<String, List<DoTaskItem>> entry : entries) {
             items.add(new DoTaskType(entry.getKey()));
-            Collections.sort(entry.getValue(),new DoTaskItemComparator());
+            Collections.sort(entry.getValue(), new DoTaskItemComparator());
             items.addAll(entry.getValue());
         }
         multiTypeAdapter.notifyDataSetChanged();
@@ -138,6 +139,7 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
                 break;
         }
     }
+
     @Override
     public void onRefresh() {
         final BaseRequestBean baseRequestBean = new BaseRequestBean();
@@ -145,7 +147,7 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         HttpCallbackDecode httpCallbackDecode = new HttpCallbackDecode<DoTaskResultBean>(this, httpParamsBuild.getAuthkey()) {
             @Override
             public void onDataSuccess(DoTaskResultBean data) {
-                if(data!=null){
+                if (data != null) {
                     updateData(data);
                 }
             }
@@ -155,11 +157,15 @@ public class DoScoreTaskActivity extends ImmerseActivity implements SwipeRefresh
         httpCallbackDecode.setShowLoading(false);
         RxVolley.post(AppApi.getUrl(AppApi.userActlistApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
     }
+
     class DoTaskItemComparator implements Comparator<DoTaskItem> {
         @Override
         public int compare(DoTaskItem o1, DoTaskItem o2) {
-            if (StringUtils.isEmpty(o1.getFinishflag()) || StringUtils.isEmpty(o2.getFinishflag())){
-                return 1;
+            if (StringUtils.isEmpty(o1.getFinishflag())) {
+                o1.setFinishflag("1");
+            }
+            if (StringUtils.isEmpty(o2.getFinishflag())) {
+                o2.setFinishflag("1");
             }
             return o1.getFinishflag().compareTo(o2.getFinishflag());
         }

@@ -1,5 +1,7 @@
 package com.etsdk.app.huov7.util;
 
+import com.game.sdk.log.L;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +14,8 @@ public class TimeUtils {
     public static String getTime(long time) {
         String timeString = "";
         long current_time = System.currentTimeMillis();
-        long sub_time = (current_time - time) / 1000 + 20;
+        L.i("333", "current_time：" + current_time);
+        long sub_time = (current_time - time * 1000) / 1000;
         if (sub_time < 60) {
             timeString = sub_time + "秒前";
         } else if (sub_time < 3600) {

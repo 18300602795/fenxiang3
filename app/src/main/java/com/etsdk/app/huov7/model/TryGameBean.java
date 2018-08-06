@@ -17,6 +17,8 @@ public class TryGameBean {
     private String hot;
     private String isnew;
     private String category;
+    private String statu;
+
 
 
     private String downlink;
@@ -27,6 +29,14 @@ public class TryGameBean {
     private String mem_rate;
     private String integral;
     private String giftcnt;
+
+    public String getStatu() {
+        return statu;
+    }
+
+    public void setStatu(String statu) {
+        this.statu = statu;
+    }
 
     public String getGameid() {
         return gameid;

@@ -85,6 +85,7 @@ dependencies {
     compile project(':multi-image-selector')
     compile project(':baseadapter-recyclerview')
     compile files('libs/alipay-sdk-java-3.1.0.jar')
+    compile 'com.github.ithedan:TextViewDrawable:v1.0'
     compile files('libs/alipaySdk-20180601.jar')
 }
 //apply plugin: 'AndResGuard'

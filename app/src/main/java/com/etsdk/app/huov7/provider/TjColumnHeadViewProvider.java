@@ -65,7 +65,23 @@ public class TjColumnHeadViewProvider
     @Override
     protected void onBindViewHolder(@NonNull final ViewHolder holder, @NonNull TjColumnHead tjColumnHead) {
         if (tjColumnHead.getType() == TjColumnHead.TYPE_NEW_GAME_SF) {
-            holder.tvTypeName.setText("新游首发");
+            switch (category){
+                case 5:
+                    holder.tvTypeName.setText("新游首发");
+                    break;
+                case 4:
+                    holder.tvTypeName.setText("新品上线");
+                    break;
+                case 3:
+                    holder.tvTypeName.setText("最新上架");
+                    break;
+                case 1:
+                    holder.tvTypeName.setText("新游上线");
+                    break;
+                default:
+                    holder.tvTypeName.setText("新游首发");
+            }
+
             holder.ivHint.setBackgroundResource(R.mipmap.smnews);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);

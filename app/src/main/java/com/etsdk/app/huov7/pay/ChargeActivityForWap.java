@@ -46,7 +46,7 @@ import java.util.HashMap;
 public class ChargeActivityForWap extends ImmerseActivity implements OnClickListener, IPayListener {
     private final static int CODE_PAY_FAIL = -1;//支付失败
     private final static int CODE_PAY_CANCEL = -2;//用户取消支付
-    private static final String TAG = "ChargeActivityForWap";
+    private static final String TAG = "333";
     private WebView wv;
     private TextView tv_back, tv_charge_title;
     private ImageView iv_cancel;
@@ -90,6 +90,7 @@ public class ChargeActivityForWap extends ImmerseActivity implements OnClickList
 
 
         wv.getSettings().setJavaScriptEnabled(true);
+        wv.getSettings().setLightTouchEnabled(true);
         wv.getSettings().setLoadsImagesAutomatically(true);
         wv.getSettings().setAppCacheEnabled(true);
         wv.getSettings().setDomStorageEnabled(true);
@@ -108,7 +109,7 @@ public class ChargeActivityForWap extends ImmerseActivity implements OnClickList
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                L.e(TAG + "打开 " + url);
+                L.e(TAG , "打开 " + url);
                 if (url.startsWith("http") || url.startsWith("https") || url.startsWith("ftp")) {
                     return false;
                 } else {
@@ -146,7 +147,7 @@ public class ChargeActivityForWap extends ImmerseActivity implements OnClickList
         requestBean.setGameid(gameId);
         requestBean.setId(sellId);
         HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(requestBean));
-
+        L.i("333", "getAuthkey：" + httpParamsBuild.getAuthkey());
         CommonJsForWeb js = new CommonJsForWeb(this, httpParamsBuild.getAuthkey(), this);
         wv.addJavascriptInterface(js, "huosdk");
 
@@ -155,8 +156,8 @@ public class ChargeActivityForWap extends ImmerseActivity implements OnClickList
             postData = postData.substring(1);
         }
         wv.postUrl(url, postData.getBytes());
-
     }
+
 
     public static WeakReference<OnPaymentListener> getPaymentListener() {
         return paymentListener;

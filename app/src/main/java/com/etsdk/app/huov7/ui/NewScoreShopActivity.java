@@ -117,7 +117,7 @@ public class NewScoreShopActivity extends ImmerseActivity implements AdvRefreshL
         });
         recyclerView.setLayoutManager(gridLayoutManager);
         multiTypeAdapter = new MultiTypeAdapter(items);
-        multiTypeAdapter.register(CouponListItem.class, new CouponListItemViewProvider());
+//        multiTypeAdapter.register(CouponListItem.class, new CouponListItemViewProvider());
         multiTypeAdapter.register(SplitLine.class, new SplitLineViewProvider());
         multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());
         multiTypeAdapter.register(AdImage.class, new AdImageViewProvider());

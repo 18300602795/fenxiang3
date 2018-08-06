@@ -141,7 +141,7 @@
                 android:id="@+id/earn_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_earn" />
+                android:src="@mipmap/ic_discovery_earn1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -189,7 +189,7 @@
                 android:id="@+id/apply_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_apply" />
+                android:src="@mipmap/ic_discovery_life" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -213,7 +213,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:gravity="bottom"
-                    android:text="玩腻不怕有转游"
+                    android:text="互相交流乐趣多"
                     android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
@@ -291,7 +291,7 @@
                 android:id="@+id/news_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_news" />
+                android:src="@mipmap/ic_discovery_news1" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -345,7 +345,7 @@
                 android:id="@+id/event_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_discovery_life" />
+                android:src="@mipmap/ic_event" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

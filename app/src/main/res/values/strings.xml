@@ -21,6 +21,13 @@
         \n4、充值的游戏币只限于该款游戏内使用。
         \n5、充值时务必确认好您的充值金额及充值游戏，准确无误后再进行充值，避免输错金额或游戏选择错误导致的失误，如因未仔细确认金额造成的充值问题或充错游戏，我们将不予处理此类退款申诉。
     </string>
+
+    <string name="invite_rule1">每邀请一位新好友安装注册并绑定手机号，邀请者和被邀请者各奖励100积分；</string>
+    <string name="invite_rule2">被邀请者累计游戏充值>=20元，邀请者奖励900积分；</string>
+    <string name="invite_rule3">请提醒被邀请者登陆纷享APP进入“+”-赚钱-邀请赚钱页面，在“我收到的邀请码”输入邀请者的邀请码</string>
+    <string name="invite_rule4">您发送的邀请码仅针对新用户有效，已注册过的帐号，或者已安装过纷享APP的设备使用邀请码无效；</string>
+    <string name="invite_rule5">用户通过纷享APP个人中心查看积分记录、积分兑换，提现等。</string>
+    <string name="invite_rule6">本活动最终解释权归纷享APP官方所有。</string>
     <string-array name="game_feedback">
         <item>色情内容</item>
         <item>携带病毒</item>

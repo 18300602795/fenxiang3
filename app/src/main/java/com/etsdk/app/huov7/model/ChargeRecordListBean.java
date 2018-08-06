@@ -30,7 +30,7 @@ public class ChargeRecordListBean {
 
     public static class DataBean {
 
-        private int gameid;
+        private String gameid;
         private String gamename;
         private String paytype;
         private String status;
@@ -38,11 +38,11 @@ public class ChargeRecordListBean {
         private String pay_time;
         private float amount;
 
-        public int getGameid() {
+        public String getGameid() {
             return gameid;
         }
 
-        public void setGameid(int gameid) {
+        public void setGameid(String gameid) {
             this.gameid = gameid;
         }
 

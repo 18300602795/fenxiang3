@@ -33,7 +33,7 @@ import java.util.Map;
  * Created by liu hong liang on 2016/10/13.
  */
 public class CommonJsForWeb {
-    private static final String TAG = CommonJsForWeb.class.getSimpleName();
+    private static final String TAG = "333";
     private Activity context;
     private float  chargeMoney;
     private String authKey;
@@ -63,6 +63,7 @@ public class CommonJsForWeb {
         this.iPayListener=iPayListener;
         handler=new Handler();
     }
+
 
     /**
      * 设置支付的钱，只有用户传入金额的支付页面才会传
