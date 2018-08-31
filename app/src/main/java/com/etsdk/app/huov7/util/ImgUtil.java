@@ -107,7 +107,7 @@ public class ImgUtil {
     }
 
 
-    private static int getError() {
+    public static int getError() {
         int photo = (int) (Math.random() * 30);
         L.i("333", "photo：" + photo);
         return AileApplication.imgs.get(photo);

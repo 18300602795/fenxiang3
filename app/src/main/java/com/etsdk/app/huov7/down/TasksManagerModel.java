@@ -20,7 +20,6 @@ public class TasksManagerModel implements BaseGameDownModel{
     public final static String GAME_TYPE = "gameType";//游戏类型标签
 
     public boolean isSelected = false;//用于是否被选中的标记
-
     private int id;
     private String url;
     private String path;

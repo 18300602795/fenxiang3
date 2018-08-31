@@ -77,8 +77,9 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
     private GameBean gameBean;
     private ShareResultBean.DateBean shareResult;
     private UserInfoResultBean resultBean;
-    private boolean isH5;
+    private boolean isH5 = false;
     private Context context;
+    private HashMap<String, Boolean> gameDown = new HashMap<>();
 
     public GameDetailDownView(Context context) {
         super(context);
@@ -98,6 +99,10 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         initUI();
     }
 
+    private void setDown(String gameId, boolean isDown){
+        gameDown.put(gameId, isDown);
+    }
+
     private void initUI() {
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         if (layoutParams == null) {
@@ -113,16 +118,16 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
 
     public void setGameBean(GameBean gameBean) {
         this.gameBean = gameBean;
-        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
-            isH5 = true;
-        } else {
-            isH5 = false;
-        }
-        if (isH5) {
-            tvDownStatus.setText("开启");
-        } else {
+//        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
+//            isH5 = true;
+//        } else {
+//            isH5 = false;
+//        }
+//        if (isH5) {
+//            tvDownStatus.setText("开启");
+//        } else {
             tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
-        }
+//        }
         if ("下载".equals(tvDownStatus.getText().toString().trim()) && !TextUtils.isEmpty(gameBean.getSize())) {
             tvDownStatus.setText("下载（" + gameBean.getSize() + "）");
         }
@@ -162,6 +167,7 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         if (isH5) {
             return;
         }
+        setDown(tasksManagerModel.getGameId(), true);
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
         tvDownStatus.setText(TasksManager.getImpl().getProgress(tasksManagerModel.getId()) + "%");
     }
@@ -172,9 +178,11 @@ public class GameDetailDownView extends FrameLayout implements ApklDownloadListe
         if (isH5) {
             return;
         }
+        if (gameDown.containsKey(tasksManagerModel.getGameId()) && gameDown.get(tasksManagerModel.getGameId())){
+            DownloadHelper.installOrOpen(tasksManagerModel);
+        }
         pbDown.setProgress(100);
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
-//        DownloadHelper.installOrOpen(tasksManagerModel);
     }
 
     @Override

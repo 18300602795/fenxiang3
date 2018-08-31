@@ -194,14 +194,14 @@ public class GameDetailV2Activity extends ImmerseActivity {
                 finish();
                 break;
             case R.id.iv_downManager:
-                if (gameBean.getCategory().equals(AileApplication.selectH5)) {
-                    Intent intent = new Intent(mContext, WebViewH5Activity.class);
-                    intent.putExtra("url", gameBean.getDownlink());
-//                    intent.putExtra("titleName", gameBean.getGamename());
-                    startActivity(intent);
-                } else {
+//                if (gameBean.getCategory().equals(AileApplication.selectH5)) {
+//                    Intent intent = new Intent(mContext, WebViewH5Activity.class);
+//                    intent.putExtra("url", gameBean.getDownlink());
+////                    intent.putExtra("titleName", gameBean.getGamename());
+//                    startActivity(intent);
+//                } else {
                     DownloadManagerActivity.start(mContext);
-                }
+//                }
 
                 break;
             case R.id.iv_gotoMsg:

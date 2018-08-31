@@ -97,7 +97,8 @@ public class ArticleListAdapter
         holder.name_tv.setText(articleBean.getNickname());
         holder.count_tv.setText(articleBean.getContents());
         holder.like_num.setText(articleBean.getLike_number());
-        ImgUtil.setImg(holder.context, SdkConstant.BASE_URL + articleBean.getPortrait(), R.mipmap.ic_launcher, holder.head_img);
+        ImgUtil.setPhoto(SdkConstant.BASE_URL + articleBean.getPortrait(), holder.head_img);
+//        ImgUtil.setImg(holder.context, SdkConstant.BASE_URL + articleBean.getPortrait(), R.mipmap.ic_launcher, holder.head_img);
         if (articleBean.getP_status() != null && articleBean.getP_status().equals("1")) {
             holder.like_img.setImageResource(R.mipmap.praise_1215);
         } else {

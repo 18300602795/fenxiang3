@@ -81,12 +81,12 @@ public class GameItemView extends BaseDownView {
         this.gameBean = gameBean;
         ImgUtil.setImg(getContext(), gameBean.getIcon(), R.mipmap.icon_load, iv_game_img);
         tv_game_title.setText(gameBean.getGamename());
-        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
-            isH5 = true;
-            tvDownStatus.setText("开启");
-        } else {
+//        if (gameBean.getCategory().equals(AileApplication.selectH5)) {
+//            isH5 = true;
+//            tvDownStatus.setText("开启");
+//        } else {
             tvDownStatus.setText(TasksManager.getImpl().getStatusText(gameBean.getGameid()));
-        }
+//        }
         if (gameBean.getCategory().equals("4")) {
             discount_tv.setVisibility(VISIBLE);
             String name;

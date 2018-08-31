@@ -22,6 +22,8 @@ import com.etsdk.app.huov7.util.GameViewUtil;
 import com.liang530.log.L;
 import com.liang530.views.imageview.roundedimageview.RoundedImageView;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -60,6 +62,7 @@ public class DownloadingListItem extends BaseDownView {
 
     private TasksManagerModel model;
     public boolean isEdit = false;
+    private HashMap<String, Boolean> gameDown = new HashMap<>();
 
     Context context;
     public DownloadingListItem(Context context) {
@@ -80,6 +83,9 @@ public class DownloadingListItem extends BaseDownView {
         initUI();
     }
 
+    private void setDown(String gameId, boolean isDown){
+        gameDown.put(gameId, isDown);
+    }
     private void initUI() {
         ViewGroup.LayoutParams layoutParams = getLayoutParams();
         if (layoutParams == null) {
@@ -170,6 +176,7 @@ public class DownloadingListItem extends BaseDownView {
     @Override
     public void progress(TasksManagerModel tasksManagerModel, int soFarBytes, int totalBytes) {
         tvSpeed.setVisibility(VISIBLE);
+        setDown(tasksManagerModel.getGameId(), true);
         if (TasksManager.getImpl().getSoFar(tasksManagerModel.getId()) == 0){
             lastBytes = 0;
         }else if (TasksManager.getImpl().getSoFar(tasksManagerModel.getId()) == soFarBytes){
@@ -204,7 +211,9 @@ public class DownloadingListItem extends BaseDownView {
     public void completed(TasksManagerModel tasksManagerModel) {
         pbDown.setProgress(100);
         tvProgress.setText(TasksManager.getImpl().getDescText(model.getGameId()));
-        DownloadHelper.installOrOpen(tasksManagerModel);
+        if (gameDown.containsKey(tasksManagerModel.getGameId()) && gameDown.get(tasksManagerModel.getGameId())){
+            DownloadHelper.installOrOpen(tasksManagerModel);
+        }
         updateDownLoadManagerActivity();
         tvSpeed.setVisibility(GONE);
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(model.getGameId()));

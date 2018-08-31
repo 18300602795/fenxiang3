@@ -98,7 +98,9 @@ public class StartActivity extends ImmerseActivity {
 
     @Override
     protected void onDestroy() {
-        timer.cancel();
+        if (timer != null){
+            timer.cancel();
+        }
         super.onDestroy();
     }
 
@@ -146,12 +148,11 @@ public class StartActivity extends ImmerseActivity {
         };
         Intent intent = new Intent(this, HuoSdkService.class);
         startService(intent);
-//        if (isFirstRun(mContext)) {
-//            GuideActivity.start(mContext);
-//            finish();
-//            return;
-//        }
-
+        if (isFirstRun(mContext)) {
+            GuideActivity.start(mContext);
+            finish();
+            return;
+        }
         timer = new Timer(true);
         timer.schedule(new TimerTask() {
             @Override

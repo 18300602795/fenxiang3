@@ -37,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static android.R.attr.data;
 import static com.etsdk.app.huov7.R.id.kefu_img;
 
 /**
@@ -100,10 +101,8 @@ public class HomeFragment extends AutoLazyFragment {
         txts.add(text1);
         txts.add(text2);
         txts.add(text3);
-        if (StringUtils.isEmpty(SdkConstant.HS_AGENT)) {
-            bgs.add(bg4);
-            txts.add(text4);
-        }
+        bgs.add(bg4);
+        txts.add(text4);
         bgs.add(bg5);
 
         txts.add(text5);
@@ -130,15 +129,15 @@ public class HomeFragment extends AutoLazyFragment {
 
 
     private void initDate() {
+        ll_gift.setVisibility(View.VISIBLE);
         fragments = new ArrayList<>();
         fragments.add(new MainTjFragment(5));
         fragments.add(new MainTjFragment(4));
         fragments.add(new MainTjFragment(3));
-        if (StringUtils.isEmpty(SdkConstant.HS_AGENT)) {
-            fragments.add(new MainTjFragment(1));
-            ll_gift.setVisibility(View.VISIBLE);
-        }
-        fragments.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 2, null));
+        fragments.add(new MainTjFragment(1));
+        text5.setText("赚钱");
+        fragments.add(new TryGameListFragment());
+
         mAdapter = new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public int getCount() {
@@ -216,7 +215,11 @@ public class HomeFragment extends AutoLazyFragment {
 
             @Override
             public void onJsonSuccess(int code, String msg, String data) {
-                mViewPager.setCurrentItem(2);
+                if (StringUtils.isEmpty(SdkConstant.HS_AGENT)) {
+                    mViewPager.setCurrentItem(2);
+                } else {
+                    mViewPager.setCurrentItem(0);
+                }
             }
 
             @Override
@@ -251,11 +254,7 @@ public class HomeFragment extends AutoLazyFragment {
                 select(3);
                 break;
             case R.id.ll_h5:
-                if (StringUtils.isEmpty(SdkConstant.HS_AGENT)){
-                    select(4);
-                }else {
-                    select(3);
-                }
+                select(4);
                 break;
             case kefu_img:
                 ServiceActivity.start(mContext);

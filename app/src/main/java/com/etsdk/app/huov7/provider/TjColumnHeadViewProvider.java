@@ -76,13 +76,13 @@ public class TjColumnHeadViewProvider
                     holder.tvTypeName.setText("最新上架");
                     break;
                 case 1:
-                    holder.tvTypeName.setText("新游上线");
+                    holder.tvTypeName.setText("GM最新");
                     break;
                 default:
                     holder.tvTypeName.setText("新游首发");
             }
 
-            holder.ivHint.setBackgroundResource(R.mipmap.smnews);
+            holder.ivHint.setBackgroundResource(R.mipmap.zuixin);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);
             holder.llMore.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +105,22 @@ public class TjColumnHeadViewProvider
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_FXB) {
-            holder.tvTypeName.setText("热门游戏");
+            switch (category){
+                case 5:
+                    holder.tvTypeName.setText("热门游戏");
+                    break;
+                case 4:
+                    holder.tvTypeName.setText("热门游戏");
+                    break;
+                case 3:
+                    holder.tvTypeName.setText("热门游戏");
+                    break;
+                case 1:
+                    holder.tvTypeName.setText("GM热门");
+                    break;
+                default:
+                    holder.tvTypeName.setText("热门游戏");
+            }
             holder.ivHint.setBackgroundResource(R.mipmap.remen);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);//跳转至游戏热门分类
@@ -117,8 +132,23 @@ public class TjColumnHeadViewProvider
                 }
             });
         } else if (tjColumnHead.getType() == TjColumnHead.TYPE_GAME_TJ) {
-            holder.tvTypeName.setText("精品推荐");
-            holder.ivHint.setBackgroundResource(R.mipmap.zuixin);
+            switch (category){
+                case 5:
+                    holder.tvTypeName.setText("精品推荐");
+                    break;
+                case 4:
+                    holder.tvTypeName.setText("精品推荐");
+                    break;
+                case 3:
+                    holder.tvTypeName.setText("精品推荐");
+                    break;
+                case 1:
+                    holder.tvTypeName.setText("GM精品");
+                    break;
+                default:
+                    holder.tvTypeName.setText("精品推荐");
+            }
+            holder.ivHint.setBackgroundResource(R.mipmap.smnews);
             holder.tvMore.setText("更多");
             holder.ivMore.setVisibility(View.VISIBLE);//跳转至游戏新游
             holder.llMore.setOnClickListener(new View.OnClickListener() {

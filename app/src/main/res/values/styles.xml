@@ -17,6 +17,14 @@
         <item name="android:windowAnimationStyle">@android:style/Animation</item>
     </style>
 
+    <style name="FullScreen" parent="AppTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+
+    </style>
+
     <style name="GameDetailStyle" parent="Theme.AppCompat.Translucent">
         <item name="android:windowAnimationStyle">@style/AnimationDetalActivity</item>
     </style>

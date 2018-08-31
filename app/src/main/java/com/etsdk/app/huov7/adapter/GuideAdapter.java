@@ -15,7 +15,12 @@ import com.etsdk.app.huov7.ui.MainActivity;
  */
 
 public class GuideAdapter extends PagerAdapter {
-    private int[] imageIds=new int[]{R.mipmap.guide1,R.mipmap.guide2,R.mipmap.guide3};
+    private int[] imageIds;
+
+    public GuideAdapter(int[] imageIds) {
+        this.imageIds = imageIds;
+    }
+
     @Override
     public int getCount() {
         return imageIds.length;
@@ -32,7 +37,7 @@ public class GuideAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         container.addView(imageView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         imageView.setImageResource(imageIds[position]);
-        if(position==2){
+        if(position==3){
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

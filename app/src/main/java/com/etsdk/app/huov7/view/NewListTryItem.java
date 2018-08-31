@@ -47,6 +47,8 @@ import com.kymjs.rxvolley.RxVolley;
 import com.liang530.log.T;
 import com.liang530.views.imageview.roundedimageview.RoundedImageView;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -94,6 +96,7 @@ public class NewListTryItem extends BaseDownView {
     private TryGameBean tryGameBean;//游戏本身属性
     private boolean isHotRank;
     private boolean isH5 = false;
+    private HashMap<String, Boolean> gameDown = new HashMap<>();
 
     Context context;
 
@@ -113,6 +116,9 @@ public class NewListTryItem extends BaseDownView {
         super(context, attrs, defStyleAttr);
         this.context = context;
         initUI();
+    }
+    private void setDown(String gameId, boolean isDown){
+        gameDown.put(gameId, isDown);
     }
 
     private void initUI() {
@@ -242,6 +248,7 @@ public class NewListTryItem extends BaseDownView {
         if (isH5) {
             return;
         }
+        setDown(tasksManagerModel.getGameId(), true);
         pbDown.setProgress(TasksManager.getImpl().getProgress(tasksManagerModel.getId()));
         tvDownStatus.setText(TasksManager.getImpl().getProgress(tasksManagerModel.getId()) + "%");
     }
@@ -254,7 +261,9 @@ public class NewListTryItem extends BaseDownView {
         }
         tvDownStatus.setText(TasksManager.getImpl().getStatusText(tasksManagerModel.getGameId()));
         pbDown.setProgress(100);
-        DownloadHelper.installOrOpen(tasksManagerModel);
+        if (gameDown.containsKey(tasksManagerModel.getGameId()) && gameDown.get(tasksManagerModel.getGameId())){
+            DownloadHelper.installOrOpen(tasksManagerModel);
+        }
         updateDownLoadManagerActivity();
     }
 

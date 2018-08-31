@@ -20,7 +20,7 @@ public class SdkConstant {
     public static String HS_CLIENTID = "";//
     public static String HS_CLIENTKEY = "";
     public static String HS_APPKEY = "";
-    //    public static String HS_AGENT = "app_100_991";
+//        public static String HS_AGENT = "app_100_991";
     public static String HS_AGENT = "";
     public static String FROM = "3";//1-WEB、2-WAP、3-Android、4-IOS、5-WP
 

@@ -53,7 +53,7 @@ public class MainGameFragment extends AutoLazyFragment {
     ImageView ivGotoMsg;
     private VpAdapter vpAdapter;
     private List<Fragment> fragmentList = new ArrayList<>();
-    private String[] titleList = {"分类", "精选", "BT", "折扣", "H5"};
+    private String[] titleList = {"分类", "精选", "BT", "折扣", "GM"};
     private int[] mIconUnselectIds = {R.mipmap.fenlei_u, R.mipmap.remenbang_u, R.mipmap.kaice_u, R.mipmap.xinyoubang_u, R.mipmap.gm_icon};
     private int[] mIconSelectIds = {R.mipmap.fenlei_s, R.mipmap.remenbang_s, R.mipmap.kaice_s, R.mipmap.xinyoubang_s, R.mipmap.gm_icon_s};
     private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
@@ -67,9 +67,6 @@ public class MainGameFragment extends AutoLazyFragment {
         super.onCreateViewLazy(savedInstanceState);
         setContentView(R.layout.fragment_main_game);
         EventBus.getDefault().register(this);
-       if (!StringUtils.isEmpty(SdkConstant.HS_AGENT)){
-           titleList[4] = "畅销";
-       }
 //        if(BuildConfig.projectCode == 137){
 //            titleList[1] = "BT榜";
 //            titleList[3] = "开服";
@@ -96,11 +93,12 @@ public class MainGameFragment extends AutoLazyFragment {
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 5, null));
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 3, null));
         fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 4, null));
-        if (!StringUtils.isEmpty(SdkConstant.HS_AGENT)){
-            fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 2, null));
-        }else {
+        if (StringUtils.isEmpty(SdkConstant.HS_AGENT)){
             fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 1, null));
         }
+//        else {
+//            fragmentList.add(GameListFragment.newInstance(true, true, 0, 0, 0, 0, 0, 2, null));
+//        }
 //        gameTestNewFragment = new GameTestNewFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putInt("position", secondPosition);

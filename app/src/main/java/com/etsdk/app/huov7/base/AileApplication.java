@@ -33,7 +33,7 @@ public class AileApplication extends BaseApplication {
     private Map<String, InstallApkRecord> installingApkList = new HashMap<>();
     public static String agent;
     public static String imei;
-    public static String selectH5 = "1";
+//    public static String selectH5 = "1";
     public static List<Integer> imgs;
 
     public static HuoSdkService.InitListener initListener;

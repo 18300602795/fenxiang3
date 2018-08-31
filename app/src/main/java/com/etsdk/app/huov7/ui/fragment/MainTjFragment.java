@@ -233,12 +233,12 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
 
         //新游首发头
         isReuqestLine = false;
-        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_NEW_GAME_SF);
-        allItems.add(tjColumnHead);
         //新游首发
         if (homePage1Data.getNewgame() != null && homePage1Data.getNewgame() != null
                 && homePage1Data.getNewgame().getList() != null
                 && homePage1Data.getNewgame().getList().size() > 0) {
+            tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_NEW_GAME_SF);
+            allItems.add(tjColumnHead);
 //            List<GameBean> gameBeanList = homePage1Data.getNewgame().getList();
 //            int i = 0;
 //            for (GameBean gameBean : gameBeanList) {
@@ -249,6 +249,7 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
 //                allItems.add(gameBean);
 //            }
             allItems.add(homePage1Data);
+            allItems.add(new SplitLine());
             isReuqestLine = true;
         }
         //横幅广告
@@ -256,16 +257,16 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
                 && homePage1Data.getHomenewgame().getList().size() > 0) {
 //            allItems.add(homePage1Data.getHomenewgame().getList().get(0));
             isReuqestLine = true;
-            allItems.add(new SplitLine());
+//            allItems.add(new SplitLine());
         }
         //手游风向标头(热门游戏)
         isReuqestLine = false;
-        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_TJ);
-        allItems.add(tjColumnHead);
         //手游风向标(精品推荐)
         if (homePage1Data.getNewrmd() != null && homePage1Data.getNewrmd() != null
                 && homePage1Data.getNewrmd().getList() != null
                 && homePage1Data.getNewrmd().getList().size() > 0) {
+            tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_TJ);
+            allItems.add(tjColumnHead);
             List<GameBean> gameBeanList = homePage1Data.getNewrmd().getList();
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
@@ -276,22 +277,23 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
                 allItems.add(gameBean);
             }
             isReuqestLine = true;
+            //横幅广告
+            if (homePage1Data.getHomenewgame() != null && homePage1Data.getHomenewgame().getList() != null
+                    && homePage1Data.getHomenewgame().getList().size() > 0) {
+                allItems.add(homePage1Data.getHomenewgame().getList().get(0));
+                isReuqestLine = true;
+                allItems.add(new SplitLine());
+            }
         }
-        //横幅广告
-        if (homePage1Data.getHomenewgame() != null && homePage1Data.getHomenewgame().getList() != null
-                && homePage1Data.getHomenewgame().getList().size() > 0) {
-            allItems.add(homePage1Data.getHomenewgame().getList().get(0));
-            isReuqestLine = true;
-            allItems.add(new SplitLine());
-        }
+
         //公益游戏头
         isReuqestLine = false;
-        tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_FXB);
-        allItems.add(tjColumnHead);
         //热门游戏
         if (homePage1Data.getHotgame() != null && homePage1Data.getHotgame() != null
                 && homePage1Data.getHotgame().getList() != null
                 && homePage1Data.getHotgame().getList().size() > 0) {
+            tjColumnHead = new TjColumnHead(TjColumnHead.TYPE_GAME_FXB);
+            allItems.add(tjColumnHead);
             List<GameBean> gameBeanList = homePage1Data.getHotgame().getList();
             int i = 0;
             for (GameBean gameBean : gameBeanList) {
@@ -302,14 +304,15 @@ public class MainTjFragment extends AutoLazyFragment implements AdvRefreshListen
                 allItems.add(gameBean);
             }
             isReuqestLine = true;
+            //横幅广告
+            if (homePage1Data.getHomehotgame() != null && homePage1Data.getHomehotgame().getList() != null
+                    && homePage1Data.getHomehotgame().getList().size() > 0) {
+                allItems.add(homePage1Data.getHomehotgame().getList().get(0));
+                isReuqestLine = true;
+                allItems.add(new SplitLine());
+            }
         }
-        //横幅广告
-        if (homePage1Data.getHomehotgame() != null && homePage1Data.getHomehotgame().getList() != null
-                && homePage1Data.getHomehotgame().getList().size() > 0) {
-            allItems.add(homePage1Data.getHomehotgame().getList().get(0));
-            isReuqestLine = true;
-            allItems.add(new SplitLine());
-        }
+
         //分割
 //        if (isReuqestLine) {
 //            allItems.add(new SplitLine());

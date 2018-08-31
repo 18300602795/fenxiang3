@@ -1,6 +1,9 @@
 package com.etsdk.app.huov7.ui;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,10 +22,12 @@ import com.etsdk.app.huov7.R;
 import com.etsdk.app.huov7.adapter.GroupHomeAdapter;
 import com.etsdk.app.huov7.base.ImmerseActivity;
 import com.etsdk.app.huov7.http.AppApi;
+import com.etsdk.app.huov7.model.AddressList;
 import com.etsdk.app.huov7.model.ListRequestBean;
 import com.etsdk.app.huov7.model.MessageRequestBean;
 import com.etsdk.app.huov7.model.ShowMsg;
 import com.etsdk.app.huov7.model.StartupResultBean;
+import com.etsdk.app.huov7.model.UserInfoResultBean;
 import com.etsdk.app.huov7.ui.fragment.FindFragment;
 import com.etsdk.app.huov7.ui.fragment.GameTestNewFragmentNew;
 import com.etsdk.app.huov7.ui.fragment.HomeFragment;
@@ -30,6 +35,9 @@ import com.etsdk.app.huov7.ui.fragment.MainGameFragment;
 import com.etsdk.app.huov7.ui.fragment.MainMineFragmentNew2;
 import com.etsdk.app.huov7.update.UpdateVersionDialog;
 import com.etsdk.app.huov7.update.UpdateVersionService;
+import com.etsdk.app.huov7.util.ImgUtil;
+import com.etsdk.app.huov7.util.StringUtils;
+import com.game.sdk.domain.BaseRequestBean;
 import com.game.sdk.http.HttpNoLoginCallbackDecode;
 import com.game.sdk.http.HttpParamsBuild;
 import com.game.sdk.log.L;
@@ -37,18 +45,26 @@ import com.game.sdk.util.GsonUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.jude.swipbackhelper.SwipeBackHelper;
 import com.kymjs.rxvolley.RxVolley;
+import com.kymjs.rxvolley.client.HttpParams;
 import com.liang530.log.T;
+import com.liang530.rxvolley.HttpJsonCallBackDialog;
+import com.liang530.rxvolley.NetRequest;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.liulishuo.filedownloader.model.FileDownloadStatus.error;
 
 /**
  * Created by Administrator on 2018\3\14 0014.
@@ -105,6 +121,7 @@ public class MainActivity2 extends ImmerseActivity {
         EventBus.getDefault().register(this);
         SwipeBackHelper.getCurrentPage(this).setSwipeBackEnable(false);
         initDate();
+        getUserInfoData();
         getPageData();
     }
 
@@ -348,5 +365,65 @@ public class MainActivity2 extends ImmerseActivity {
         if (showMsg.isShow()) {
         } else {
         }
+    }
+
+    public void getUserInfoData() {
+        final BaseRequestBean baseRequestBean = new BaseRequestBean();
+        HttpParamsBuild httpParamsBuild = new HttpParamsBuild(GsonUtil.getGson().toJson(baseRequestBean));
+        HttpNoLoginCallbackDecode httpCallbackDecode = new HttpNoLoginCallbackDecode<UserInfoResultBean>(mContext, httpParamsBuild.getAuthkey()) {
+            @Override
+            public void onDataSuccess(UserInfoResultBean data) {
+                if (data != null) {
+                    if (StringUtils.isEmpty(data.getPortrait()) || data.getPortrait().equals("http://static.idielian.com")) {
+                        Bitmap bmp = BitmapFactory.decodeResource(getResources(), ImgUtil.getError());
+                        L.i("333", "开始上传头像：");
+                        updateHeadImage(savePhoto(bmp));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String code, String msg) {
+                if (CODE_SESSION_ERROR.equals(code)) {
+                } else {
+                    super.onFailure(code, msg);
+                }
+            }
+        };
+        httpCallbackDecode.setShowTs(true);
+        httpCallbackDecode.setLoadingCancel(false);
+        httpCallbackDecode.setShowLoading(false);
+        RxVolley.post(AppApi.getUrl(AppApi.userDetailApi), httpParamsBuild.getHttpParams(), httpCallbackDecode);
+    }
+
+    private File savePhoto(Bitmap bitmap) {
+        //进行图片保存
+        try {
+            bitmap = ThumbnailUtils.extractThumbnail(bitmap, bitmap.getWidth(), bitmap.getHeight(),
+                    ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+            File file = new File(mContext.getCacheDir(), System.currentTimeMillis() + "temp.jpg");
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            return file;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void updateHeadImage(File file) {
+        HttpParams httpParams = AppApi.getCommonHttpParams(AppApi.userHeadImgApi);
+        httpParams.put("portrait", file);
+        //成功，失败，null数据
+        NetRequest.request(this).setParams(httpParams).post(AppApi.getUrl(AppApi.userHeadImgApi), new HttpJsonCallBackDialog<AddressList>() {
+            @Override
+            public void onDataSuccess(AddressList data) {
+//                T.s(getContext(), "上传成功");
+                L.i("333", "上传头像成功");
+            }
+        });
     }
 }
